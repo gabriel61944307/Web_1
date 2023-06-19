@@ -22,16 +22,16 @@ CREATE TABLE Paciente (
     telefone VARCHAR(20),
     sexo VARCHAR(20),
     data_nascimento DATE,
-    FOREIGN KEY (id) REFERENCES Usuario(id),
-    INDEX (cpf) -- Adiciona um índice na coluna cpf para criar a chave estrangeira corretamente
+    FOREIGN KEY (id) REFERENCES Usuario(id)
+    --INDEX (cpf) -- Adiciona um índice na coluna cpf para criar a chave estrangeira corretamente
 );
 
 CREATE TABLE Medico (
     id BIGINT NOT NULL PRIMARY KEY,
     crm VARCHAR(10) NOT NULL,
     especialidade VARCHAR(256) NOT NULL,
-    FOREIGN KEY (id) REFERENCES Usuario(id),
-    INDEX (crm) -- Adiciona um índice na coluna crm para criar a chave estrangeira corretamente
+    FOREIGN KEY (id) REFERENCES Usuario(id)
+    --INDEX (crm) -- Adiciona um índice na coluna crm para criar a chave estrangeira corretamente
 );
 
 -- Criação da tabela Consulta
@@ -40,7 +40,7 @@ CREATE TABLE Consulta (
     cpf_paciente VARCHAR(11) NOT NULL,
     crm_medico VARCHAR(10) NOT NULL,
     data_hora DATETIME NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (id)
 );
 
 -- Inserção de dados aleatórios na tabela Paciente
