@@ -1,22 +1,22 @@
 package br.ufscar.dc.dsw.domain;
 
-public class Paciente {
+public class Paciente extends Usuario {
 
-    private Long id;
     private String cpf;
     private String telefone;
     private String sexo;
     private String dataNascimento;
 
-    public Paciente(Long id, String cpf, String telefone, String sexo, String dataNascimento) {
-        this.id = id;
+    public Paciente(Long id, String nome, String email, String senha, String papel, String cpf, String telefone, String sexo, String dataNascimento) {
+        super(id, nome, email, senha, papel);
         this.cpf = cpf;
         this.telefone = telefone;
         this.sexo = sexo;
         this.dataNascimento = dataNascimento;
     }
 
-    public Paciente(String cpf, String telefone, String sexo, String dataNascimento) {
+    public Paciente(String nome, String email, String senha, String papel, String cpf, String telefone, String sexo, String dataNascimento) {
+        super(nome, email, senha, papel);
         this.cpf = cpf;
         this.telefone = telefone;
         this.sexo = sexo;
@@ -24,11 +24,11 @@ public class Paciente {
     }
 
     public Long getId() {
-        return id;
+        return super.getId();
     }
 
     public void setId(Long id) {
-        this.id = id;
+        super.setId(id);
     }
 
     public String getCpf() {

@@ -12,14 +12,14 @@ import br.ufscar.dc.dsw.domain.Usuario;
 
 public class UsuarioDAO extends GenericDAO {
 
-    public void insert(Usuario usuario) {
-
+    public long insert(Usuario usuario) {
+        long userID = 0;
         String sql = "INSERT INTO Usuario (nome, email, senha, papel) VALUES (?, ?, ?, ?)";
 
         try {
             Connection conn = this.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-
+            PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
             statement = conn.prepareStatement(sql);
             statement.setString(1, usuario.getNome());
             statement.setString(2, usuario.getEmail());
@@ -27,42 +27,49 @@ public class UsuarioDAO extends GenericDAO {
             statement.setString(4, usuario.getPapel());
             statement.executeUpdate();
 
+
+            ResultSet rs = statement.getGeneratedKeys();
+			if (rs.next()) {
+				userID = rs.getLong(1);
+			}
+
             statement.close();
             conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return userID;
     }
 
-    public List<Usuario> getAll() {
+    // public List<Usuario> getAll() {
 
-        List<Usuario> listaUsuarios = new ArrayList<>();
+    //     List<Usuario> listaUsuarios = new ArrayList<>();
 
-        String sql = "SELECT * from Usuario u";
+    //     String sql = "SELECT * from Usuario u";
 
-        try {
-            Connection conn = this.getConnection();
-            Statement statement = conn.createStatement();
+    //     try {
+    //         Connection conn = this.getConnection();
+    //         Statement statement = conn.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                long id = resultSet.getLong("id");
-                String nome = resultSet.getString("nome");
-                String email = resultSet.getString("email");
-                String senha = resultSet.getString("senha");
-                String papel = resultSet.getString("papel");
-                Usuario usuario = new Usuario(id, nome, email, senha, papel);
-                listaUsuarios.add(usuario);
-            }
+    //         ResultSet resultSet = statement.executeQuery(sql);
+    //         while (resultSet.next()) {
+    //             long id = resultSet.getLong("id");
+    //             String nome = resultSet.getString("nome");
+    //             String email = resultSet.getString("email");
+    //             String senha = resultSet.getString("senha");
+    //             String papel = resultSet.getString("papel");
+    //             Usuario usuario = new Usuario(id, nome, email, senha, papel);
+    //             listaUsuarios.add(usuario);
+    //         }
 
-            resultSet.close();
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return listaUsuarios;
-    }
+    //         resultSet.close();
+    //         statement.close();
+    //         conn.close();
+    //     } catch (SQLException e) {
+    //         throw new RuntimeException(e);
+    //     }
+    //     return listaUsuarios;
+    // }
 
     public void delete(Usuario usuario) {
         String sql = "DELETE FROM Usuario where id = ?";
@@ -101,32 +108,32 @@ public class UsuarioDAO extends GenericDAO {
         }
     }
 
-    public Usuario get(Long id) {
-        Usuario usuario = null;
+    // public Usuario get(Long id) {
+    //     Usuario usuario = null;
 
-        String sql = "SELECT * from Usuario WHERE id = ?";
+    //     String sql = "SELECT * from Usuario WHERE id = ?";
 
-        try {
-            Connection conn = this.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
+    //     try {
+    //         Connection conn = this.getConnection();
+    //         PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                String nome = resultSet.getString("nome");
-                String email = resultSet.getString("email");
-                String senha = resultSet.getString("senha");
-                String papel = resultSet.getString("papel");
+    //         statement.setLong(1, id);
+    //         ResultSet resultSet = statement.executeQuery();
+    //         if (resultSet.next()) {
+    //             String nome = resultSet.getString("nome");
+    //             String email = resultSet.getString("email");
+    //             String senha = resultSet.getString("senha");
+    //             String papel = resultSet.getString("papel");
 
-                usuario = new Usuario(id, nome, email, senha, papel);
-            }
+    //             usuario = new Usuario(id, nome, email, senha, papel);
+    //         }
 
-            resultSet.close();
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return usuario;
-    }
+    //         resultSet.close();
+    //         statement.close();
+    //         conn.close();
+    //     } catch (SQLException e) {
+    //         throw new RuntimeException(e);
+    //     }
+    //     return usuario;
+    // }
 }

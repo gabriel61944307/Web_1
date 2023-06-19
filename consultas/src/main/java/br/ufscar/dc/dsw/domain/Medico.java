@@ -1,28 +1,28 @@
 package br.ufscar.dc.dsw.domain;
 
-public class Medico {
+public class Medico extends Usuario {
 
-    private Long id;
     private String crm;
     private String especialidade;
 
-    public Medico(Long id, String crm, String especialidade) {
-        this.id = id;
+    public Medico(Long id, String nome, String email, String senha, String papel, String crm, String especialidade) {
+        super(id, nome, email, senha, papel);
         this.crm = crm;
         this.especialidade = especialidade;
     }
 
-    public Medico(String crm, String especialidade) {
+    public Medico(String nome, String email, String senha, String papel, String crm, String especialidade) {
+        super(nome, email, senha, papel);
         this.crm = crm;
         this.especialidade = especialidade;
     }
 
     public Long getId() {
-        return id;
+        return super.getId();
     }
 
     public void setId(Long id) {
-        this.id = id;
+        super.setId(id);
     }
 
     public String getCrm() {
