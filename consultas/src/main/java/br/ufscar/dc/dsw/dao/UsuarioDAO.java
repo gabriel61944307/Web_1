@@ -5,14 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 import br.ufscar.dc.dsw.domain.Usuario;
 
 public class UsuarioDAO extends GenericDAO {
 
+    // Este insert é necessário no caso da criação de um usuário do tipo ADMIN, de modo que seu atributo papel é definido adequadamente.
     public long insert(Usuario usuario) {
+        return insert(usuario, "ADMIN");
+    }
+
+    // Para a criação de um paciente, por exemplo, a função insert em PacienteDAO chamaria este método com o atributo "PACIENTE" no lugar de papel.
+    public long insert(Usuario usuario, String papel) {
         long userID = 0;
         String sql = "INSERT INTO Usuario (nome, email, senha, papel) VALUES (?, ?, ?, ?)";
 
@@ -20,11 +26,11 @@ public class UsuarioDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             
-            statement = conn.prepareStatement(sql);
+            //statement = conn.prepareStatement(sql);
             statement.setString(1, usuario.getNome());
             statement.setString(2, usuario.getEmail());
             statement.setString(3, usuario.getSenha());
-            statement.setString(4, usuario.getPapel());
+            statement.setString(4, papel);
             statement.executeUpdate();
 
 
@@ -39,6 +45,32 @@ public class UsuarioDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
         return userID;
+    }
+
+    public Usuario getbyEmail(String email) {
+        Usuario usuario = null;
+
+        String sql = "SELECT * FROM Usuario WHERE email = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String nome = resultSet.getString("nome");
+                String senha = resultSet.getString("senha");
+                String papel = resultSet.getString("papel");
+
+                usuario = new Usuario(id, nome, email, senha, papel);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return usuario;
     }
 
     // public List<Usuario> getAll() {
