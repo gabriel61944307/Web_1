@@ -7,6 +7,10 @@ public class Paciente extends Usuario {
     private String sexo;
     private String dataNascimento;
 
+    public Paciente(Long id) {
+        super(id);
+    }
+
     public Paciente(Long id, String nome, String email, String senha, String papel, String cpf, String telefone, String sexo, String dataNascimento) {
         super(id, nome, email, senha, papel);
         this.cpf = cpf;

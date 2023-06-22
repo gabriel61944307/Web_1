@@ -22,8 +22,8 @@
         <form method="post" action="index.jsp">
             <table>
                 <tr>
-                    <th>Login:</th>
-                    <td><input type="text" name="login" value="${param.login}"/></td>
+                    <th>Email:</th>
+                    <td><input type="text" name="email" value="${param.email}"/></td>
                 </tr>
                 <tr>
                     <th>Senha:</th>

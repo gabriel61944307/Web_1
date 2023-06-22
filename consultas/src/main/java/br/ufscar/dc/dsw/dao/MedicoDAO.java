@@ -46,10 +46,11 @@ public class MedicoDAO extends GenericDAO {
                 Long id = resultSet.getLong("id");
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
+                String papel = resultSet.getString("papel");
                 String crm = resultSet.getString("crm");
                 String nome = resultSet.getString("nome");
                 String especialidade = resultSet.getString("especialidade");
-                Medico medico = new Medico(id, email, senha, crm, nome, especialidade);
+                Medico medico = new Medico(id, email, senha, papel, crm, nome, especialidade);
                 listaMedicos.add(medico);
             }
 
@@ -118,10 +119,11 @@ public class MedicoDAO extends GenericDAO {
             if (resultSet.next()) {
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
+                String papel = resultSet.getString("papel");
                 String crm = resultSet.getString("crm");
                 String nome = resultSet.getString("nome");
                 String especialidade = resultSet.getString("especialidade");
-                medico = new Medico(id, email, senha, crm, nome, especialidade);
+                medico = new Medico(id, email, senha, papel, crm, nome, especialidade);
             }
 
             resultSet.close();
