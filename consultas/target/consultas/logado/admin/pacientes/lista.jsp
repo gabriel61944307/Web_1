@@ -10,7 +10,7 @@
     <div align="center">
         <h1>Gerenciamento de Pacientes</h1>
         <h2>
-            <a href="${pageContext.request.contextPath}/admin">Menu Principal</a> &nbsp;&nbsp;&nbsp; 
+            <a href="../index.jsp">Menu Principal</a> &nbsp;&nbsp;&nbsp; 
             <a href="${pageContext.request.contextPath}/pacientes/cadastro">Adicionar Novo Paciente</a> &nbsp;&nbsp;&nbsp;
             <a href="${pageContext.request.contextPath}/logout.jsp">Logout</a>
         </h2>
@@ -27,7 +27,7 @@
                 <th>CPF</th>
                 <th>Telefone</th>
                 <th>Sexo</th>
-                <th>Data de Nascimento</th>
+                <th>Data de Nascimento AAAAAAAAAAAAAAAAAAAAAAAAAAAA</th>
                 <th>Ações</th>
             </tr>
             <c:forEach var="paciente" items="${requestScope.listaPacientes}">

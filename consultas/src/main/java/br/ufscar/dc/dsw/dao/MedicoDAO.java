@@ -9,7 +9,7 @@ import java.util.List;
 
 import br.ufscar.dc.dsw.domain.Medico;
 
-public class MedicoDAO extends GenericDAO {
+public class MedicoDAO extends UsuarioDAO {
 
     public void insert(Medico medico) {
         String sql = "INSERT INTO Medico (email, senha, crm, nome, especialidade) VALUES (?, ?, ?, ?, ?)";
