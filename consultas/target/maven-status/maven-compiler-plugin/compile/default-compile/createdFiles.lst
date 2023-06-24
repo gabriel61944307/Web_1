@@ -9,6 +9,7 @@ br\ufscar\dc\dsw\dao\ConsultaDAO.class
 br\ufscar\dc\dsw\controller\IndexController.class
 br\ufscar\dc\dsw\AcessaBD.class
 br\ufscar\dc\dsw\utils\Erro.class
+br\ufscar\dc\dsw\controller\MedicoUserController.class
 br\ufscar\dc\dsw\controller\PacienteController.class
 br\ufscar\dc\dsw\domain\Usuario.class
 br\ufscar\dc\dsw\controller\PacienteUserController.class
