@@ -14,6 +14,12 @@
                 <a href="${pageContext.request.contextPath}/pacientes/lista.jsp">Administrar Pacientes</a>
             </li>
             <li>
+                <a href="${pageContext.request.contextPath}/medicos/lista.jsp">Administrar Médicos</a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/usuarios/lista.jsp">Administrar Usuários do Sistema</a>
+            </li>
+            <li>
                 <a href="${pageContext.request.contextPath}/logout.jsp">Sair</a>
             </li>
         </ul>

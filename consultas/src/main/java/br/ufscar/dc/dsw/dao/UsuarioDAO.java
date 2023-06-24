@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 //import java.util.ArrayList;
 //import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.ufscar.dc.dsw.domain.Usuario;
 
@@ -73,64 +75,17 @@ public class UsuarioDAO extends GenericDAO {
         return usuario;
     }
 
-    // public List<Usuario> getAll() {
-
-    //     List<Usuario> listaUsuarios = new ArrayList<>();
-
-    //     String sql = "SELECT * from Usuario u";
-
-    //     try {
-    //         Connection conn = this.getConnection();
-    //         Statement statement = conn.createStatement();
-
-    //         ResultSet resultSet = statement.executeQuery(sql);
-    //         while (resultSet.next()) {
-    //             long id = resultSet.getLong("id");
-    //             String nome = resultSet.getString("nome");
-    //             String email = resultSet.getString("email");
-    //             String senha = resultSet.getString("senha");
-    //             String papel = resultSet.getString("papel");
-    //             Usuario usuario = new Usuario(id, nome, email, senha, papel);
-    //             listaUsuarios.add(usuario);
-    //         }
-
-    //         resultSet.close();
-    //         statement.close();
-    //         conn.close();
-    //     } catch (SQLException e) {
-    //         throw new RuntimeException(e);
-    //     }
-    //     return listaUsuarios;
-    // }
-
-    public void delete(Usuario usuario) {
-        String sql = "DELETE FROM Usuario where id = ?";
-
-        try {
-            Connection conn = this.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-
-            statement.setLong(1, usuario.getId());
-            statement.executeUpdate();
-
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-        }
-    }
-
     public void update(Usuario usuario) {
-        String sql = "UPDATE Usuario SET nome = ?, email = ?, senha = ?, papel = ? WHERE id = ?";
-
         try {
+            String sql = "UPDATE Usuario SET nome = ?, email = ?, senha = ? WHERE id = ?";
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, usuario.getNome());
             statement.setString(2, usuario.getEmail());
             statement.setString(3, usuario.getSenha());
-            statement.setString(4, usuario.getPapel());
-            statement.setLong(5, usuario.getId());
+            statement.setLong(4, usuario.getId());
+
             statement.executeUpdate();
 
             statement.close();
@@ -140,32 +95,82 @@ public class UsuarioDAO extends GenericDAO {
         }
     }
 
-    // public Usuario get(Long id) {
-    //     Usuario usuario = null;
+    public void delete(Usuario usuario) {
+        try {
+            String sql = "DELETE FROM Usuario WHERE id = ?";
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
 
-    //     String sql = "SELECT * from Usuario WHERE id = ?";
+            statement.setLong(1, usuario.getId());
 
-    //     try {
-    //         Connection conn = this.getConnection();
-    //         PreparedStatement statement = conn.prepareStatement(sql);
+            statement.executeUpdate();
 
-    //         statement.setLong(1, id);
-    //         ResultSet resultSet = statement.executeQuery();
-    //         if (resultSet.next()) {
-    //             String nome = resultSet.getString("nome");
-    //             String email = resultSet.getString("email");
-    //             String senha = resultSet.getString("senha");
-    //             String papel = resultSet.getString("papel");
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-    //             usuario = new Usuario(id, nome, email, senha, papel);
-    //         }
+    public Usuario get(Long id) {
+        Usuario usuario = null;
 
-    //         resultSet.close();
-    //         statement.close();
-    //         conn.close();
-    //     } catch (SQLException e) {
-    //         throw new RuntimeException(e);
-    //     }
-    //     return usuario;
-    // }
+        try {
+            String sql = "SELECT * FROM Usuario WHERE id = ?";
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setLong(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String nome = resultSet.getString("nome");
+                String email = resultSet.getString("email");
+                String senha = resultSet.getString("senha");
+                String papel = resultSet.getString("papel");
+
+                usuario = new Usuario(id, nome, email, senha, papel);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return usuario;
+    }
+
+    public List<Usuario> getAll() {
+        List<Usuario> listaUsuarios = new ArrayList<>();
+
+        try {
+            //String sql = "SELECT * FROM Usuario";
+            String sql = "SELECT * FROM Usuario WHERE papel = 'ADMIN'";
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String nome = resultSet.getString("nome");
+                String email = resultSet.getString("email");
+                String senha = resultSet.getString("senha");
+                String papel = resultSet.getString("papel");
+
+                Usuario usuario = new Usuario(id, nome, email, senha, papel);
+                listaUsuarios.add(usuario);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaUsuarios;
+    }
+
 }
