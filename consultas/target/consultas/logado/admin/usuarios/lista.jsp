@@ -18,7 +18,7 @@
 
     <div align="center">
         <table border="1">
-            <caption>Lista de Usuários</caption>
+            <caption>Lista de Usuários Administradores</caption>
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
