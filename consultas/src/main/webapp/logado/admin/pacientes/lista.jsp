@@ -18,7 +18,7 @@
 
     <div align="center">
         <table border="1">
-            <caption>Lista de Pacientes      ${pageContext.request.contextPath}/admin"</caption>
+            <caption>Lista de Pacientes</caption>
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
