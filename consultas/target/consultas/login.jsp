@@ -23,11 +23,47 @@
             <table>
                 <tr>
                     <th>Email:</th>
-                    <td><input type="text" name="email" value="${param.email}"/></td>
+                    <td><input type="text" name="email" value="admin@email.com"/></td>
                 </tr>
                 <tr>
                     <th>Senha:</th>
-                    <td><input type="password" name="senha" /></td>
+                    <td><input type="password" name="senha" value="admin" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"> 
+                        <input type="submit" name="bOK" value="Entrar">
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <form method="post" action="index.jsp">
+            <table>
+                <tr>
+                    <th>Email:</th>
+                    <td><input type="text" name="email" value="paciente@email.com"/></td>
+                </tr>
+                <tr>
+                    <th>Senha:</th>
+                    <td><input type="password" name="senha" value="senha"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2"> 
+                        <input type="submit" name="bOK" value="Entrar">
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <form method="post" action="index.jsp">
+            <table>
+                <tr>
+                    <th>Email:</th>
+                    <td><input type="text" name="email" value="medico@email.com"/></td>
+                </tr>
+                <tr>
+                    <th>Senha:</th>
+                    <td><input type="password" name="senha" value="senha"/></td>
                 </tr>
                 <tr>
                     <td colspan="2"> 
