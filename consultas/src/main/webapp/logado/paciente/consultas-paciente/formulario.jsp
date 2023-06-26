@@ -8,10 +8,9 @@
 </head>
 <body>
     <div align="center">
-        <h1>Gerenciamento de Pacientes</h1>
-        <h1>Olá, ${sessionScope.usuarioLogado.nome}</h1>
+        <h1>Gerenciamento de Consultas</h1>
         <h2>
-            <a href="lista">Agendamento de Consulta</a>
+            <a href="lista">Lista de Consultas</a>
         </h2>
     </div>
 
