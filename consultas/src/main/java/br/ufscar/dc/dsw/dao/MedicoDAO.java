@@ -37,44 +37,11 @@ public class MedicoDAO extends UsuarioDAO {
         }
     }
 
-    /*
-    public List<Medico> getAll() {
-        List<Medico> listaMedicos = new ArrayList<>();
-
-        String sql = "SELECT" +
-                " Usuario.id, Usuario.nome, Usuario.email, Usuario.senha, Usuario.papel, Medico.crm, Medico.especialidade" +
-                " FROM Usuario" +
-                " JOIN Medico ON Usuario.id = Medico.id";
-
-        try {
-            Connection conn = this.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                Long id = resultSet.getLong("id");
-                String email = resultSet.getString("email");
-                String senha = resultSet.getString("senha");
-                String papel = resultSet.getString("papel");
-                String crm = resultSet.getString("crm");
-                String nome = resultSet.getString("nome");
-                String especialidade = resultSet.getString("especialidade");
-                Medico medico = new Medico(id, nome, email, senha, papel, crm, especialidade);
-                listaMedicos.add(medico);
-            }
-
-            resultSet.close();
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return listaMedicos;
-    }
-    */
 
     public List<Usuario> getAll() {
+        System.out.println("TIAGOOOOO:");
     List<Usuario> listaUsuarios = new ArrayList<>();
+
 
     String sql = "SELECT" +
             " Usuario.id, Usuario.nome, Usuario.email, Usuario.senha, Usuario.papel, Medico.crm, Medico.especialidade" +
@@ -85,7 +52,7 @@ public class MedicoDAO extends UsuarioDAO {
         Connection conn = this.getConnection();
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
-
+        
         while (resultSet.next()) {
             Long id = resultSet.getLong("id");
             String email = resultSet.getString("email");
@@ -95,6 +62,7 @@ public class MedicoDAO extends UsuarioDAO {
             String nome = resultSet.getString("nome");
             String especialidade = resultSet.getString("especialidade");
             Medico medico = new Medico(id, nome, email, senha, papel, crm, especialidade);
+            System.out.println("TIAGOOOOO:" + email);
             listaUsuarios.add(medico); // Adiciona como Usuario, fazendo um cast
         }
 

@@ -36,5 +36,17 @@
                 </tr>
             </table>
         </form>
+
+        <form method="get" action="noAuth/consulta-medicos.jsp">
+            <input type="submit" name="bListarMedicos" value="Listar Médicos">
+        </form>
+
+        <!-- <%
+            // Verificar qual botão foi clicado
+            String listarMedicos = request.getParameter("bListarMedicos");
+            if (listarMedicos != null) {
+                response.sendRedirect("/noAuth/consulta-medicos.jsp");
+            }
+        %> -->
     </body>
 </html>
