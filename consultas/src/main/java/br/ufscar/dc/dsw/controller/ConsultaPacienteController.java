@@ -13,8 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import br.ufscar.dc.dsw.utils.Erro;
 import br.ufscar.dc.dsw.dao.ConsultaDAO;
 import br.ufscar.dc.dsw.domain.Consulta;
+import br.ufscar.dc.dsw.domain.Paciente;
 import br.ufscar.dc.dsw.dao.MedicoDAO;
-import br.ufscar.dc.dsw.domain.Medico;
+//import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.domain.Usuario;
 
 
@@ -24,11 +25,13 @@ public class ConsultaPacienteController extends HttpServlet {
     
     private static final long serialVersionUID = 1L;
 
-    private ConsultaDAO dao;
+    private ConsultaDAO daoConsulta;
+    private MedicoDAO daoMedico;
 
     @Override
     public void init() {
-        dao = new ConsultaDAO();
+        daoConsulta = new ConsultaDAO();
+        daoMedico = new MedicoDAO();
     }
 
     @Override
@@ -64,6 +67,18 @@ public class ConsultaPacienteController extends HttpServlet {
                 case "/cadastro":
                     apresentaFormCadastroConsulta(request, response);
                     break;
+                case "/insercao":
+                    insereConsulta(request, response);
+                    break;
+                case "/remocao":
+                    //removeConsulta(request, response);
+                    break;
+                case "/edicao":
+                    //apresentaFormEdicaoConsulta(request, response);
+                    break;
+                case "/atualizacao":
+                    //atualizeConsulta(request, response);
+                    break;
                 default:
                     listaConsulta(request, response);
                     break;
@@ -74,12 +89,35 @@ public class ConsultaPacienteController extends HttpServlet {
     }
 
     private void apresentaFormCadastroConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Usuario> listaMedicos = daoMedico.getAll();
+        request.setAttribute("listaMedicos", listaMedicos);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/paciente/consultas-paciente/formulario.jsp");
         dispatcher.forward(request, response);
     }
 
+    private void insereConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+
+        //Long id = Long.parseLong(request.getParameter("id"));
+        String crmMedico = request.getParameter("crm");
+
+        String nome = request.getParameter("nome");
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+        String papel = request.getParameter("papel");
+        String cpf = request.getParameter("cpf");
+        String telefone = request.getParameter("telefone");
+        String sexo = request.getParameter("sexo");
+        String dataNascimento = request.getParameter("dataNascimento");
+        
+        //Paciente paciente = new Paciente(id, nome, email, senha, papel, cpf, telefone, sexo, dataNascimento);
+        Paciente paciente = new Paciente(nome, email, senha, papel, cpf, telefone, sexo, dataNascimento);
+        //dao.insert(paciente);
+        response.sendRedirect("lista");
+    }
+
     private void listaConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Consulta> listaConsultas = dao.getAll();
+        List<Consulta> listaConsultas = daoConsulta.getAll();
         request.setAttribute("listaConsultas", listaConsultas);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/paciente/consultas-paciente/lista.jsp");
         dispatcher.forward(request, response);

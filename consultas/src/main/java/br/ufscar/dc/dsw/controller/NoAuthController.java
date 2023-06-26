@@ -1,7 +1,7 @@
 package br.ufscar.dc.dsw.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ufscar.dc.dsw.dao.MedicoDAO;
-import br.ufscar.dc.dsw.domain.Medico;
+//import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.domain.Usuario;
 
 @WebServlet(urlPatterns = "/noAuth/*")

@@ -3,10 +3,16 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
 <table border="1">
     <caption>
         <c:choose>
-            <c:when test="${paciente != null}">
+            <c:when test="${consulta != null}">
                 Edição
             </c:when>
             <c:otherwise>
@@ -20,16 +26,33 @@
     </c:if>
 
     <tr>
-        <td><label for="sexo">Sexo</label></td>
+        <td><label for="listaMedicos">Médicos</label></td>
         <td>
-            <select id="sexo" name="sexo" required>
-                <option value="M" ${paciente.sexo == 'F' ? 'selected' : ''}>M</option>
-                <option value="F" ${paciente.sexo == 'M' ? 'selected' : ''}>F</option>
+            <select id="listaMedicos" name="listaMedicos" required>
+                <c:forEach var="medico" items="${requestScope.listaMedicos}">
+                    <option value="${medico.crm}">${medico.nome} - ${medico.especialidade}</option>
+                </c:forEach>
             </select>
         </td>
     </tr>
 
+    <div>
+        <tr>
+            <label for="data">Data:</label>
+            <input type="date" id="data" name="data">
+        </tr>
+        
+        <tr>
+            <label for="hora">Hora:</label>
+            <input type="time" id="hora" name="hora">
+        </tr>
+        <button id="botao1" onclick="toggleVisibility('botao2')">Verificar Disponibilidade</button>
+        <button id="botao2" onclick="toggleVisibility('botao1')" class="hidden">Salvar</button>
+    </div>
+
     <tr>
-        <td colspan="2" align="center"><input type="submit" value="Salvar"/></td>
+        <td colspan="2" align="center">
+            <input type="submit" value="Salvar" id="botaoSalvar"/>
+        </td>
     </tr>
 </table>
