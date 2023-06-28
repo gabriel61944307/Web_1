@@ -42,7 +42,7 @@ public class IndexController extends HttpServlet {
                         //request.getSession().setAttribute("contextPath", contextPath);
 
                         if (usuario.getPapel().equals("PACIENTE")) {
-                            response.sendRedirect("paciente/"); // acho que aqui não é pra ser pacientes
+                            response.sendRedirect("paciente/");
                         } else if (usuario.getPapel().equals("MEDICO")) {
                             response.sendRedirect("medico/");
                         } else { // admin

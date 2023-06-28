@@ -5,6 +5,10 @@ public class Medico extends Usuario {
     private String crm;
     private String especialidade;
 
+    public Medico(Long id) {
+        super(id);
+    }
+
     public Medico(Long id, String nome, String email, String senha, String papel, String crm, String especialidade) {
         super(id, nome, email, senha, papel);
         this.crm = crm;

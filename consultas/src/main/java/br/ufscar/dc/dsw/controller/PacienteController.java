@@ -83,9 +83,9 @@ public class PacienteController extends HttpServlet {
     }
 
     private void listaPaciente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Paciente> listaPacientes = dao.getAll();
+        List<Usuario> listaPacientes = dao.getAll();
         request.setAttribute("listaPacientes", listaPacientes);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/paciente/lista.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/pacientes/lista.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -93,7 +93,7 @@ public class PacienteController extends HttpServlet {
         Long id = Long.parseLong(request.getParameter("id"));
         Paciente paciente = dao.get(id);
         request.setAttribute("paciente", paciente);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/paciente/formulario.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/pacientes/formulario.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -116,7 +116,7 @@ public class PacienteController extends HttpServlet {
 
     private void apresentaFormCadastroPaciente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //request.setAttribute(getServletName(), response);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/paciente/formulario.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/pacientes/formulario.jsp");
         dispatcher.forward(request, response);
     }
 

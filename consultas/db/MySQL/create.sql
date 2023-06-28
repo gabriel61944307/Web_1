@@ -38,16 +38,16 @@ CREATE TABLE Consulta (
 );
 
 INSERT INTO Usuario(nome, email, senha, papel) VALUES
-    ('Lucas Costa', 'lucas@example.com', 'senha1', 'PACIENTE');
+    ('Paciente Teste', 'paciente@email.com', 'senha', 'PACIENTE');
 
 INSERT INTO Paciente(id, cpf, telefone, sexo, data_nascimento) VALUES
     (LAST_INSERT_ID(), '12345678901', '1234-5678', 'M', '1990-01-01');
 
 INSERT INTO Usuario(nome, email, senha, papel) VALUES
-    ('Marcos Costa', 'marcos@example.com', 'senha1', 'MEDICO');
+    ('Doutor Teste', 'medico@email.com', 'senha', 'MEDICO');
 
 INSERT INTO Medico(id, crm, especialidade) VALUES
     (LAST_INSERT_ID(), '12345', 'Cardiologia');
 
 INSERT INTO Usuario(nome, email, senha, papel) VALUES
-    ('Administrador', 'admin@example.com', 'admin', 'ADMIN');
+    ('Administrador', 'admin@email.com', 'admin', 'ADMIN');
