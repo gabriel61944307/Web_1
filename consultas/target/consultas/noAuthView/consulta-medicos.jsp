@@ -28,6 +28,10 @@
                 </tr>
             </c:forEach>
         </table>
+        
+        <div>
+            <a href="${pageContext.request.contextPath}/logout.jsp">Voltar</a>
+        </div>    
     </div>
 </body>
 </html>
