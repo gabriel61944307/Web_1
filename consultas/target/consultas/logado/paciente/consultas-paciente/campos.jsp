@@ -30,7 +30,7 @@
         <td>
             <select id="listaMedicos" name="listaMedicos" required>
                 <c:forEach var="medico" items="${requestScope.listaMedicos}">
-                    <option value="${medico.nome} - ${medico.especialidade}">${medico.nome} - ${medico.especialidade}</option>
+                    <option value="${medico.crm}">${medico.nome} - ${medico.especialidade}</option>
                 </c:forEach>
             </select>
         </td>
