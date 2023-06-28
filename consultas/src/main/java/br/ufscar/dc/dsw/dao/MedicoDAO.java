@@ -166,4 +166,41 @@ public class MedicoDAO extends UsuarioDAO {
         }
         return medico;
     }
+
+    public List<Usuario> getByEspecialidade(String especialidade) {
+    List<Usuario> listaMedicosEspecialidade = new ArrayList<>();
+
+    String sql = "SELECT " +
+            " Usuario.id, Usuario.nome, Usuario.email, Usuario.senha, Usuario.papel, Medico.crm, Medico.especialidade" +
+            " FROM Usuario" +
+            " JOIN Medico ON Usuario.id = Medico.id" +
+            " WHERE Medico.especialidade = ?";
+
+    try {
+        Connection conn = this.getConnection();
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, especialidade);
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()) {
+            Long id = resultSet.getLong("id");
+            String email = resultSet.getString("email");
+            String senha = resultSet.getString("senha");
+            String papel = resultSet.getString("papel");
+            String crm = resultSet.getString("crm");
+            String nome = resultSet.getString("nome");
+            Medico medico = new Medico(id, nome, email, senha, papel, crm, especialidade);
+            listaMedicosEspecialidade.add(medico);
+        }
+
+        resultSet.close();
+        statement.close();
+        conn.close();
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+
+    return listaMedicosEspecialidade;
+}
+
 }

@@ -77,6 +77,10 @@
             <input type="submit" name="bListarMedicos" value="Listar Médicos">
         </form>
 
+        <form method="get" action="noAuth/listaMedicosEspecialidade">
+            <input type="submit" name="bListarMedicosEspecialidade" value="Listar Médicos por Especialidade">
+        </form>
+
         <!-- <%
             // Verificar qual botão foi clicado
             String listarMedicos = request.getParameter("bListarMedicos");
