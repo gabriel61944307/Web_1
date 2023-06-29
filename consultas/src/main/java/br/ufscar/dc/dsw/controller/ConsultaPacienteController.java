@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import br.ufscar.dc.dsw.utils.Erro;
 import br.ufscar.dc.dsw.dao.ConsultaDAO;
 import br.ufscar.dc.dsw.domain.Consulta;
@@ -18,11 +17,15 @@ import br.ufscar.dc.dsw.dao.MedicoDAO;
 //import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.domain.Usuario;
 
+/*
+ * OBS: ainda tem um problema no formulário pra edição da consulta: precisa dar um jeito de manter 
+ * os valores atuais pré-definidos no formulário pra não precisar inserir todos novamente
+ */
 
 @WebServlet(urlPatterns = "/consultas-paciente/*")
 
 public class ConsultaPacienteController extends HttpServlet {
-    
+
     private static final long serialVersionUID = 1L;
 
     private ConsultaDAO daoConsulta;
@@ -35,19 +38,24 @@ public class ConsultaPacienteController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         doGet(request, response);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado"); 
         Erro erros = new Erro();
+
+        
+       // System.out.println(usuario.getClass());
 
         if (usuario == null) {
             response.sendRedirect(request.getContextPath());
             return;
-        } else if (!usuario.getPapel().equals("PACIENTE")) { 
+        } else if (!usuario.getPapel().equals("PACIENTE")) {
             erros.add("Acesso não autorizado!");
             erros.add("Apenas Papel [PACIENTE] tem acesso a essa página.");
             request.setAttribute("mensagens", erros);
@@ -56,6 +64,8 @@ public class ConsultaPacienteController extends HttpServlet {
             rd.forward(request, response);
             return;
         }
+
+        //System.out.println("CLASSE: "+usuario.getClass());
 
         String action = request.getPathInfo();
         if (action == null) {
@@ -71,13 +81,13 @@ public class ConsultaPacienteController extends HttpServlet {
                     insereConsulta(request, response);
                     break;
                 case "/remocao":
-                    //removeConsulta(request, response);
+                    removeConsulta(request, response);
                     break;
                 case "/edicao":
-                    //apresentaFormEdicaoConsulta(request, response);
+                    apresentaFormEdicaoConsulta(request, response);
                     break;
                 case "/atualizacao":
-                    //atualizeConsulta(request, response);
+                    atualizaConsulta(request, response);
                     break;
                 default:
                     listaConsulta(request, response);
@@ -88,38 +98,91 @@ public class ConsultaPacienteController extends HttpServlet {
         }
     }
 
-    private void apresentaFormCadastroConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void apresentaFormCadastroConsulta(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         List<Usuario> listaMedicos = daoMedico.getAll();
         request.setAttribute("listaMedicos", listaMedicos);
+        RequestDispatcher dispatcher = request
+                .getRequestDispatcher("/logado/paciente/consultas-paciente/formulario.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void insereConsulta(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+
+        Paciente paciente = (Paciente) request.getSession().getAttribute("usuarioLogado");
+        String cpfPaciente = paciente.getCpf();
+
+        String crmMedico = request.getParameter("crm");
+        String data = request.getParameter("data");
+        String hora = request.getParameter("hora");
+        String dataHora = data + " " + hora;
+
+        Consulta consulta = new Consulta(cpfPaciente, crmMedico, dataHora);
+        daoConsulta.insert(consulta);
+
+        response.sendRedirect("lista");
+    }
+
+    private void listaConsulta(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Obtém o usuário atualmente logado na sessão
+        Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
+
+        Paciente paciente = (Paciente) usuarioLogado;
+        String cpfPaciente = paciente.getCpf();
+
+        List<Consulta> listaConsultas = daoConsulta.getConsultasByCpfPaciente(cpfPaciente);
+        request.setAttribute("listaConsultas", listaConsultas);
+        RequestDispatcher dispatcher = request
+                .getRequestDispatcher("/logado/paciente/consultas-paciente/lista.jsp");
+        dispatcher.forward(request, response);
+        
+    }
+
+    private void removeConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Long id = Long.parseLong(request.getParameter("id"));
+
+        System.out.println(id);
+
+        Consulta consulta = new Consulta(id);
+        daoConsulta.delete(consulta);
+        response.sendRedirect("lista");
+    }
+
+    private void apresentaFormEdicaoConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Usuario> listaMedicos = daoMedico.getAll();
+        request.setAttribute("listaMedicos", listaMedicos);
+
+        Long id = Long.parseLong(request.getParameter("id"));
+        Consulta consulta = daoConsulta.get(id);
+        request.setAttribute("consulta", consulta);
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/paciente/consultas-paciente/formulario.jsp");
         dispatcher.forward(request, response);
     }
 
-    private void insereConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void atualizaConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
-        //Long id = Long.parseLong(request.getParameter("id"));
-        String crmMedico = request.getParameter("crm");
-
-        String nome = request.getParameter("nome");
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-        String papel = request.getParameter("papel");
-        String cpf = request.getParameter("cpf");
-        String telefone = request.getParameter("telefone");
-        String sexo = request.getParameter("sexo");
-        String dataNascimento = request.getParameter("dataNascimento");
         
-        //Paciente paciente = new Paciente(id, nome, email, senha, papel, cpf, telefone, sexo, dataNascimento);
-        Paciente paciente = new Paciente(nome, email, senha, papel, cpf, telefone, sexo, dataNascimento);
-        //dao.insert(paciente);
+        Long id = Long.parseLong(request.getParameter("id"));
+
+        // Obtém o usuário atualmente logado na sessão
+        Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
+
+        Paciente paciente = (Paciente) usuarioLogado;
+        String cpfPaciente = paciente.getCpf();
+
+        String crmMedico = request.getParameter("crm");
+        String data = request.getParameter("data");
+        String hora = request.getParameter("hora");
+        String dataHora = data + " " + hora;
+
+        Consulta consulta = new Consulta(id, cpfPaciente, crmMedico, dataHora);
+        daoConsulta.update(consulta);
+
         response.sendRedirect("lista");
     }
 
-    private void listaConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Consulta> listaConsultas = daoConsulta.getAll();
-        request.setAttribute("listaConsultas", listaConsultas);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/paciente/consultas-paciente/lista.jsp");
-        dispatcher.forward(request, response);
-    }
 }

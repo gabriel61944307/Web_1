@@ -31,10 +31,10 @@
                     <td>${consulta.crmMedico}</td>
                     <td>${consulta.dataHora}</td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/consultas-paciente/edicao?id=${paciente.id}">
+                        <a href="${pageContext.request.contextPath}/consultas-paciente/edicao?id=${consulta.id}">
                             Edição
                         </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="${pageContext.request.contextPath}/consultas-paciente/remocao?id=${paciente.id}" onclick="return confirm('Tem certeza de que deseja excluir este paciente?');">
+                        <a href="${pageContext.request.contextPath}/consultas-paciente/remocao?id=${consulta.id}" onclick="return confirm('Tem certeza de que deseja excluir esta consulta?');">
                             Remoção
                         </a>
                     </td>

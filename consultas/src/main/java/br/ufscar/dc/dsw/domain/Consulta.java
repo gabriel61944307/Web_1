@@ -7,6 +7,10 @@ public class Consulta {
     private String crmMedico;
     private String dataHora;
 
+    public Consulta(Long id) {
+		this.id = id;
+	}
+
     public Consulta(Long id, String cpfPaciente, String crmMedico, String dataHora) {
         this.id = id;
         this.cpfPaciente = cpfPaciente;
