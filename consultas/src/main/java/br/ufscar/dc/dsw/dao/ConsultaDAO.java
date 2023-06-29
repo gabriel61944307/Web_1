@@ -62,6 +62,36 @@ public class ConsultaDAO extends GenericDAO {
         return listaConsultas;
     }
 
+    public List<Consulta> getAllbyCRM(String crm) {
+
+        List<Consulta> listaConsultas = new ArrayList<>();
+
+        String sql = "SELECT * FROM Consulta WHERE crm_medico = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, crm);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String cpfPaciente = resultSet.getString("cpf_paciente");
+                String crmMedico = resultSet.getString("crm_medico");
+                String dataHora = resultSet.getString("data_hora");
+                Consulta consulta = new Consulta(id, cpfPaciente, crmMedico, dataHora);
+                listaConsultas.add(consulta);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaConsultas;
+    }
+
     public List<Consulta> getConsultasByCpfPaciente(String cpfPaciente) {
         List<Consulta> listaConsultas = new ArrayList<>();
 

@@ -123,9 +123,12 @@ public class ConsultaPacienteController extends HttpServlet {
         Consulta consulta = new Consulta(cpfPaciente, crmMedico, dataHora);
 
         boolean flag = true;
-        for(Consulta cst : daoConsulta.getAll())
+        for(Consulta cst : daoConsulta.getConsultasByCpfPaciente(cpfPaciente))
             if(cst.getDataHora().equals(dataHora)) flag = false;
             
+        for(Consulta cst : daoConsulta.getAllbyCRM(crmMedico))
+            if(cst.getDataHora().equals(dataHora)) flag = false;
+
         if(flag){
             daoConsulta.insert(consulta);
             response.sendRedirect("lista");
