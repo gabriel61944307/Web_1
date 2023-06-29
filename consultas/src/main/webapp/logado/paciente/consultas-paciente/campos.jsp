@@ -33,37 +33,39 @@
         <td><label for="data">Data</label></td>
         <td><input type="date" id="data" name="data" required /></td>
     </tr>
-
+    
     <tr>
-        <label for="hora">Hora:</label>
-        <select id="hora" name="hora">
-            <script>
-                var selectHora = document.getElementById("hora");
-    
-                var horaInicial = 8; // Hora inicial (8:00 da manhã)
-                var horaFinal = 18; // Hora final (18:00)
-                var intervaloMinutos = 30; // Intervalo de 30 minutos
-    
-                for (var hora = horaInicial; hora <= horaFinal; hora++) {
-                    for (var minuto = 0; minuto < 60; minuto += intervaloMinutos) {
-                        var horaFormatada = hora.toString().padStart(2, '0');
-                        var minutoFormatado = minuto.toString().padStart(2, '0');
-                        var option = document.createElement("option");
-                        option.value = horaFormatada + ":" + minutoFormatado;
-                        option.text = horaFormatada + ":" + minutoFormatado;
-                        selectHora.appendChild(option);
+        <td><label for="hora">Hora:</label></td>
+        <td>
+            <select id="hora" name="hora">
+                <script>
+                    var selectHora = document.getElementById("hora");
+
+                    var horaInicial = 8; // Hora inicial (8:00 da manhã)
+                    var horaFinal = 18; // Hora final (18:00)
+                    var intervaloMinutos = 30; // Intervalo de 30 minutos
+
+                    for (var hora = horaInicial; hora <= horaFinal; hora++) {
+                        for (var minuto = 0; minuto < 60; minuto += intervaloMinutos) {
+                            var horaFormatada = hora.toString().padStart(2, '0');
+                            var minutoFormatado = minuto.toString().padStart(2, '0');
+                            var option = document.createElement("option");
+                            option.value = horaFormatada + ":" + minutoFormatado;
+                            option.text = horaFormatada + ":" + minutoFormatado;
+                            selectHora.appendChild(option);
+                        }
                     }
-                }
-            </script>
-        </select>
+                </script>
+            </select>
+        </td>
     </tr>
 
-    <c:if test="${requestScope.disponibilidade == false}">
-                <h3 style="color:red;">Data indisponivel, escolha outra data para se consultar.<h3>
-    </c:if>
     <tr>
         <td colspan="2" align="center">
-            <input type="submit" value="Agendar" onclick="${requestScope.disponibilidade}"/>
+            <c:if test="${requestScope.disponibilidade == false}">
+                <h3 style="color:red;">Data indisponível, escolha outra data para se consultar.</h3>
+            </c:if>
+            <input type="submit" value="Agendar" />
         </td>
     </tr>
 </table>
