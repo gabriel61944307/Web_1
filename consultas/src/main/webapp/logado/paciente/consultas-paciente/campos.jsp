@@ -1,13 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ page isELIgnored="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<style>
-    .hidden {
-        display: none;
-    }
-</style>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <table border="1">
     <caption>
@@ -26,33 +19,46 @@
     </c:if>
 
     <tr>
-        <td><label for="listaMedicos">Médicos</label></td>
+        <td><label for="crm">Médicos</label></td>
         <td>
-            <select id="listaMedicos" name="listaMedicos" required>
-                <c:forEach var="medico" items="${requestScope.listaMedicos}">
+            <select id="crm" name="crm">
+                <c:forEach items="${listaMedicos}" var="medico">
                     <option value="${medico.crm}">${medico.nome} - ${medico.especialidade}</option>
                 </c:forEach>
             </select>
         </td>
     </tr>
 
-    <div>
-        <tr>
-            <label for="data">Data:</label>
-            <input type="date" id="data" name="data">
-        </tr>
-        
-        <tr>
-            <label for="hora">Hora:</label>
-            <input type="time" id="hora" name="hora">
-        </tr>
-        <button id="botao1" onclick="toggleVisibility('botao2')">Verificar Disponibilidade</button>
-        <button id="botao2" onclick="toggleVisibility('botao1')" class="hidden">Salvar</button>
-    </div>
+    <tr>
+        <td><label for="data">Data</label></td>
+        <td><input type="date" id="data" name="data" required /></td>
+    </tr>
 
     <tr>
-        <td colspan="2" align="center">
-            <input type="submit" value="Salvar" id="botaoSalvar"/>
-        </td>
+        <label for="hora">Hora:</label>
+        <select id="hora" name="hora">
+            <script>
+                var selectHora = document.getElementById("hora");
+    
+                var horaInicial = 8; // Hora inicial (8:00 da manhã)
+                var horaFinal = 18; // Hora final (18:00)
+                var intervaloMinutos = 30; // Intervalo de 30 minutos
+    
+                for (var hora = horaInicial; hora <= horaFinal; hora++) {
+                    for (var minuto = 0; minuto < 60; minuto += intervaloMinutos) {
+                        var horaFormatada = hora.toString().padStart(2, '0');
+                        var minutoFormatado = minuto.toString().padStart(2, '0');
+                        var option = document.createElement("option");
+                        option.value = horaFormatada + ":" + minutoFormatado;
+                        option.text = horaFormatada + ":" + minutoFormatado;
+                        selectHora.appendChild(option);
+                    }
+                }
+            </script>
+        </select>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center"><input type="submit" value="Agendar" /></td>
     </tr>
 </table>
