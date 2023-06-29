@@ -58,7 +58,12 @@
         </select>
     </tr>
 
+    <c:if test="${requestScope.disponibilidade == false}">
+                <h3 style="color:red;">Data indisponivel, escolha outra data para se consultar.<h3>
+    </c:if>
     <tr>
-        <td colspan="2" align="center"><input type="submit" value="Agendar" /></td>
+        <td colspan="2" align="center">
+            <input type="submit" value="Agendar" onclick="${requestScope.disponibilidade}"/>
+        </td>
     </tr>
 </table>

@@ -135,7 +135,13 @@ public class ConsultaPacienteController extends HttpServlet {
         }
         else{
             request.setAttribute("disponibilidade", false);
-            response.sendRedirect("lista");
+            List<Usuario> listaMedicos = daoMedico.getAll();
+            request.setAttribute("listaMedicos", listaMedicos);
+            RequestDispatcher dispatcher = request
+                .getRequestDispatcher("/logado/paciente/consultas-paciente/formulario.jsp");
+        dispatcher.forward(request, response);
+
+            //response.sendRedirect("cadastro");
         }
         
     }

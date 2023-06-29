@@ -29,12 +29,5 @@
         </c:choose>
     </div>
 
-    <c:if test="${!empty requestScope.mensagens}">
-        <ul class="erro">
-            <c:forEach items="${requestScope.mensagens}" var="mensagem">
-                <li>${mensagem}</li>
-            </c:forEach>
-        </ul>
-    </c:if>
 </body>
 </html>
