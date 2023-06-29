@@ -117,12 +117,24 @@ public class ConsultaPacienteController extends HttpServlet {
         String crmMedico = request.getParameter("crm");
         String data = request.getParameter("data");
         String hora = request.getParameter("hora");
-        String dataHora = data + " " + hora;
+        //:00 Necessário pois o banco está voltando o horario com segundos no final
+        String dataHora = data + " " + hora + ":00";
 
         Consulta consulta = new Consulta(cpfPaciente, crmMedico, dataHora);
-        daoConsulta.insert(consulta);
 
-        response.sendRedirect("lista");
+        boolean flag = true;
+        for(Consulta cst : daoConsulta.getAll())
+            if(cst.getDataHora().equals(dataHora)) flag = false;
+            
+        if(flag){
+            daoConsulta.insert(consulta);
+            response.sendRedirect("lista");
+        }
+        else{
+            request.setAttribute("disponibilidade", false);
+            response.sendRedirect("lista");
+        }
+        
     }
 
     private void listaConsulta(HttpServletRequest request, HttpServletResponse response)
