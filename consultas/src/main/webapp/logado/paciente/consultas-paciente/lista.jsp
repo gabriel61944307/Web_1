@@ -25,10 +25,12 @@
                 <th>Data</th>
                 <th>Ações</th>
             </tr>
-            <c:forEach var="consulta" items="${requestScope.listaConsultas}">
+            <c:forEach items="${requestScope.listaConsultas}" var="consulta" varStatus="status">
+                <c:set var="medico" value="${requestScope.listaNomes[status.index]}" />
+                <!-- Agora você tem acesso ao item atual de cada lista usando as variáveis "item1" e "item2" -->
                 <tr>
                     <td>${consulta.id}</td>
-                    <td>${consulta.crmMedico}</td>
+                    <td>${medico}</td>
                     <td>${consulta.dataHora}</td>
                     <td>
                         <a href="${pageContext.request.contextPath}/consultas-paciente/edicao?id=${consulta.id}">

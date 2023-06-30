@@ -39,7 +39,6 @@ public class MedicoDAO extends UsuarioDAO {
 
 
     public List<Usuario> getAll() {
-        System.out.println("TIAGOOOOO:");
     List<Usuario> listaUsuarios = new ArrayList<>();
 
 
@@ -153,6 +152,42 @@ public class MedicoDAO extends UsuarioDAO {
                 String senha = resultSet.getString("senha");
                 String papel = resultSet.getString("papel");
                 String crm = resultSet.getString("crm");
+                String nome = resultSet.getString("nome");
+                String especialidade = resultSet.getString("especialidade");
+                medico = new Medico(id, nome, email, senha, papel, crm, especialidade);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return medico;
+    }
+
+    public Medico getByCRM(String crm) {
+        Medico medico = null;
+
+        String sql = "SELECT " +
+                " Usuario.id, Usuario.nome, Usuario.email, Usuario.senha, Usuario.papel, Medico.especialidade" +
+                " FROM Usuario" +
+                " JOIN Medico ON Usuario.id = Medico.id" +
+                " WHERE Medico.crm = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, crm);
+            ResultSet resultSet = statement.executeQuery();
+
+
+            if (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String email = resultSet.getString("email");
+                String senha = resultSet.getString("senha");
+                String papel = resultSet.getString("papel");
                 String nome = resultSet.getString("nome");
                 String especialidade = resultSet.getString("especialidade");
                 medico = new Medico(id, nome, email, senha, papel, crm, especialidade);

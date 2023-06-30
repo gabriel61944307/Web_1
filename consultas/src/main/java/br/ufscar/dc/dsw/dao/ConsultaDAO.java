@@ -120,6 +120,16 @@ public class ConsultaDAO extends GenericDAO {
         return listaConsultas;
     }
 
+    public List<String> getNomeMedico(String cpfPaciente) {
+        List<String> resp = new ArrayList<>();
+        List<Consulta> lista = getConsultasByCpfPaciente(cpfPaciente);
+        for(Consulta con: lista){
+            MedicoDAO daomedico = new MedicoDAO();
+            resp.add(daomedico.getByCRM(con.getCrmMedico()).getNome());
+        }
+        return resp;
+    }
+
     public void delete(Consulta consulta) {
         try {
             String sql = "DELETE FROM Consulta WHERE id = ?";

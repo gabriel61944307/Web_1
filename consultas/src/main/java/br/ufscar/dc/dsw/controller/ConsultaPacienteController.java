@@ -156,6 +156,9 @@ public class ConsultaPacienteController extends HttpServlet {
 
         List<Consulta> listaConsultas = daoConsulta.getConsultasByCpfPaciente(cpfPaciente);
         request.setAttribute("listaConsultas", listaConsultas);
+        List<String> listaNomes = daoConsulta.getNomeMedico(cpfPaciente);
+        request.setAttribute("listaNomes", listaNomes);
+
         RequestDispatcher dispatcher = request
                 .getRequestDispatcher("/logado/paciente/consultas-paciente/lista.jsp");
         dispatcher.forward(request, response);
