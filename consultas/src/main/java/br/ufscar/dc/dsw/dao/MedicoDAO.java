@@ -61,7 +61,7 @@ public class MedicoDAO extends UsuarioDAO {
             String nome = resultSet.getString("nome");
             String especialidade = resultSet.getString("especialidade");
             Medico medico = new Medico(id, nome, email, senha, papel, crm, especialidade);
-            System.out.println("TIAGOOOOO:" + email);
+            //System.out.println("TIAGOOOOO:" + email);
             listaUsuarios.add(medico); // Adiciona como Usuario, fazendo um cast
         }
 

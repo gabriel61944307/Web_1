@@ -123,8 +123,9 @@ public class ConsultaDAO extends GenericDAO {
     public List<String> getNomeMedico(String cpfPaciente) {
         List<String> resp = new ArrayList<>();
         List<Consulta> lista = getConsultasByCpfPaciente(cpfPaciente);
-        for(Consulta con: lista){
+        for (Consulta con : lista) {
             MedicoDAO daomedico = new MedicoDAO();
+            //System.out.println(daomedico.getByCRM(con.getCrmMedico()).getNome());
             resp.add(daomedico.getByCRM(con.getCrmMedico()).getNome());
         }
         return resp;
@@ -195,4 +196,29 @@ public class ConsultaDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean verificaDisponibilidade(String cpfPaciente, String crmMedico, String dataHora) {
+        boolean disponivel = true;
+
+        List<Consulta> consultasPaciente = getConsultasByCpfPaciente(cpfPaciente);
+        for (Consulta consulta : consultasPaciente) {
+            if (consulta.getDataHora().equals(dataHora)) {
+                disponivel = false;
+                break;
+            }
+        }
+
+        if (disponivel) {
+            List<Consulta> consultasMedico = getAllbyCRM(crmMedico);
+            for (Consulta consulta : consultasMedico) {
+                if (consulta.getDataHora().equals(dataHora)) {
+                    disponivel = false;
+                    break;
+                }
+            }
+        }
+
+        return disponivel;
+    }
+
 }

@@ -46,11 +46,15 @@ public class ConsultaPacienteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado"); 
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
         Erro erros = new Erro();
 
-        
-       // System.out.println(usuario.getClass());
+        // System.out.println(usuario.getClass());
+
+        // não sei se vai precisar disso, mas a ideia era usar de alguma forma pra manter o formulário preenchido caso desse erro ou na edição
+        request.setAttribute("medicoSelecionado", request.getParameter("crm"));
+        request.setAttribute("dataSelecionada", request.getParameter("data"));
+        request.setAttribute("horaSelecionada", request.getParameter("hora"));
 
         if (usuario == null) {
             response.sendRedirect(request.getContextPath());
@@ -65,7 +69,7 @@ public class ConsultaPacienteController extends HttpServlet {
             return;
         }
 
-        //System.out.println("CLASSE: "+usuario.getClass());
+        // System.out.println("CLASSE: "+usuario.getClass());
 
         String action = request.getPathInfo();
         if (action == null) {
@@ -117,33 +121,21 @@ public class ConsultaPacienteController extends HttpServlet {
         String crmMedico = request.getParameter("crm");
         String data = request.getParameter("data");
         String hora = request.getParameter("hora");
-        //:00 Necessário pois o banco está voltando o horario com segundos no final
+        // :00 Necessário pois o banco está voltando o horario com segundos no final
         String dataHora = data + " " + hora + ":00";
 
         Consulta consulta = new Consulta(cpfPaciente, crmMedico, dataHora);
 
-        boolean flag = true;
-        for(Consulta cst : daoConsulta.getConsultasByCpfPaciente(cpfPaciente))
-            if(cst.getDataHora().equals(dataHora)) flag = false;
-            
-        for(Consulta cst : daoConsulta.getAllbyCRM(crmMedico))
-            if(cst.getDataHora().equals(dataHora)) flag = false;
+        boolean disponivel = daoConsulta.verificaDisponibilidade(cpfPaciente, crmMedico, dataHora);
 
-        if(flag){
+        if (disponivel) {
             daoConsulta.insert(consulta);
             response.sendRedirect("lista");
-        }
-        else{
+        } else {
             request.setAttribute("disponibilidade", false);
-            List<Usuario> listaMedicos = daoMedico.getAll();
-            request.setAttribute("listaMedicos", listaMedicos);
-            RequestDispatcher dispatcher = request
-                .getRequestDispatcher("/logado/paciente/consultas-paciente/formulario.jsp");
-        dispatcher.forward(request, response);
-
-            //response.sendRedirect("cadastro");
+            apresentaFormCadastroConsulta(request, response); // chama novamente o form de cadastro de consulta para mais uma tentativa caso esteja indisponível.
         }
-        
+
     }
 
     private void listaConsulta(HttpServletRequest request, HttpServletResponse response)
@@ -162,10 +154,11 @@ public class ConsultaPacienteController extends HttpServlet {
         RequestDispatcher dispatcher = request
                 .getRequestDispatcher("/logado/paciente/consultas-paciente/lista.jsp");
         dispatcher.forward(request, response);
-        
+
     }
 
-    private void removeConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void removeConsulta(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         Long id = Long.parseLong(request.getParameter("id"));
 
         System.out.println(id);
@@ -175,7 +168,8 @@ public class ConsultaPacienteController extends HttpServlet {
         response.sendRedirect("lista");
     }
 
-    private void apresentaFormEdicaoConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void apresentaFormEdicaoConsulta(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         List<Usuario> listaMedicos = daoMedico.getAll();
         request.setAttribute("listaMedicos", listaMedicos);
 
@@ -183,16 +177,21 @@ public class ConsultaPacienteController extends HttpServlet {
         Consulta consulta = daoConsulta.get(id);
         request.setAttribute("consulta", consulta);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/paciente/consultas-paciente/formulario.jsp");
+        RequestDispatcher dispatcher = request
+                .getRequestDispatcher("/logado/paciente/consultas-paciente/formulario.jsp");
         dispatcher.forward(request, response);
     }
 
-    private void atualizaConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void atualizaConsulta(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        
+
         Long id = Long.parseLong(request.getParameter("id"));
 
         // Obtém o usuário atualmente logado na sessão
+        // fazer cast
+        // Paciente paciente = (Paciente) request.getSession().getAttribute("usuarioLogado");
+        //String cpfPaciente = paciente.getCpf();
         Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
         Paciente paciente = (Paciente) usuarioLogado;
@@ -201,12 +200,19 @@ public class ConsultaPacienteController extends HttpServlet {
         String crmMedico = request.getParameter("crm");
         String data = request.getParameter("data");
         String hora = request.getParameter("hora");
-        String dataHora = data + " " + hora;
+        String dataHora = data + " " + hora + ":00";
 
         Consulta consulta = new Consulta(id, cpfPaciente, crmMedico, dataHora);
-        daoConsulta.update(consulta);
 
-        response.sendRedirect("lista");
+        boolean disponivel = daoConsulta.verificaDisponibilidade(cpfPaciente, crmMedico, dataHora);
+
+        if (disponivel) {
+            daoConsulta.update(consulta);
+            response.sendRedirect("lista");
+        } else {
+            request.setAttribute("disponibilidade", false);
+            apresentaFormEdicaoConsulta(request, response); // chama novamente o form de edição de consulta para mais uma tentativa caso esteja indisponível.
+        }
     }
 
 }
