@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+//import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.domain.Paciente;
 //import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.Usuario;
@@ -207,6 +208,46 @@ public class PacienteDAO extends UsuarioDAO {
                 String telefone = resultSet.getString("telefone");
                 String sexo = resultSet.getString("sexo");
                 String dataNascimento = resultSet.getString("data_nascimento");
+                paciente = new Paciente(id, nome, email, senha, papel, cpf, telefone, sexo, dataNascimento);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return paciente;
+    }
+
+    public Paciente getByCPF(String cpf) {
+        Paciente paciente = null;
+
+        String sql = "SELECT " +
+                " Usuario.id, Usuario.nome, Usuario.email, Usuario.senha, Usuario.papel, Paciente.cpf, Paciente.telefone, " +
+                " Paciente.sexo, Paciente.data_nascimento FROM Usuario" +
+                " JOIN Paciente ON Usuario.id = Paciente.id" +
+                " WHERE Paciente.cpf = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, cpf);
+            ResultSet resultSet = statement.executeQuery();
+
+
+            if (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String email = resultSet.getString("email");
+                String senha = resultSet.getString("senha");
+                String papel = resultSet.getString("papel");
+                String nome = resultSet.getString("nome");
+                String telefone = resultSet.getString("telefone");
+                String sexo = resultSet.getString("sexo");
+                String dataNascimento = resultSet.getString("data_nascimento");
+                //medico = new Medico(id, nome, email, senha, papel, crm, especialidade);
+
                 paciente = new Paciente(id, nome, email, senha, papel, cpf, telefone, sexo, dataNascimento);
             }
 

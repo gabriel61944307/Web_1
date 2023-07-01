@@ -10,6 +10,10 @@
     <h1>Olá, ${sessionScope.usuarioLogado.nome}</h1>
 
     <li>
+        <a href="${pageContext.request.contextPath}/consultas-paciente/cadastro">Agendar Nova Consulta</a>
+    </li>
+
+    <li>
         <a href="${pageContext.request.contextPath}/consultas-paciente/lista.jsp">Lista de Consultas</a>
     </li>
 

@@ -1,7 +1,7 @@
+br\ufscar\dc\dsw\controller\ConsultaMedicoController.class
 br\ufscar\dc\dsw\controller\NoAuthController.class
 br\ufscar\dc\dsw\dao\PacienteDAO.class
 br\ufscar\dc\dsw\dao\UsuarioDAO.class
-br\ufscar\dc\dsw\controller\ConsultaController.class
 br\ufscar\dc\dsw\controller\UsuarioController.class
 br\ufscar\dc\dsw\domain\Consulta.class
 br\ufscar\dc\dsw\controller\MedicoController.class

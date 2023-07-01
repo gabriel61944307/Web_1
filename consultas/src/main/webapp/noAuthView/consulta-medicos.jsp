@@ -30,7 +30,7 @@
         </table>
         
         <div>
-            <a href="${pageContext.request.contextPath}/logout.jsp">Voltar</a>
+            <a href="${pageContext.request.contextPath}/login.jsp">Voltar</a>
         </div>    
     </div>
 </body>

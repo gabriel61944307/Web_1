@@ -37,43 +37,41 @@ public class MedicoDAO extends UsuarioDAO {
         }
     }
 
-
     public List<Usuario> getAll() {
-    List<Usuario> listaUsuarios = new ArrayList<>();
+        List<Usuario> listaUsuarios = new ArrayList<>();
 
+        String sql = "SELECT" +
+                " Usuario.id, Usuario.nome, Usuario.email, Usuario.senha, Usuario.papel, Medico.crm, Medico.especialidade"
+                +
+                " FROM Usuario" +
+                " JOIN Medico ON Usuario.id = Medico.id";
 
-    String sql = "SELECT" +
-            " Usuario.id, Usuario.nome, Usuario.email, Usuario.senha, Usuario.papel, Medico.crm, Medico.especialidade" +
-            " FROM Usuario" +
-            " JOIN Medico ON Usuario.id = Medico.id";
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
 
-    try {
-        Connection conn = this.getConnection();
-        PreparedStatement statement = conn.prepareStatement(sql);
-        ResultSet resultSet = statement.executeQuery();
-        
-        while (resultSet.next()) {
-            Long id = resultSet.getLong("id");
-            String email = resultSet.getString("email");
-            String senha = resultSet.getString("senha");
-            String papel = resultSet.getString("papel");
-            String crm = resultSet.getString("crm");
-            String nome = resultSet.getString("nome");
-            String especialidade = resultSet.getString("especialidade");
-            Medico medico = new Medico(id, nome, email, senha, papel, crm, especialidade);
-            //System.out.println("TIAGOOOOO:" + email);
-            listaUsuarios.add(medico); // Adiciona como Usuario, fazendo um cast
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String email = resultSet.getString("email");
+                String senha = resultSet.getString("senha");
+                String papel = resultSet.getString("papel");
+                String crm = resultSet.getString("crm");
+                String nome = resultSet.getString("nome");
+                String especialidade = resultSet.getString("especialidade");
+                Medico medico = new Medico(id, nome, email, senha, papel, crm, especialidade);
+                // System.out.println("TIAGOOOOO:" + email);
+                listaUsuarios.add(medico); // Adiciona como Usuario, fazendo um cast
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        resultSet.close();
-        statement.close();
-        conn.close();
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
+        return listaUsuarios;
     }
-    return listaUsuarios;
-}
-
 
     public void delete(Medico medico) {
 
@@ -135,7 +133,8 @@ public class MedicoDAO extends UsuarioDAO {
         Medico medico = null;
 
         String sql = "SELECT " +
-                " Usuario.id, Usuario.nome, Usuario.email, Usuario.senha, Usuario.papel, Medico.crm, Medico.especialidade" +
+                " Usuario.id, Usuario.nome, Usuario.email, Usuario.senha, Usuario.papel, Medico.crm, Medico.especialidade"
+                +
                 " FROM Usuario" +
                 " JOIN Medico ON Usuario.id = Medico.id" +
                 " WHERE Usuario.id = ?";
@@ -182,7 +181,6 @@ public class MedicoDAO extends UsuarioDAO {
             statement.setString(1, crm);
             ResultSet resultSet = statement.executeQuery();
 
-
             if (resultSet.next()) {
                 Long id = resultSet.getLong("id");
                 String email = resultSet.getString("email");
@@ -203,39 +201,56 @@ public class MedicoDAO extends UsuarioDAO {
     }
 
     public List<Usuario> getByEspecialidade(String especialidade) {
-    List<Usuario> listaMedicosEspecialidade = new ArrayList<>();
+        List<Usuario> listaMedicosEspecialidade = new ArrayList<>();
 
-    String sql = "SELECT " +
-            " Usuario.id, Usuario.nome, Usuario.email, Usuario.senha, Usuario.papel, Medico.crm, Medico.especialidade" +
-            " FROM Usuario" +
-            " JOIN Medico ON Usuario.id = Medico.id" +
-            " WHERE Medico.especialidade = ?";
+        String sql = "SELECT " +
+                " Usuario.id, Usuario.nome, Usuario.email, Usuario.senha, Usuario.papel, Medico.crm, Medico.especialidade"
+                +
+                " FROM Usuario" +
+                " JOIN Medico ON Usuario.id = Medico.id" +
+                " WHERE Medico.especialidade = ?";
 
-    try {
-        Connection conn = this.getConnection();
-        PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setString(1, especialidade);
-        ResultSet resultSet = statement.executeQuery();
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, especialidade);
+            ResultSet resultSet = statement.executeQuery();
 
-        while (resultSet.next()) {
-            Long id = resultSet.getLong("id");
-            String email = resultSet.getString("email");
-            String senha = resultSet.getString("senha");
-            String papel = resultSet.getString("papel");
-            String crm = resultSet.getString("crm");
-            String nome = resultSet.getString("nome");
-            Medico medico = new Medico(id, nome, email, senha, papel, crm, especialidade);
-            listaMedicosEspecialidade.add(medico);
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String email = resultSet.getString("email");
+                String senha = resultSet.getString("senha");
+                String papel = resultSet.getString("papel");
+                String crm = resultSet.getString("crm");
+                String nome = resultSet.getString("nome");
+                Medico medico = new Medico(id, nome, email, senha, papel, crm, especialidade);
+                listaMedicosEspecialidade.add(medico);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
-        resultSet.close();
-        statement.close();
-        conn.close();
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
+        return listaMedicosEspecialidade;
     }
 
-    return listaMedicosEspecialidade;
-}
+    public List<String> inicializaEspecialidades() {
+        List<String> listaEspecialidades = new ArrayList<>();
 
+        listaEspecialidades.add("Cardiologia");
+        listaEspecialidades.add("Dermatologia");
+        listaEspecialidades.add("Endocrinologia");
+        listaEspecialidades.add("Ginecologia");
+        listaEspecialidades.add("Neurologia");
+        listaEspecialidades.add("Oftalmologia");
+        listaEspecialidades.add("Oncologia");
+        listaEspecialidades.add("Ortopedia");
+        listaEspecialidades.add("Pediatria");
+        listaEspecialidades.add("Psiquiatria");
+
+        return listaEspecialidades;
+    }
 }
