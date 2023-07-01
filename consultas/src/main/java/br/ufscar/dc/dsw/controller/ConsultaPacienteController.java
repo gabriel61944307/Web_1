@@ -9,6 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+// import java.text.SimpleDateFormat;
+// import java.util.ArrayList;
+// import java.util.Date;
+// import java.time.LocalDateTime;
+// import java.time.format.DateTimeFormatter;
+// import java.util.List;
+// import java.time.format.DateTimeParseException;
+
 import br.ufscar.dc.dsw.utils.Erro;
 import br.ufscar.dc.dsw.dao.ConsultaDAO;
 import br.ufscar.dc.dsw.domain.Consulta;
@@ -51,7 +59,8 @@ public class ConsultaPacienteController extends HttpServlet {
 
         // System.out.println(usuario.getClass());
 
-        // não sei se vai precisar disso, mas a ideia era usar de alguma forma pra manter o formulário preenchido caso desse erro ou na edição
+        // não sei se vai precisar disso, mas a ideia era usar de alguma forma pra
+        // manter o formulário preenchido caso desse erro ou na edição
         request.setAttribute("medicoSelecionado", request.getParameter("crm"));
         request.setAttribute("dataSelecionada", request.getParameter("data"));
         request.setAttribute("horaSelecionada", request.getParameter("hora"));
@@ -133,7 +142,8 @@ public class ConsultaPacienteController extends HttpServlet {
             response.sendRedirect("lista");
         } else {
             request.setAttribute("disponibilidade", false);
-            apresentaFormCadastroConsulta(request, response); // chama novamente o form de cadastro de consulta para mais uma tentativa caso esteja indisponível.
+            apresentaFormCadastroConsulta(request, response); // chama novamente o form de cadastro de consulta para
+                                                              // mais uma tentativa caso esteja indisponível.
         }
 
     }
@@ -148,8 +158,18 @@ public class ConsultaPacienteController extends HttpServlet {
 
         List<Consulta> listaConsultas = daoConsulta.getConsultasByCpfPaciente(cpfPaciente);
         request.setAttribute("listaConsultas", listaConsultas);
+
         List<String> listaNomes = daoConsulta.getNomeMedico(cpfPaciente);
         request.setAttribute("listaNomes", listaNomes);
+
+        // criação de uma lista de datas formatadas corretamente para a exibição na
+        // lista
+        List<String> listaData = daoConsulta.getDatasFormatadas(listaConsultas);
+        request.setAttribute("listaData", listaData);
+
+        // criação de uma lista de horas formatadas corretamente para a exibição na lista
+        List<String> listaHora = daoConsulta.getHorasFormatadas(listaConsultas);
+        request.setAttribute("listaHora", listaHora);
 
         RequestDispatcher dispatcher = request
                 .getRequestDispatcher("/logado/paciente/consultas-paciente/lista.jsp");
@@ -190,8 +210,9 @@ public class ConsultaPacienteController extends HttpServlet {
 
         // Obtém o usuário atualmente logado na sessão
         // fazer cast
-        // Paciente paciente = (Paciente) request.getSession().getAttribute("usuarioLogado");
-        //String cpfPaciente = paciente.getCpf();
+        // Paciente paciente = (Paciente)
+        // request.getSession().getAttribute("usuarioLogado");
+        // String cpfPaciente = paciente.getCpf();
         Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
         Paciente paciente = (Paciente) usuarioLogado;
@@ -211,7 +232,8 @@ public class ConsultaPacienteController extends HttpServlet {
             response.sendRedirect("lista");
         } else {
             request.setAttribute("disponibilidade", false);
-            apresentaFormEdicaoConsulta(request, response); // chama novamente o form de edição de consulta para mais uma tentativa caso esteja indisponível.
+            apresentaFormEdicaoConsulta(request, response); // chama novamente o form de edição de consulta para mais
+                                                            // uma tentativa caso esteja indisponível.
         }
     }
 

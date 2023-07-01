@@ -39,8 +39,18 @@
 
     <tr>
         <td><label for="especialidade">Especialidade</label></td>
-        <td><input type="text" id="especialidade" name="especialidade" size="45" required value="${medico.especialidade}" /></td>
+        <td>
+            <select id="especialidade" name="especialidade" required>
+                <option value="">Selecione uma especialidade</option>
+                <c:forEach var="especialidade" items="${listaEspecialidades}">
+                    <option value="${especialidade}" ${medico.especialidade == especialidade ? 'selected' : ''}>
+                        ${especialidade}
+                    </option>
+                </c:forEach>
+            </select>
+        </td>
     </tr>
+    
     
     <tr>
         <td colspan="2" align="center"><input type="submit" value="Salvar" /></td>

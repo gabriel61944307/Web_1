@@ -39,6 +39,9 @@ public class MedicoController extends HttpServlet {
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
         Erro erros = new Erro();
 
+        List<String> listaEspecialidades = dao.inicializaEspecialidades();
+        request.setAttribute("listaEspecialidades", listaEspecialidades);
+
         if (usuario == null) {
             response.sendRedirect(request.getContextPath());
             return;

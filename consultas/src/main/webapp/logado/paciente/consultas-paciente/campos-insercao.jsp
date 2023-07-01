@@ -66,7 +66,7 @@
     <tr>
         <td colspan="2" align="center">
             <c:if test="${requestScope.disponibilidade == false}">
-                <h3 style="color:red;">Data indisponível, escolha outra data para se consultar.</h3>
+                <h3 style="color:red;">Data/horário indisponível. Escolha outra data ou horário para se consultar.</h3>
             </c:if>
             <input type="submit" value="Agendar" />
         </td>

@@ -20,18 +20,17 @@
         <table border="1">
             <caption>Lista de Consultas</caption>
             <tr>
-                <th>ID</th>
                 <th>Médico</th>
                 <th>Data</th>
                 <th>Ações</th>
             </tr>
             <c:forEach items="${requestScope.listaConsultas}" var="consulta" varStatus="status">
                 <c:set var="medico" value="${requestScope.listaNomes[status.index]}" />
-                <!-- Agora você tem acesso ao item atual de cada lista usando as variáveis "item1" e "item2" -->
+                <c:set var="dataFormatada" value="${requestScope.listaData[status.index]}" />
+                <c:set var="horaFormatada" value="${requestScope.listaHora[status.index]}" />
                 <tr>
-                    <td>${consulta.id}</td>
                     <td>${medico}</td>
-                    <td>${consulta.dataHora}</td>
+                    <td>${dataFormatada} às ${horaFormatada}</td>
                     <td>
                         <a href="${pageContext.request.contextPath}/consultas-paciente/edicao?id=${consulta.id}">
                             Edição
