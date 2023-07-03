@@ -16,16 +16,13 @@
         <select name="especialidade" id="especialidade">
             <option value="Especialidade 1">Especialidade 1</option>
             <option value="Especialidade 2">Especialidade 2</option>
-            <!-- Adicione aqui as opções para cada especialidade disponível -->
         </select>
         <input type="submit" value="Buscar">
     </form>
 
     <hr>
 
-    <%-- Verifica se a lista de médicos por especialidade está disponível --%>
     <c:if test="${not empty requestScope.listaMedicosEspecialidade}">
-        <%-- Exibe a lista de médicos por especialidade --%>
         <table border="1">
             <caption>Lista de Médicos por Especialidade</caption>
             <tr>

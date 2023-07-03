@@ -20,7 +20,6 @@
             <tr>
                 <th>Paciente</th>
                 <th>Data</th>
-                <th>Ações</th>
             </tr>
             <c:forEach items="${requestScope.listaConsultas}" var="consulta" varStatus="status">
                 <c:set var="paciente" value="${requestScope.listaNomes[status.index]}" />
@@ -29,11 +28,6 @@
                 <tr>
                     <td>${paciente}</td>
                     <td>${dataFormatada} às ${horaFormatada}</td>
-                    <td>
-                        <a href="${pageContext.request.contextPath}/consultas-paciente/remocao?id=${consulta.id}" onclick="return confirm('Tem certeza de que deseja cancelar esta consulta?');">
-                            Cancelar
-                        </a>
-                    </td>
                 </tr>
             </c:forEach>
         </table>

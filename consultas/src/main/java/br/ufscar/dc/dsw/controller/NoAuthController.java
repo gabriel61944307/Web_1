@@ -53,16 +53,10 @@ public class NoAuthController extends HttpServlet {
 
     private void listaMedicosEspecialidade(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Obtenha a especialidade selecionada a partir do parâmetro da requisição
         String especialidade = request.getParameter("especialidade");
-
-        // Consulte o banco de dados para obter a lista de médicos por especialidade
         List<Usuario> listaMedicosEspecialidade = dao.getByEspecialidade(especialidade);
-
-        // Armazene a lista de médicos por especialidade no atributo de requisição
         request.setAttribute("listaMedicosEspecialidade", listaMedicosEspecialidade);
 
-        // Encaminhe a requisição para a página "listaMedicosEspecialidade.jsp"
         RequestDispatcher dispatcher = request.getRequestDispatcher("/noAuthView/listaMedicosEspecialidade.jsp");
         dispatcher.forward(request, response);
     }

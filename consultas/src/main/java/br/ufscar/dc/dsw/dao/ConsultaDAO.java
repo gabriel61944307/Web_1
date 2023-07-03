@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 import br.ufscar.dc.dsw.domain.Consulta;
-//import br.ufscar.dc.dsw.domain.Usuario;
 
 public class ConsultaDAO extends GenericDAO {
 
@@ -41,7 +40,6 @@ public class ConsultaDAO extends GenericDAO {
 
         List<Consulta> listaConsultas = new ArrayList<>();
 
-        // String sql = "SELECT * FROM Consulta ORDER BY id";
         String sql = "SELECT * FROM Consulta ORDER BY data_hora";
 
         try {
@@ -158,7 +156,6 @@ public class ConsultaDAO extends GenericDAO {
         List<Consulta> lista = getConsultasByCpfPaciente(cpfPaciente);
         for (Consulta con : lista) {
             MedicoDAO daoMedico = new MedicoDAO();
-            //System.out.println(daomedico.getByCRM(con.getCrmMedico()).getNome());
             resp.add(daoMedico.getByCRM(con.getCrmMedico()).getNome());
         }
         return resp;
@@ -168,10 +165,7 @@ public class ConsultaDAO extends GenericDAO {
         List<String> resp = new ArrayList<>();
         List<Consulta> lista = getConsultasByCrmMedico(crmMedico);
         for (Consulta con : lista) {
-            //MedicoDAO daomedico = new MedicoDAO();
             PacienteDAO daoPaciente = new PacienteDAO();
-            //System.out.println(daomedico.getByCRM(con.getCrmMedico()).getNome());
-            //resp.add(daomedico.getByCRM(con.getCrmMedico()).getNome());
             resp.add(daoPaciente.getByCPF(con.getCpfPaciente()).getNome());
         }
         return resp;
@@ -279,7 +273,6 @@ public class ConsultaDAO extends GenericDAO {
                 Date dataHora = formatoOriginal.parse(consulta.getDataHora());
                 String dataFormatada = formatoDesejado.format(dataHora);
                 listaData.add(dataFormatada);
-                // consulta.setDataHora(dataFormatada);
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }
@@ -298,7 +291,6 @@ public class ConsultaDAO extends GenericDAO {
                 LocalDateTime dataHora = LocalDateTime.parse(consulta.getDataHora(), formatoHoraOriginal);
                 String horaFormatada = dataHora.format(formatoHoraDesejado);
                 listaHora.add(horaFormatada);
-                //consulta.setDataHora(horaFormatada);
             } catch (DateTimeParseException e) {
                 e.printStackTrace();
             }

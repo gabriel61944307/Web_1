@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufscar.dc.dsw.domain.Medico;
-//import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.Usuario;
 
 public class MedicoDAO extends UsuarioDAO {
@@ -24,7 +23,6 @@ public class MedicoDAO extends UsuarioDAO {
             Connection conn = this.getConnection();
             PreparedStatement medicoStatement = conn.prepareStatement(medicoSql);
 
-            // Dúvida: será que precisa verificar email ou crm repetido?
             medicoStatement.setLong(1, idUsuario);
             medicoStatement.setString(2, medico.getCrm());
             medicoStatement.setString(3, medico.getEspecialidade());
@@ -60,7 +58,6 @@ public class MedicoDAO extends UsuarioDAO {
                 String nome = resultSet.getString("nome");
                 String especialidade = resultSet.getString("especialidade");
                 Medico medico = new Medico(id, nome, email, senha, papel, crm, especialidade);
-                // System.out.println("TIAGOOOOO:" + email);
                 listaUsuarios.add(medico); // Adiciona como Usuario, fazendo um cast
             }
 
@@ -237,6 +234,7 @@ public class MedicoDAO extends UsuarioDAO {
         return listaMedicosEspecialidade;
     }
 
+    // Lista com especialidades pré-definidas para o cadastro de médico, para evitar possíveis erros de digitação.
     public List<String> inicializaEspecialidades() {
         List<String> listaEspecialidades = new ArrayList<>();
 

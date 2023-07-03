@@ -19,6 +19,25 @@
                 </ul>
             </div>
         </c:if>
+
+        <form method="post" action="index.jsp">
+            <table>
+                <tr>
+                    <th>Email:</th>
+                    <td><input type="text" name="email" value="${param.email}"/></td>
+                </tr>
+                <tr>
+                    <th>Senha:</th>
+                    <td><input type="password" name="senha" value="${param.senha}" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"> 
+                        <input type="submit" name="bOK" value="Entrar">
+                    </td>
+                </tr>
+            </table>
+        </form>
+
         <form method="post" action="index.jsp">
             <table>
                 <tr>
@@ -80,13 +99,5 @@
         <form method="get" action="noAuth/listaMedicosEspecialidade">
             <input type="submit" name="bListarMedicosEspecialidade" value="Listar Médicos por Especialidade">
         </form>
-
-        <!-- <%
-            // Verificar qual botão foi clicado
-            String listarMedicos = request.getParameter("bListarMedicos");
-            if (listarMedicos != null) {
-                response.sendRedirect("/noAuth/consulta-medicos.jsp");
-            }
-        %> -->
     </body>
 </html>
