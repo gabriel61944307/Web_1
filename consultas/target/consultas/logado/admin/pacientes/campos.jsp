@@ -56,7 +56,7 @@
 
     <tr>
         <td><label for="dataNascimento"> Data de Nascimento</label></td>
-        <td><input type="text" id="dataNascimento" name="dataNascimento" size="45" required value="${paciente.dataNascimento}"/></td>
+        <td><input type="date" id="dataNascimento" name="dataNascimento" size="45" required value="${paciente.dataNascimento}"/></td>
     </tr>
 
     <tr>
