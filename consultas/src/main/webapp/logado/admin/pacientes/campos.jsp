@@ -53,7 +53,6 @@
             </select>
         </td>
     </tr>
-    
 
     <tr>
         <td><label for="dataNascimento"> Data de Nascimento</label></td>

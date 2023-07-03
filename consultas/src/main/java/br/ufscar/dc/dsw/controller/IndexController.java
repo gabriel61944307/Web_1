@@ -37,15 +37,12 @@ public class IndexController extends HttpServlet {
                 if (usuario != null) {
                     if (usuario.getSenha().equalsIgnoreCase(senha)) {
                         request.getSession().setAttribute("usuarioLogado", usuario);
-                        
-                        //String contextPath = request.getContextPath().replace("/", "");
-                        //request.getSession().setAttribute("contextPath", contextPath);
 
                         if (usuario.getPapel().equals("PACIENTE")) {
                             response.sendRedirect("paciente/");
                         } else if (usuario.getPapel().equals("MEDICO")) {
                             response.sendRedirect("medico/");
-                        } else { // admin
+                        } else {
                             response.sendRedirect("admin/");
                         }
                         return;

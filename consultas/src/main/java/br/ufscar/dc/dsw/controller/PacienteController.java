@@ -2,8 +2,6 @@ package br.ufscar.dc.dsw.controller;
 
 import java.io.IOException;
 import java.util.List;
-//import java.util.HashMap;
-//import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,7 +28,7 @@ public class PacienteController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response); // pq get?
+        doGet(request, response);
     }
 
     @Override
@@ -41,7 +39,7 @@ public class PacienteController extends HttpServlet {
         if (usuario == null) {
             response.sendRedirect(request.getContextPath());
             return;
-        } else if (!usuario.getPapel().equals("ADMIN")) { // como fica quando for uma operação que o usuário paciente mesmo que tem que executar? ou será que isso é feito em Consulta? mas aí fica a mesma dúvida pra Médicos, os dois usuários vão ter autorização pra fazer coisas diferentes em Consulta?
+        } else if (!usuario.getPapel().equals("ADMIN")) {
             erros.add("Acesso não autorizado!");
             erros.add("Apenas Papel [ADMIN] tem acesso a essa página.");
             request.setAttribute("mensagens", erros);
@@ -115,7 +113,6 @@ public class PacienteController extends HttpServlet {
     }
 
     private void apresentaFormCadastroPaciente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //request.setAttribute(getServletName(), response);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/pacientes/formulario.jsp");
         dispatcher.forward(request, response);
     }
@@ -123,7 +120,6 @@ public class PacienteController extends HttpServlet {
     private void inserePaciente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        //Long id = Long.parseLong(request.getParameter("id"));
         String nome = request.getParameter("nome");
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
@@ -133,7 +129,6 @@ public class PacienteController extends HttpServlet {
         String sexo = request.getParameter("sexo");
         String dataNascimento = request.getParameter("dataNascimento");
         
-        //Paciente paciente = new Paciente(id, nome, email, senha, papel, cpf, telefone, sexo, dataNascimento);
         Paciente paciente = new Paciente(nome, email, senha, papel, cpf, telefone, sexo, dataNascimento);
         dao.insert(paciente);
         response.sendRedirect("lista");

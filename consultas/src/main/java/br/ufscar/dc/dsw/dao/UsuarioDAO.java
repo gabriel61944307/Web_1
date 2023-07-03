@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-//import java.util.ArrayList;
-//import java.util.List;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class UsuarioDAO extends GenericDAO {
     }
 
     // Para a criação de um paciente, por exemplo, a função insert em PacienteDAO
-    // chamaria este método com o atributo "PACIENTE" no lugar de papel.
+    // chamaria este método com o atributo "PACIENTE" para o papel.
     public long insert(Usuario usuario, String papel) {
         long userID = 0;
         String sql = "INSERT INTO Usuario (nome, email, senha, papel) VALUES (?, ?, ?, ?)";
@@ -32,7 +30,6 @@ public class UsuarioDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            // statement = conn.prepareStatement(sql);
             statement.setString(1, usuario.getNome());
             statement.setString(2, usuario.getEmail());
             statement.setString(3, usuario.getSenha());
@@ -68,10 +65,7 @@ public class UsuarioDAO extends GenericDAO {
                 String senha = resultSet.getString("senha");
                 String papel = resultSet.getString("papel");
 
-                //System.out.println("PAPEL: " + papel);
-
                 if (papel.equals("PACIENTE")) {
-                    //System.out.println("FEZ PACIENTE");
                     String pacienteSql = "SELECT * FROM Paciente WHERE id = ?";
                     PreparedStatement pacienteStatement = conn.prepareStatement(pacienteSql);
                     pacienteStatement.setLong(1, id);
@@ -187,7 +181,6 @@ public class UsuarioDAO extends GenericDAO {
         List<Usuario> listaUsuarios = new ArrayList<>();
 
         try {
-            // String sql = "SELECT * FROM Usuario";
             String sql = "SELECT * FROM Usuario WHERE papel = 'ADMIN'";
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -213,5 +206,4 @@ public class UsuarioDAO extends GenericDAO {
         }
         return listaUsuarios;
     }
-
 }

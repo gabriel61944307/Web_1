@@ -1,6 +1,5 @@
 package br.ufscar.dc.dsw.dao;
 
-//import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,9 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-//import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.domain.Paciente;
-//import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.Usuario;
 
 public class PacienteDAO extends UsuarioDAO {
@@ -22,17 +19,15 @@ public class PacienteDAO extends UsuarioDAO {
             // Inserção com a definição adequada do papel deste usuário.
             long idUsuario = usuarioDAO.insert(paciente, "PACIENTE");
 
-            // Inserir na tabela Paciente
             String pacienteSql = "INSERT INTO Paciente (id, cpf, telefone, sexo, data_nascimento) VALUES (?, ?, ?, ?, ?)";
             Connection conn = this.getConnection();
             PreparedStatement pacienteStatement = conn.prepareStatement(pacienteSql);
 
-            // Dúvida: será que precisa verificar email ou cpf repetido?
             pacienteStatement.setLong(1, idUsuario);
             pacienteStatement.setString(2, paciente.getCpf());
             pacienteStatement.setString(3, paciente.getTelefone());
             pacienteStatement.setString(4, paciente.getSexo());
-            // OBS SOBRE A DATA DE NASCIMENTO: tem que ser no formato ano-mes-dia tipo 1990-01-01 se não dá ruim, tentei dar um jeito de arrumar isso em outros casos mas não consegui
+            // Obs sobre as datas: tem que ser no formato ano-mes-dia (1990-01-01)
             pacienteStatement.setString(5, paciente.getDataNascimento());
             pacienteStatement.executeUpdate();
 
@@ -42,44 +37,6 @@ public class PacienteDAO extends UsuarioDAO {
             throw new RuntimeException(e);
         }
     }
-
-    /*
-    public List<Paciente> getAll() {
-        List<Paciente> listaPacientes = new ArrayList<>();
-
-        String sql = "SELECT" + 
-        " Usuario.id, Usuario.nome, Usuario.email, Usuario.senha, Usuario.papel, Paciente.cpf, Paciente.telefone, Paciente.sexo, Paciente.data_nascimento" +
-        " FROM Usuario" +
-        " JOIN Paciente ON Usuario.id = Paciente.id";
-
-        try {
-            Connection conn = this.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                Long id = resultSet.getLong("id");
-                String email = resultSet.getString("email");
-                String senha = resultSet.getString("senha");
-                String papel = resultSet.getString("papel");
-                String cpf = resultSet.getString("cpf");
-                String nome = resultSet.getString("nome");
-                String telefone = resultSet.getString("telefone");
-                String sexo = resultSet.getString("sexo");
-                String dataNascimento = resultSet.getString("data_nascimento");
-                Paciente paciente = new Paciente(id, nome, email, senha, papel, cpf, telefone, sexo, dataNascimento);
-                listaPacientes.add(paciente);
-            }
-
-            resultSet.close();
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return listaPacientes;
-    }
-    */
 
     public List<Usuario> getAll() {
         List<Usuario> listaUsuarios = new ArrayList<>();
@@ -117,7 +74,6 @@ public class PacienteDAO extends UsuarioDAO {
         return listaUsuarios;
     }
 
-
     public void delete(Paciente paciente) {
 
         String pacienteSql = "DELETE FROM Paciente WHERE id = ?";
@@ -145,10 +101,6 @@ public class PacienteDAO extends UsuarioDAO {
     }
 
     public void update(Paciente paciente) {
-        /*
-        String sql = "UPDATE Paciente SET email = ?, senha = ?, cpf = ?, nome = ?, telefone = ?, sexo = ?, data_nascimento = ?";
-        sql += " WHERE id = ?";
-        */
 
         String sql = "UPDATE Paciente AS p " +
                      "INNER JOIN Usuario AS u ON p.id = u.id " + 
@@ -246,7 +198,6 @@ public class PacienteDAO extends UsuarioDAO {
                 String telefone = resultSet.getString("telefone");
                 String sexo = resultSet.getString("sexo");
                 String dataNascimento = resultSet.getString("data_nascimento");
-                //medico = new Medico(id, nome, email, senha, papel, crm, especialidade);
 
                 paciente = new Paciente(id, nome, email, senha, papel, cpf, telefone, sexo, dataNascimento);
             }

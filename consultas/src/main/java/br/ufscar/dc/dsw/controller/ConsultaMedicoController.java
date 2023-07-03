@@ -9,22 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// import java.text.SimpleDateFormat;
-// import java.util.ArrayList;
-// import java.util.Date;
-// import java.time.LocalDateTime;
-// import java.time.format.DateTimeFormatter;
-// import java.util.List;
-// import java.time.format.DateTimeParseException;
-
 import br.ufscar.dc.dsw.utils.Erro;
 import br.ufscar.dc.dsw.dao.ConsultaDAO;
 import br.ufscar.dc.dsw.domain.Consulta;
 import br.ufscar.dc.dsw.domain.Medico;
-//import br.ufscar.dc.dsw.domain.Paciente;
-// import br.ufscar.dc.dsw.dao.MedicoDAO;
-// import br.ufscar.dc.dsw.dao.PacienteDAO;
-//import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.domain.Usuario;
 
 @WebServlet(urlPatterns = "/consultas-medico/*")
@@ -34,14 +22,10 @@ public class ConsultaMedicoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private ConsultaDAO daoConsulta;
-    // private MedicoDAO daoMedico;
-    // private PacienteDAO daoPaciente;
 
     @Override
     public void init() {
         daoConsulta = new ConsultaDAO();
-        // daoMedico = new MedicoDAO();
-        // daoPaciente = new PacienteDAO();
     }
 
     @Override
@@ -76,9 +60,6 @@ public class ConsultaMedicoController extends HttpServlet {
 
         try {
             switch (action) {
-                case "/remocao":
-                    removeConsulta(request, response);
-                    break;
                 default:
                     listaConsulta(request, response);
                     break;
@@ -117,14 +98,4 @@ public class ConsultaMedicoController extends HttpServlet {
 
     }
 
-    private void removeConsulta(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Long id = Long.parseLong(request.getParameter("id"));
-
-        System.out.println(id);
-
-        Consulta consulta = new Consulta(id);
-        daoConsulta.delete(consulta);
-        response.sendRedirect("lista");
-    }
 }

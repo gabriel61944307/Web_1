@@ -38,9 +38,9 @@
                 <script>
                     var selectHora = document.getElementById("hora");
             
-                    var horaInicial = 8; // Hora inicial (8:00 da manhã)
-                    var horaFinal = 18; // Hora final (18:00)
-                    var intervaloMinutos = 30; // Intervalo de 30 minutos
+                    var horaInicial = 8;
+                    var horaFinal = 18;
+                    var intervaloMinutos = 30;
                     var horaSelecionada = "${fn:substring(consulta.dataHora, 11, 16)}"; // Valor selecionado anteriormente
             
                     for (var hora = horaInicial; hora <= horaFinal; hora++) {

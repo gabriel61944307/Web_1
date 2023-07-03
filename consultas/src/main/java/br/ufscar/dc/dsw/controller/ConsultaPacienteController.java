@@ -9,26 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// import java.text.SimpleDateFormat;
-// import java.util.ArrayList;
-// import java.util.Date;
-// import java.time.LocalDateTime;
-// import java.time.format.DateTimeFormatter;
-// import java.util.List;
-// import java.time.format.DateTimeParseException;
-
 import br.ufscar.dc.dsw.utils.Erro;
 import br.ufscar.dc.dsw.dao.ConsultaDAO;
 import br.ufscar.dc.dsw.domain.Consulta;
 import br.ufscar.dc.dsw.domain.Paciente;
 import br.ufscar.dc.dsw.dao.MedicoDAO;
-//import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.domain.Usuario;
-
-/*
- * OBS: ainda tem um problema no formulário pra edição da consulta: precisa dar um jeito de manter 
- * os valores atuais pré-definidos no formulário pra não precisar inserir todos novamente
- */
 
 @WebServlet(urlPatterns = "/consultas-paciente/*")
 
@@ -57,10 +43,6 @@ public class ConsultaPacienteController extends HttpServlet {
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
         Erro erros = new Erro();
 
-        // System.out.println(usuario.getClass());
-
-        // não sei se vai precisar disso, mas a ideia era usar de alguma forma pra
-        // manter o formulário preenchido caso desse erro ou na edição
         request.setAttribute("medicoSelecionado", request.getParameter("crm"));
         request.setAttribute("dataSelecionada", request.getParameter("data"));
         request.setAttribute("horaSelecionada", request.getParameter("hora"));
@@ -77,8 +59,6 @@ public class ConsultaPacienteController extends HttpServlet {
             rd.forward(request, response);
             return;
         }
-
-        // System.out.println("CLASSE: "+usuario.getClass());
 
         String action = request.getPathInfo();
         if (action == null) {
@@ -208,13 +188,7 @@ public class ConsultaPacienteController extends HttpServlet {
 
         Long id = Long.parseLong(request.getParameter("id"));
 
-        // Obtém o usuário atualmente logado na sessão
-        // fazer cast
-        // Paciente paciente = (Paciente)
-        // request.getSession().getAttribute("usuarioLogado");
-        // String cpfPaciente = paciente.getCpf();
         Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
-
         Paciente paciente = (Paciente) usuarioLogado;
         String cpfPaciente = paciente.getCpf();
 
@@ -236,5 +210,4 @@ public class ConsultaPacienteController extends HttpServlet {
                                                             // uma tentativa caso esteja indisponível.
         }
     }
-
 }
