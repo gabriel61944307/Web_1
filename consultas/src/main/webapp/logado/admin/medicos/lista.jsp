@@ -42,7 +42,7 @@
                         <td>${medico.especialidade}</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/medicos/edicao?id=${medico.id}"><fmt:message key="Edicao" /></a> &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="${pageContext.request.contextPath}/usuarios/remocao?id=${usuario.id}" onclick="return confirm(getMessage());">
+                            <a href="${pageContext.request.contextPath}/medicos/remocao?id=${medico.id}" onclick="return confirm(getMessage());">
                                 <fmt:message key="Remocao" />
                             </a>
                         </td>
