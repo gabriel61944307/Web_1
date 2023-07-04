@@ -9,12 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ufscar.dc.dsw.utils.EmailService;
 import br.ufscar.dc.dsw.utils.Erro;
 import br.ufscar.dc.dsw.dao.ConsultaDAO;
 import br.ufscar.dc.dsw.domain.Consulta;
+import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.domain.Paciente;
 import br.ufscar.dc.dsw.dao.MedicoDAO;
+import br.ufscar.dc.dsw.dao.PacienteDAO;
 import br.ufscar.dc.dsw.domain.Usuario;
+
+import java.io.UnsupportedEncodingException;
+import javax.mail.internet.InternetAddress;
 
 @WebServlet(urlPatterns = "/consultas-paciente/*")
 
@@ -101,7 +107,7 @@ public class ConsultaPacienteController extends HttpServlet {
     }
 
     private void insereConsulta(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, UnsupportedEncodingException {
         request.setCharacterEncoding("UTF-8");
 
         Paciente paciente = (Paciente) request.getSession().getAttribute("usuarioLogado");
@@ -119,6 +125,38 @@ public class ConsultaPacienteController extends HttpServlet {
 
         if (disponivel) {
             daoConsulta.insert(consulta);
+
+        // --- ENVIO DE EMAIL ---
+        
+        EmailService service = new EmailService();
+		
+		InternetAddress from = new InternetAddress("gabrielrodriguesmalaquias1111@gmail.com", "Admin");
+        PacienteDAO DAOpac = new PacienteDAO();
+        Paciente pac = DAOpac.getByCPF(cpfPaciente);
+        String nome = pac.getNome();
+        String email = pac.getEmail();
+		InternetAddress to = new InternetAddress(email, nome);
+				
+		String subject = "Sua consulta foi marcada com sucesso";
+		String body = "Olá " + nome + ", este email tem como objetivo lhe informar que sua consulta foi marcada com sucesso para " +
+                        consulta.getDataHora() + "\n Atenciosamente administrador do sistema do hospital.";
+
+		service.send(from, to, subject, body);
+
+        MedicoDAO DAOmed = new MedicoDAO();
+        Medico med = DAOmed.getByCRM(crmMedico);
+        nome = med.getNome();
+        email = med.getEmail();
+        to = new InternetAddress(email, nome);
+
+        subject = "Você possui uma nova consulta agendada";
+		body = "Olá " + nome + ", este email tem como objetivo lhe informar que foi marcada uma consulta com você na seguinte data: " +
+                        consulta.getDataHora() + "\n Atenciosamente administrador do sistema do hospital.";
+
+		service.send(from, to, subject, body);
+
+        // --- ENVIO DE EMAIL ---
+
             response.sendRedirect("lista");
         } else {
             request.setAttribute("disponibilidade", false);
@@ -163,8 +201,40 @@ public class ConsultaPacienteController extends HttpServlet {
 
         System.out.println(id);
 
-        Consulta consulta = new Consulta(id);
+        Consulta consulta = daoConsulta.get(id);
         daoConsulta.delete(consulta);
+
+        // --- ENVIO DE EMAIL ---
+        
+        EmailService service = new EmailService();
+		
+		InternetAddress from = new InternetAddress("gabrielrodriguesmalaquias1111@gmail.com", "Admin");
+        PacienteDAO DAOpac = new PacienteDAO();
+        Paciente pac = DAOpac.getByCPF(consulta.getCpfPaciente());
+        String nome = pac.getNome();
+        String email = pac.getEmail();
+		InternetAddress to = new InternetAddress(email, nome);
+				
+		String subject = "Sua consulta foi desmarcada com sucesso";
+		String body = "Olá " + nome + ", este email tem como objetivo lhe informar que sua consulta do dia " +
+                        consulta.getDataHora() + " foi desmarcada." + "\n Atenciosamente administrador do sistema do hospital.";
+
+		service.send(from, to, subject, body);
+
+        MedicoDAO DAOmed = new MedicoDAO();
+        Medico med = DAOmed.getByCRM(consulta.getCrmMedico());
+        nome = med.getNome();
+        email = med.getEmail();
+        to = new InternetAddress(email, nome);
+
+        subject = "Uma de suas consultas foi desmarcada";
+		body = "Olá " + nome + ", este email tem como objetivo lhe informar que sua consulta do dia: " +
+                        consulta.getDataHora() + " foi desmarcada." + "\n Atenciosamente administrador do sistema do hospital.";
+
+		service.send(from, to, subject, body);
+
+        // --- ENVIO DE EMAIL ---
+
         response.sendRedirect("lista");
     }
 
