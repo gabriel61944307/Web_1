@@ -251,4 +251,22 @@ public class MedicoDAO extends UsuarioDAO {
 
         return listaEspecialidades;
     }
+
+    public List<String> initializeSpecialties() {
+        List<String> specialtyList = new ArrayList<>();
+
+        specialtyList.add("Cardiology");
+        specialtyList.add("Dermatology");
+        specialtyList.add("Endocrinology");
+        specialtyList.add("Gynecology");
+        specialtyList.add("Neurology");
+        specialtyList.add("Ophthalmology");
+        specialtyList.add("Oncology");
+        specialtyList.add("Orthopedics");
+        specialtyList.add("Pediatrics");
+        specialtyList.add("Psychiatry");
+
+        return specialtyList;
+    }
+
 }

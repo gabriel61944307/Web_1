@@ -5,7 +5,9 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Consultório</title>
+    <fmt:bundle basename="message">
+        <title><fmt:message key="Consultorio" /></title>
+    </fmt:bundle>
 </head>
 <body>
     <fmt:bundle basename="message">

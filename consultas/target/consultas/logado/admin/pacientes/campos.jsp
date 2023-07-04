@@ -27,7 +27,7 @@
         </tr>
     
         <tr>
-            <td><label for="email">Email</label></td>
+            <td><label for="email"><fmt:message key="Email"/></label></td>
             <td><input type="text" id="email" name="email" size="45" required value="${paciente.email}"></td>
         </tr>
     
@@ -62,7 +62,7 @@
         </tr>
     
         <tr>
-            <td colspan="2" align="center"><input type="submit" value="Salvar"/></td>
+            <td colspan="2" align="center"><input type="submit" value="<fmt:message key='Salvar' />"/></td>
         </tr>
     </fmt:bundle>
 </table>
