@@ -11,7 +11,7 @@
     </head>
     <body>
         <fmt:bundle basename="message">
-            <h1>Página de Login</h1>
+            <h1><fmt:message key="PaginaDeLogin"/></h1>
             <c:if test="${mensagens.existeErros}">
                 <div id="erro">
                     <ul>

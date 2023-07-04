@@ -1,5 +1,6 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,18 +8,20 @@
     <title>Consultório</title>
 </head>
 <body>
-    <h1>Olá, ${sessionScope.usuarioLogado.nome}</h1>
-
-    <li>
-        <a href="${pageContext.request.contextPath}/consultas-paciente/cadastro">Agendar Nova Consulta</a>
-    </li>
-
-    <li>
-        <a href="${pageContext.request.contextPath}/consultas-paciente/lista.jsp">Lista de Consultas</a>
-    </li>
-
-    <li>
-        <a href="${pageContext.request.contextPath}/logout.jsp">Sair</a>
-    </li>
+    <fmt:bundle basename="message">
+        <h1><fmt:message key="Ola"/>, ${sessionScope.usuarioLogado.nome}</h1>
+    
+        <li>
+            <a href="${pageContext.request.contextPath}/consultas-paciente/cadastro"><fmt:message key="AgendarNovaConsulta"/></a>
+        </li>
+    
+        <li>
+            <a href="${pageContext.request.contextPath}/consultas-paciente/lista.jsp"><fmt:message key="ListaDeConsultas"/></a>
+        </li>
+    
+        <li>
+            <a href="${pageContext.request.contextPath}/logout.jsp"><fmt:message key="Sair"/></a>
+        </li>
+    </fmt:bundle>
 </body>
 </html>
