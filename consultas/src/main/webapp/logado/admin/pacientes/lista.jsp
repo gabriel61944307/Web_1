@@ -48,7 +48,7 @@
                             <a href="${pageContext.request.contextPath}/pacientes/edicao?id=${paciente.id}">
                                 <fmt:message key="Edicao" />
                             </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="${pageContext.request.contextPath}/usuarios/remocao?id=${usuario.id}" onclick="return confirm(getMessage());">
+                            <a href="${pageContext.request.contextPath}/pacientes/remocao?id=${paciente.id}" onclick="return confirm(getMessage());">
                                 <fmt:message key="Remocao" />
                             </a>
                         </td>
