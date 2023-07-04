@@ -34,7 +34,7 @@ public class NoAuthController extends HttpServlet {
         }
 
         switch (action) {
-            case "/listaMedicosEspecialidade":
+            case "/listaEspecialidade":
                 listaMedicosEspecialidade(request, response);
                 break;
             default:
@@ -54,10 +54,12 @@ public class NoAuthController extends HttpServlet {
     private void listaMedicosEspecialidade(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String especialidade = request.getParameter("especialidade");
+
         List<Usuario> listaMedicosEspecialidade = dao.getByEspecialidade(especialidade);
+
         request.setAttribute("listaMedicosEspecialidade", listaMedicosEspecialidade);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/noAuthView/listaMedicosEspecialidade.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/noAuthView/listaMedicosEspecialidadeResult.jsp");
         dispatcher.forward(request, response);
     }
 }
