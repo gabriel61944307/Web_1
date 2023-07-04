@@ -81,13 +81,15 @@
             <label for="especialidade">Selecione a Especialidade:</label>
             <select name="especialidade" id="especialidade">
                 <option value="Cardiologia">Cardiologia</option>
-                <option value="Oftalmologia">Oftalmologia</option>
-                <option value="Neurologia">Neurologia</option>
-                <option value="Psiquiatria">Psiquiatria</option>
-                <option value="Endocrinologia">Endocrinologia</option>
-                <option value="Ortopedia">Ortopedia</option>
                 <option value="Dermatologia">Dermatologia</option>
+                <option value="Endocrinologia">Endocrinologia</option>
+                <option value="Endocrinologia">Ginecologia</option>
+                <option value="Neurologia">Neurologia</option>
+                <option value="Oftalmologia">Oftalmologia</option>
+                <option value="Oftalmologia">Oncologia</option>
+                <option value="Ortopedia">Ortopedia</option>
                 <option value="Pediatria">Pediatria</option>
+                <option value="Psiquiatria">Psiquiatria</option>
             </select>
             <input type="submit" value="Listar Médicos por Especialidade">
         </form>
