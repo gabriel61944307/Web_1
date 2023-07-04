@@ -6,7 +6,9 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Lista de Médicos por Especialidade</title>
+    <fmt:bundle basename="message">
+        <title><fmt:message key="Consultorio" /></title>
+    </fmt:bundle>
     <link href="${pageContext.request.contextPath}/layout.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>

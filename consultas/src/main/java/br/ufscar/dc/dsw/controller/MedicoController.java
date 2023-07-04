@@ -39,8 +39,19 @@ public class MedicoController extends HttpServlet {
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
         Erro erros = new Erro();
 
-        List<String> listaEspecialidades = dao.inicializaEspecialidades();
-        request.setAttribute("listaEspecialidades", listaEspecialidades);
+        // Obtém o idioma atual da página de acordo com as configurações do navegador, para mostrar uma lista de especialidades
+        // traduzida para o idioma adequado.
+        String idiomaNavegacao = request.getHeader("Accept-Language").substring(0, 5);
+        //System.out.println("Idioma atual: " + idiomaNavegacao);
+
+        // Criação da lista de acordo com o idioma.
+        if (idiomaNavegacao.equals("pt-BR")) {
+            List<String> listaEspecialidades = dao.inicializaEspecialidades();
+            request.setAttribute("listaEspecialidades", listaEspecialidades);
+        } else if (idiomaNavegacao.equals("en-US")) {
+            List<String> listaEspecialidades = dao.initializeSpecialties();
+            request.setAttribute("listaEspecialidades", listaEspecialidades);
+        }
 
         if (usuario == null) {
             response.sendRedirect(request.getContextPath());

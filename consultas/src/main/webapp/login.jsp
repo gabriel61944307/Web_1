@@ -6,7 +6,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Página de Login</title>
+        <fmt:bundle basename="message">
+            <title><fmt:message key="Consultorio" /></title>
+        </fmt:bundle>
         <link href="${pageContext.request.contextPath}/layout.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
@@ -25,11 +27,11 @@
             <form method="post" action="index.jsp">
                 <table>
                     <tr>
-                        <th>Email:</th>
+                        <th><fmt:message key="Email"/>:</th>
                         <td><input type="text" name="email" value="${param.email}"/></td>
                     </tr>
                     <tr>
-                        <th><fmt:message key="Senha"/></th>
+                        <th><fmt:message key="Senha"/>:</th>
                         <td><input type="password" name="senha" value="${param.senha}" /></td>
                     </tr>
                     <tr>
