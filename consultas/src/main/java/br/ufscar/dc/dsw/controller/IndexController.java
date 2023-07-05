@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ufscar.dc.dsw.dao.MedicoDAO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.utils.Erro;
@@ -19,6 +21,18 @@ public class IndexController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        MedicoDAO medicoDao = new MedicoDAO();
+        String idiomaNavegacao = request.getHeader("Accept-Language").substring(0, 5);
+
+        // Criação da lista de acordo com o idioma.
+        if (idiomaNavegacao.equals("pt-BR")) {
+            List<String> listaEspecialidades = medicoDao.inicializaEspecialidades();
+            request.setAttribute("listaEspecialidades", listaEspecialidades);
+        } else if (idiomaNavegacao.equals("en-US")) {
+            List<String> listaEspecialidades = medicoDao.initializeSpecialties();
+            request.setAttribute("listaEspecialidades", listaEspecialidades);
+        }
+        
         Erro erros = new Erro();
         if (request.getParameter("bOK") != null) {
             String email = request.getParameter("email");
