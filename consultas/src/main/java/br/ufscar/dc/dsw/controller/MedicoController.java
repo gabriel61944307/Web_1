@@ -42,7 +42,6 @@ public class MedicoController extends HttpServlet {
         // Obtém o idioma atual da página de acordo com as configurações do navegador, para mostrar uma lista de especialidades
         // traduzida para o idioma adequado.
         String idiomaNavegacao = request.getHeader("Accept-Language").substring(0, 5);
-        //System.out.println("Idioma atual: " + idiomaNavegacao);
 
         // Criação da lista de acordo com o idioma.
         if (idiomaNavegacao.equals("pt-BR")) {

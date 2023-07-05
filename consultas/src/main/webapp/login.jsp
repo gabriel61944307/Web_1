@@ -14,7 +14,7 @@
     </head>
     <body>
         <fmt:bundle basename="message">
-            <h1>Página de Login</h1>
+            <h1><fmt:message key="PaginaDeLogin" /></h1>
             <c:if test="${mensagens.existeErros}">
                 <div id="erro">
                     <ul>
@@ -98,34 +98,20 @@
             </form>
 
             <form method="get" action="noAuth/consulta-medicos.jsp">
-                <input type="submit" name="bListarMedicos" value="Listar Médicos">
+                <input type="submit" name="bListarMedicos" value="<fmt:message key="ListarMedicos" />">
             </form>
 
             <form method="get" action="noAuth/listaEspecialidade">
-                <label for="especialidade">Selecione a Especialidade:</label>
-                <select name="especialidade" id="especialidade">
-                    <option value="Cardiologia">Cardiologia</option>
-                    <option value="Dermatologia">Dermatologia</option>
-                    <option value="Endocrinologia">Endocrinologia</option>
-                    <option value="Endocrinologia">Ginecologia</option>
-                    <option value="Neurologia">Neurologia</option>
-                    <option value="Oftalmologia">Oftalmologia</option>
-                    <option value="Oftalmologia">Oncologia</option>
-                    <option value="Ortopedia">Ortopedia</option>
-                    <option value="Pediatria">Pediatria</option>
-                    <option value="Psiquiatria">Psiquiatria</option>
+                <label for="especialidade"><fmt:message key="SelecioneEspecialidade" /></label>
+                <select id="especialidade" name="especialidade">
+                    <c:forEach var="especialidade" items="${listaEspecialidades}">
+                        <option value="${especialidade}" ${medico.especialidade == especialidade ? 'selected' : ''}>
+                            ${especialidade}
+                        </option>
+                    </c:forEach>
                 </select>
-                <input type="submit" value="Listar Médicos por Especialidade">
+                <input type="submit" value="<fmt:message key="ListarEspecialidade" />">
             </form>
-            
-
-            <!-- <%
-                // Verificar qual botão foi clicado
-                String listarMedicos = request.getParameter("bListarMedicos");
-                if (listarMedicos != null) {
-                    response.sendRedirect("/noAuth/consulta-medicos.jsp");
-                }
-            %> -->
         </fmt:bundle>
     </body>
 </html>
