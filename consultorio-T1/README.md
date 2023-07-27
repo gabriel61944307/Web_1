@@ -1,4 +1,6 @@
-Trabalho 1 - Sistema de agendamento de consultas medicas utilizando servlets
+# Trabalho 1 - Sistema de agendamento de consultas medicas utilizando servlets
+
+Instruções de execução:
 
 1. Execute o tomcat
 2. Execute o código sql que está no caminho "db/MySQL/create.sql"
