@@ -1,4 +1,4 @@
-# Trabalho 1 - Sistema de agendamento de consultas medicas utilizando servlets
+# Trabalho 1 - Sistema de Agendamento de Consultas Médicas utilizando Servlet, JSP, JSTL & JDBC
 
 Instruções de execução:
 
