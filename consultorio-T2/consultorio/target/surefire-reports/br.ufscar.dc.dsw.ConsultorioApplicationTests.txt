@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: br.ufscar.dc.dsw.ConsultorioApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 21.206 s <<< FAILURE! - in br.ufscar.dc.dsw.ConsultorioApplicationTests
+contextLoads  Time elapsed: 0.008 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: java.lang.IllegalStateException: Failed to execute CommandLineRunner
+Caused by: org.springframework.orm.jpa.JpaSystemException: could not execute statement; nested exception is org.hibernate.exception.GenericJDBCException: could not execute statement
+Caused by: org.hibernate.exception.GenericJDBCException: could not execute statement
+Caused by: java.sql.SQLException: Field 'CPF' doesn't have a default value
+

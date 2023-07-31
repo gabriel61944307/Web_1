@@ -38,12 +38,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.authenticationProvider(authenticationProvider());
 	}
 
+	// aqui tem que atualizar de acordo com as novas rotas que a gente criar (paciente, médico, consulta...)
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 				http.authorizeRequests()
 				.antMatchers("/error", "/login/**", "/js/**", "/css/**", "/image/**", "/webjars/**").permitAll()
 				.antMatchers("/compras/**").hasRole("USER")
 				.antMatchers("/editoras/**", "/livros/**", "/usuarios/**").hasRole("ADMIN")
+				.antMatchers("/paciente/**").hasRole("PACIENTE")
 				.anyRequest().authenticated()
 			.and()
 				.formLogin()

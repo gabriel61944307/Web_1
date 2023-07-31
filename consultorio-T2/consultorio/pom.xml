@@ -9,7 +9,7 @@
 		<version>2.4.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.ufscar.dc</groupId>
+	<groupId>br.ufscar.dc.dsw</groupId>
 	<artifactId>Consultorio</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Consultorio</name>
