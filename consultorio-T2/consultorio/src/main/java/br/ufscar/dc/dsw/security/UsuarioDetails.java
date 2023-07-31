@@ -28,11 +28,10 @@ public class UsuarioDetails implements UserDetails {
     public String getPassword() {
         return usuario.getPassword();
     }
- 
-    // será que é melhor adicionar um username na classe só por causa disso aqui pra não confundir?
+
     @Override
     public String getUsername() {
-        return usuario.getUsername();
+        return usuario.getEmail();
     }
  
     @Override

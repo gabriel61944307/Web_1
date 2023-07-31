@@ -28,7 +28,7 @@
 			</ul>
 		</div>
 
-		<div sec:authorize="hasRole('ROLE_ADMIN')">
+		<!-- <div sec:authorize="hasRole('ROLE_ADMIN')">
 			<ul class="nav nav-pills">
 				<li class="nav-item"><span class="nav-link active"
 					th:text="#{sidebar.titulo.editora}"></span></li>
@@ -41,7 +41,7 @@
 						<span th:text="#{sidebar.link.listar}"></span>
 				</a></li>
 			</ul>
-		</div>
+		</div> -->
 
 		<div sec:authorize="hasRole('ROLE_ADMIN')">
 			<ul class="nav nav-pills">
@@ -58,7 +58,7 @@
 			</ul>
 		</div>
 
-		<div sec:authorize="hasRole('ROLE_ADMIN')">
+		<!-- <div sec:authorize="hasRole('ROLE_ADMIN')">
 			<ul class="nav nav-pills">
 				<li class="nav-item"><span class="nav-link active"
 					th:text="#{sidebar.titulo.usuario}"></span></li>
@@ -68,6 +68,21 @@
 				</a></li>
 				<li class="nav-item"><a class="nav-link"
 					th:href="@{/usuarios/listar}"> <i class="oi oi-spreadsheet"></i>
+						<span th:text="#{sidebar.link.listar}"></span>
+				</a></li>
+			</ul>
+		</div> -->
+
+		<div sec:authorize="hasRole('ROLE_ADMIN')">
+			<ul class="nav nav-pills">
+				<li class="nav-item"><span class="nav-link active"
+					th:text="#{sidebar.titulo.paciente}"></span></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/pacientes/cadastrar}"> <i class="oi oi-plus"></i> <span
+						th:text="#{sidebar.link.cadastrar}"></span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/pacientes/listar}"> <i class="oi oi-spreadsheet"></i>
 						<span th:text="#{sidebar.link.listar}"></span>
 				</a></li>
 			</ul>
