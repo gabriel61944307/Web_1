@@ -12,4 +12,10 @@ import br.ufscar.dc.dsw.domain.Paciente;
 @SuppressWarnings("unchecked")
 public interface IMedicoDAO extends CrudRepository<Medico, Long>  {
     Medico save(Medico medico);
+
+    Medico findById(long id);
+
+	List<Medico> findAll();
+
+	void deleteById(Long id);
 }

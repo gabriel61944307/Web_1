@@ -1,6 +1,6 @@
 package br.ufscar.dc.dsw;
 
-import java.math.BigDecimal;
+//import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.springframework.boot.CommandLineRunner;
@@ -9,10 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-// import br.ufscar.dc.dsw.dao.IEditoraDAO;
-// import br.ufscar.dc.dsw.dao.ILivroDAO;
-// import br.ufscar.dc.dsw.domain.Editora;
-// import br.ufscar.dc.dsw.domain.Livro;
 import br.ufscar.dc.dsw.dao.IPacienteDAO;
 import br.ufscar.dc.dsw.domain.Paciente;
 import br.ufscar.dc.dsw.dao.IUsuarioDAO;
@@ -33,7 +29,6 @@ public class ConsultorioApplication {
 
 			Paciente p1 = new Paciente();
 			p1.setNome("Usuário Teste");
-			p1.setUsername("paciente_1");
 			p1.setRole("ROLE_PACIENTE");
 			p1.setPassword(encoder.encode("123"));
 			p1.setEmail("paciente@email.com");
@@ -47,7 +42,6 @@ public class ConsultorioApplication {
 			
 
 			Usuario u1 = new Usuario();
-			u1.setUsername("admin");
 			u1.setPassword(encoder.encode("admin"));
 			u1.setEmail("admin@email.com");
 			u1.setNome("Administrador");
@@ -56,7 +50,6 @@ public class ConsultorioApplication {
 			usuarioDAO.save(u1);
 
 			Medico m1 = new Medico();
-			m1.setUsername("medico_1");
 			m1.setPassword(encoder.encode("123"));
 			m1.setEmail("medico@email.com");
 			m1.setNome("Medico Teste");
