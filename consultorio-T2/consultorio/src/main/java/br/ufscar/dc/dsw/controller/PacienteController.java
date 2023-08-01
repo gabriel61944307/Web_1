@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 // import br.ufscar.dc.dsw.domain.Editora;
 // import br.ufscar.dc.dsw.service.spec.IEditoraService;
 
-import br.ufscar.dc.dsw.dao.IPacienteDAO;
+import br.ufscar.dc.dsw.service.spec.IPacienteService;
 import br.ufscar.dc.dsw.domain.Paciente;
 
 @Controller
@@ -22,7 +22,7 @@ import br.ufscar.dc.dsw.domain.Paciente;
 public class PacienteController {
     
     @Autowired
-    private IPacienteDAO dao;
+    private IPacienteService service;
 
     @Autowired
 	private BCryptPasswordEncoder encoder;
@@ -33,11 +33,17 @@ public class PacienteController {
         return "pacientes/cadastro";
     }
 
+    @GetMapping("/listar")
+	public String listar(ModelMap model) {
+		model.addAttribute("pacientes",service.buscarTodos());
+		return "pacientes/lista";
+	}
+
     @PostMapping("/salvar")
 	public String salvar(@Valid Paciente paciente, BindingResult result, RedirectAttributes attr) {
 		
    
-        System.out.println("PACIENTE: " + paciente);
+        //System.out.println("PACIENTE: " + paciente);
         //System.out.println(result);
 
         //paciente.setRole("ROLE_PACIENTE");
@@ -51,8 +57,33 @@ public class PacienteController {
 		//System.out.println("password = " + paciente.getPassword());
 		
 		paciente.setPassword(encoder.encode(paciente.getPassword()));
-		dao.save(paciente);
-		attr.addFlashAttribute("sucess", "paciente.create.sucess");
+		service.salvar(paciente);
+		attr.addFlashAttribute("success", "paciente.create.success");
 		return "redirect:/pacientes/listar";
 	}
+
+    @GetMapping("/editar/{id}")
+    public String preEditar(@PathVariable("id") Long id, ModelMap model) {
+        model.addAttribute("paciente", service.buscarPorId(id));
+        return "pacientes/cadastro";
+    }
+
+    @PostMapping("/editar")
+    public String editar(@Valid Paciente paciente, BindingResult result, RedirectAttributes attr) {
+
+        if (result.hasErrors()) {
+            return "pacientes/cadastro";
+        }
+
+        service.salvar(paciente);
+        attr.addFlashAttribute("success", "paciente.edit.success");
+        return "redirect:/pacientes/listar";
+    }
+
+    @GetMapping("/excluir/{id}")
+    public String excluir(@PathVariable("id") Long id, ModelMap model) {
+        service.excluir(id);
+        model.addAttribute("success", "paciente.delete.success");
+        return listar(model);
+    }
 }

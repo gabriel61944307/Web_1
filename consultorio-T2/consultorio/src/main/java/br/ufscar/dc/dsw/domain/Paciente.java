@@ -13,6 +13,9 @@ import javax.validation.constraints.NotNull;
 // import javax.validation.constraints.Size;
 // import org.springframework.format.annotation.NumberFormat;
 // import org.springframework.format.annotation.NumberFormat.Style;
+import javax.validation.constraints.Past;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @SuppressWarnings("serial")
 @Entity
@@ -32,7 +35,10 @@ public class Paciente extends Usuario {
     @Column(nullable = false, length = 1)
     private String sexo;
 
+    // tem que dar um jeito de limitar/validar essa data (ex: 33/33/3333 dá um erro que eu ainda não consegui resolver)
     @NotNull
+    @Past(message = "{past.paciente.dataNascimento}")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(nullable = false)
     private LocalDate dataNascimento;
     

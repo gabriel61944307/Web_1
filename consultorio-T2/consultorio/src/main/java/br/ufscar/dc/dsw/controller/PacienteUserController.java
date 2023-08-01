@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 // import br.ufscar.dc.dsw.service.spec.IEditoraService;
 
 @Controller
-@RequestMapping("/paciente")
+@RequestMapping("/paciente-user")
 public class PacienteUserController {
     
     

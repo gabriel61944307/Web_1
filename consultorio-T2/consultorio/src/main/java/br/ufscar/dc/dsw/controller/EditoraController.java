@@ -41,7 +41,7 @@ public class EditoraController {
 		}
 		
 		service.salvar(editora);
-		attr.addFlashAttribute("sucess", "editora.create.sucess");
+		attr.addFlashAttribute("success", "editora.create.success");
 		return "redirect:/editoras/listar";
 	}
 	
@@ -61,7 +61,7 @@ public class EditoraController {
 		}
 
 		service.salvar(editora);
-		attr.addFlashAttribute("sucess", "editora.edit.sucess");
+		attr.addFlashAttribute("success", "editora.edit.success");
 		return "redirect:/editoras/listar";
 	}
 	
@@ -71,7 +71,7 @@ public class EditoraController {
 			model.addAttribute("fail", "editora.delete.fail");
 		} else {
 			service.excluir(id);
-			model.addAttribute("sucess", "editora.delete.sucess");
+			model.addAttribute("success", "editora.delete.success");
 		}
 		return listar(model);
 	}

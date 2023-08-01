@@ -22,6 +22,7 @@ C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\m
 C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\service\spec\IEditoraService.java
 C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\domain\Compra.java
 C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\validation\UniqueCNPJValidator.java
+C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\service\spec\IPacienteService.java
 C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\dao\IUsuarioDAO.java
 C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\controller\UsuarioController.java
 C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\domain\Editora.java
@@ -35,5 +36,6 @@ C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\m
 C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\service\spec\ILivroService.java
 C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\service\impl\UsuarioService.java
 C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\service\spec\IUsuarioService.java
+C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\service\impl\PacienteService.java
 C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\conversor\BigDecimalConversor.java
 C:\Users\Guilherme Godoy\Documents\GitHub\Web_1\consultorio-T2\consultorio\src\main\java\br\ufscar\dc\dsw\validation\UniqueCNPJ.java

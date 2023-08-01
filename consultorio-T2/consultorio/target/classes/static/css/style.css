@@ -118,3 +118,14 @@ body {
 	color: #777777;
 	text-align: center;
 }
+
+select {
+    height: 38px;
+    border-color: rgb(206, 212, 218);
+    border-radius: 4px;
+    color: rgb(73, 80, 87);
+}
+
+#sexo {
+    width: 100%;
+}

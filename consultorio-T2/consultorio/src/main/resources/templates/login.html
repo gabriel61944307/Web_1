@@ -17,7 +17,7 @@
 							<span th:text="#{login.error}"></span>
 						</div>
 					</div>
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label for="email" th:text="#{login.email}"></label>: <input
 							type="text" id="username" name="username" class="form-control"
 							autofocus="autofocus" th:placeholder="#{login.email}">
@@ -26,6 +26,74 @@
 						<label for="password" th:text="#{login.password}"></label>: <input
 							type="password" id="password" name="password"
 							class="form-control" th:placeholder="#{login.password}">
+					</div> -->
+
+					<div class="form-group">
+						<label for="email" th:text="#{login.email}"></label>: <input
+							type="text" id="username" name="username" class="form-control"
+							autofocus="autofocus" th:placeholder="#{login.email}" value="admin@email.com">
+					</div>
+					<div class="form-group">
+						<label for="password" th:text="#{login.password}"></label>: <input
+							type="password" id="password" name="password"
+							class="form-control" th:placeholder="#{login.password}" value="admin">
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3 col-sm-offset-3">
+								<input type="submit" name="login-submit" id="login-submit"
+									class="form-control btn btn-info" th:value="#{login.button}">
+							</div>
+						</div>
+					</div>
+				</form>
+
+
+
+				<form th:action="@{/login}" method="post">
+					<div th:if="${param.error}">
+						<div class="alert alert-danger">
+							<span th:text="#{login.error}"></span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="email" th:text="#{login.email}"></label>: <input
+							type="text" id="username" name="username" class="form-control"
+							autofocus="autofocus" th:placeholder="#{login.email}" value="paciente@email.com">
+					</div>
+					<div class="form-group">
+						<label for="password" th:text="#{login.password}"></label>: <input
+							type="password" id="password" name="password"
+							class="form-control" th:placeholder="#{login.password}" value="123">
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3 col-sm-offset-3">
+								<input type="submit" name="login-submit" id="login-submit"
+									class="form-control btn btn-info" th:value="#{login.button}">
+							</div>
+						</div>
+					</div>
+				</form>
+
+
+				<form th:action="@{/login}" method="post">
+					<div th:if="${param.error}">
+						<div class="alert alert-danger">
+							<span th:text="#{login.error}"></span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="email" th:text="#{login.email}"></label>: <input
+							type="text" id="username" name="username" class="form-control"
+							autofocus="autofocus" th:placeholder="#{login.email}" value="medico@email.com">
+					</div>
+					<div class="form-group">
+						<label for="password" th:text="#{login.password}"></label>: <input
+							type="password" id="password" name="password"
+							class="form-control" th:placeholder="#{login.password}" value="123">
 					</div>
 					<div class="form-group">
 						<div class="row">
