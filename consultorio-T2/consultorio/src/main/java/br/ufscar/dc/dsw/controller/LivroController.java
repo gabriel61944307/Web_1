@@ -49,7 +49,7 @@ public class LivroController {
 		}
 
 		livroService.salvar(livro);
-		attr.addFlashAttribute("sucess", "livro.create.sucess");
+		attr.addFlashAttribute("success", "livro.create.success");
 		return "redirect:/livros/listar";
 	}
 
@@ -67,14 +67,14 @@ public class LivroController {
 		}
 
 		livroService.salvar(livro);
-		attr.addFlashAttribute("sucess", "livro.edit.sucess");
+		attr.addFlashAttribute("success", "livro.edit.success");
 		return "redirect:/livros/listar";
 	}
 
 	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
 		livroService.excluir(id);
-		attr.addFlashAttribute("sucess", "livro.delete.sucess");
+		attr.addFlashAttribute("success", "livro.delete.success");
 		return "redirect:/livros/listar";
 	}
 

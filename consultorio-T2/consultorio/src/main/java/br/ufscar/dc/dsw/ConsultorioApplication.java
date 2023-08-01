@@ -28,7 +28,7 @@ public class ConsultorioApplication {
 		return (args) -> {
 
 			Paciente p1 = new Paciente();
-			p1.setNome("Usuário Teste");
+			p1.setNome("Paciente Teste");
 			p1.setRole("ROLE_PACIENTE");
 			p1.setPassword(encoder.encode("123"));
 			p1.setEmail("paciente@email.com");
@@ -52,7 +52,7 @@ public class ConsultorioApplication {
 			Medico m1 = new Medico();
 			m1.setPassword(encoder.encode("123"));
 			m1.setEmail("medico@email.com");
-			m1.setNome("Medico Teste");
+			m1.setNome("Médico Teste");
 			m1.setCRM("12.345/SP");
 			m1.setEspecialidade("Cardiologia");
 			m1.setRole("ROLE_MEDICO");

@@ -63,7 +63,7 @@ public class CompraController {
 		}
 		
 		service.salvar(compra);
-		attr.addFlashAttribute("sucess", "Compra inserida com sucesso.");
+		attr.addFlashAttribute("success", "Compra inserida com sucesso.");
 		return "redirect:/compras/listar";
 	}
 	
