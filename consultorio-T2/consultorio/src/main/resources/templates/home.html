@@ -7,6 +7,10 @@
 
 		<div class="container" style="text-align: center;">
 			<h1 th:text="#{title.label}">Consultório Virtual</h1>
+			<h5>
+				<span th:text="#{home.hello}"></span>,
+				<span th:text="${#authentication.principal.usuario.nome}"></span>!
+			</h5>
 			<img alt="" th:src="@{/image/image.png}" id="img-home">
 		</div>
 

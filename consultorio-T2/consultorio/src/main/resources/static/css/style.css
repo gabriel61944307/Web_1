@@ -126,11 +126,17 @@ select {
     color: rgb(73, 80, 87);
 }
 
+select:focus {
+    border-color: rgb(128, 189, 255);
+    outline: none;
+    box-shadow: 0 0 0px 3.5px rgb(191, 222, 255);
+}
+
 #sexo {
     width: 100%;
 }
 
 #img-home {
     width: 35%;
-    padding-top: 35px;
+    padding-top: 20px;
 }
