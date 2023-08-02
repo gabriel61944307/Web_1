@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<i class="oi oi-caret-right"></i>
+						<span th:text="#{paciente.listar.label}"></span>
+					</li>
+				</ul>
+				<a class="btn btn-primary btn-md" th:href="@{/pacientes/cadastrar}" role="button"> 
+					<span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span> 
+					<span th:text="#{paciente.cadastrar.label}"></span>
+				</a>
+			</div>
+		</nav>
+
+		<div class="container" id="listagem">
+
+			<div th:replace="fragments/alert"></div>
+
+			<div class="table-responsive">
+				<table class="table table-striped table-hover table-sm">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th th:text="#{paciente.name.label}"></th>
+							<!-- <th th:text="#{paciente.username.label}"></th> -->
+                            <th th:text="#{paciente.email.label}"></th>
+							<th th:text="#{paciente.CPF.label}"></th>
+							<th th:text="#{paciente.telefone.label}"></th>
+                            <th th:text="#{paciente.dataNascimento.label}"></th>
+                            <th th:text="#{paciente.sexo.label}"></th>
+							<th th:text="#{acao.label}"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="paciente : ${pacientes}">
+							<td th:text="${paciente.id}"></td>
+							<td th:text="${paciente.nome}"></td>
+							<td th:text="${paciente.email}"></td>
+							<td th:text="${paciente.CPF}"></td>
+							<td th:text="${paciente.telefone}"></td>
+                            <!-- <td th:text="${paciente.dataNascimento}"></td> -->
+                            <!-- <td th:text="${#dates.format(paciente.dataNascimento, 'dd/MM/yyyy')}"></td> -->
+                            <td th:with="formattedDate=${#temporals.format(paciente.dataNascimento, 'dd/MM/yyyy')}">
+                                <!-- Utilize a variável temporária para exibir a data formatada -->
+                                <span th:text="${formattedDate}"></span>
+                            </td>
+                            <td th:text="${paciente.sexo}"></td>
+							<td colspan="2">
+								<a class="btn btn-info btn-sm" th:href="@{/pacientes/editar/{id} (id=${paciente.id}) }"
+									role="button"> 
+									<span class="oi oi-brush" th:title="#{link.editar.label}" aria-hidden="true"> </span>
+								</a>
+								<button
+									th:id="${'btn_pacientes/excluir/' + paciente.id}"
+									type="button" class="btn btn-danger btn-sm"
+									data-toggle="modal" data-target="#myModal">
+									<span class="oi oi-circle-x" th:title="#{link.excluir.label}" aria-hidden="true"></span>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div th:replace="fragments/modal :: modal"></div>
+	</section>
+</body>
+</html>
