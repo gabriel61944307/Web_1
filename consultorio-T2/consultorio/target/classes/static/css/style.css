@@ -129,3 +129,8 @@ select {
 #sexo {
     width: 100%;
 }
+
+#img-home {
+    width: 35%;
+    padding-top: 35px;
+}

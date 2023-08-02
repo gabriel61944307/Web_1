@@ -65,6 +65,7 @@ public class PacienteController {
     @GetMapping("/editar/{id}")
     public String preEditar(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("paciente", service.buscarPorId(id));
+
         return "pacientes/cadastro";
     }
 

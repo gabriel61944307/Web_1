@@ -33,7 +33,7 @@ public class ConsultorioApplication {
 			p1.setPassword(encoder.encode("123"));
 			p1.setEmail("paciente@email.com");
 			p1.setCPF("123.123.123-12");
-			p1.setTelefone("1234-1234");
+			p1.setTelefone("(11) 01234-1234");
 			p1.setSexo("M");
 			p1.setDataNascimento(LocalDate.parse("1990-01-01"));
 			p1.setEnabled(true);
