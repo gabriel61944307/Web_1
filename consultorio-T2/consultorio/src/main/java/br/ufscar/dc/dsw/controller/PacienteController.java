@@ -70,11 +70,17 @@ public class PacienteController {
     }
 
     @PostMapping("/editar")
-    public String editar(@Valid Paciente paciente, BindingResult result, RedirectAttributes attr) {
+    public String editar(@Valid Paciente paciente, String novoPassword, BindingResult result, RedirectAttributes attr) {
 
         if (result.hasErrors()) {
             return "pacientes/cadastro";
         }
+
+        if (novoPassword != null && !novoPassword.trim().isEmpty()) {
+            paciente.setPassword(encoder.encode(novoPassword));
+        } else {
+			System.out.println("Senha não foi editada");
+		}
 
         service.salvar(paciente);
         attr.addFlashAttribute("success", "paciente.edit.success");
