@@ -42,7 +42,7 @@
 
 						<!-- trecho removido daqui, tava impedindo a edição: 
 							th:readonly="${paciente.id != null}" -->
-						<div class="form-group col-md-6">
+						<!-- <div class="form-group col-md-6">
 							<label th:text="#{paciente.password.label}" for="password"></label> 
 							<input type="password" class="form-control" id="password"
 								th:placeholder="#{paciente.password.label}" autofocus="autofocus"
@@ -52,6 +52,31 @@
 							<div class="invalid-feedback">
 								<span th:errors="*{password}"></span>
 							</div>
+						</div> -->
+
+						<div th:if="${paciente.id == null}" class="form-group col-md-6">
+							<label th:text="#{paciente.password.label}" for="password"></label> 
+							<input type="password" class="form-control" id="password"
+								th:placeholder="#{paciente.password.label}" autofocus="autofocus"
+								th:field="*{password}"
+								th:classappend="${#fields.hasErrors('password')} ? is-invalid" />
+								
+							<div class="invalid-feedback">
+								<span th:errors="*{password}"></span>
+							</div>
+						</div>
+
+						<div th:unless="${paciente.id == null}" class="form-group col-md-6">
+							<label th:text="#{paciente.password.label}" for="password"></label> 
+							<input type="password" class="form-control" name="novoPassword"
+								th:placeholder="#{paciente.password.label}" autofocus="autofocus"
+								th:classappend="${#fields.hasErrors('password')} ? is-invalid" />
+
+							<input type="hidden" th:field="*{password}" />
+								
+							<!-- <div class="invalid-feedback">
+								<span th:errors="*{password}"></span>
+							</div> -->
 						</div>
 					</div>
 						
