@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 // import br.ufscar.dc.dsw.domain.Editora;
 // import br.ufscar.dc.dsw.service.spec.IEditoraService;
 
+// acho que não vai precisar desse controller
 @Controller
 @RequestMapping("/paciente-user")
 public class PacienteUserController {

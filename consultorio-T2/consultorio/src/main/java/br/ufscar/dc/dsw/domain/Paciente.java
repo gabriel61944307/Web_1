@@ -2,9 +2,12 @@ package br.ufscar.dc.dsw.domain;
 
 // import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 // import javax.persistence.JoinColumn;
 // import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -13,7 +16,7 @@ import javax.validation.constraints.NotNull;
 // import javax.validation.constraints.Size;
 // import org.springframework.format.annotation.NumberFormat;
 // import org.springframework.format.annotation.NumberFormat.Style;
-import javax.validation.constraints.Past;
+//import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -36,17 +39,32 @@ public class Paciente extends Usuario {
     private String sexo;
 
     @NotNull
-    @Past(message = "{past.paciente.dataNascimento}")
+    //@Past(message = "{past.paciente.dataNascimento}")
     //@DateTimeFormat(pattern = "dd/MM/yyyy")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false)
     private LocalDate dataNascimento;
+
+    @OneToMany(mappedBy = "paciente")
+    private List<Consulta> consultas = new ArrayList<>();
     
     public String getCPF() {
 		return CPF;
 	}
 
-	public void setCPF(String CPF) {
+	public List<Consulta> getConsultas() {
+        return consultas;
+    }
+
+    public void setConsultas(List<Consulta> consultas) {
+        this.consultas = consultas;
+    }
+
+    public void addConsultas(Consulta consulta) {
+        this.consultas.add(consulta);
+    }
+
+    public void setCPF(String CPF) {
 		this.CPF = CPF;
 	}
 

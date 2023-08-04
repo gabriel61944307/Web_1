@@ -39,6 +39,7 @@ public class PacienteService implements IPacienteService {
     @Transactional(readOnly = true)
 	public boolean pacienteTemConsultas(Long id) {
 		//return !dao.findById(id.longValue()).getLivros().isEmpty(); 
-        return true;
+        //return true;
+		return !dao.findById(id.longValue()).getConsultas().isEmpty();
 	}
 }
