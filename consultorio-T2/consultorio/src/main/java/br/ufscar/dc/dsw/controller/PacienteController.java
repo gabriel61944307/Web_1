@@ -89,8 +89,19 @@ public class PacienteController {
 
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, ModelMap model) {
-        service.excluir(id);
-        model.addAttribute("success", "paciente.delete.success");
+        // if (service.editoraTemLivros(id)) {
+		// 	model.addAttribute("fail", "editora.delete.fail");
+		// } else {
+		// 	service.excluir(id);
+		// 	model.addAttribute("success", "editora.delete.success");
+		// }
+        if (service.pacienteTemConsultas(id)) {
+            model.addAttribute("fail", "paciente.delete.fail");
+        } else {
+            service.excluir(id);
+            model.addAttribute("success", "paciente.delete.success");
+        }
+        
         return listar(model);
     }
 }

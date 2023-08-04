@@ -2,6 +2,7 @@ package br.ufscar.dc.dsw;
 
 //import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +16,8 @@ import br.ufscar.dc.dsw.dao.IUsuarioDAO;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.dao.IMedicoDAO;
 import br.ufscar.dc.dsw.domain.Medico;
+import br.ufscar.dc.dsw.dao.IConsultaDAO;
+import br.ufscar.dc.dsw.domain.Consulta;
 
 @SpringBootApplication
 public class ConsultorioApplication {
@@ -24,7 +27,7 @@ public class ConsultorioApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(IUsuarioDAO usuarioDAO, IPacienteDAO pacienteDAO, IMedicoDAO medicoDAO, BCryptPasswordEncoder encoder) {
+	public CommandLineRunner demo(IUsuarioDAO usuarioDAO, IPacienteDAO pacienteDAO, IMedicoDAO medicoDAO, IConsultaDAO consultaDAO, BCryptPasswordEncoder encoder) {
 		return (args) -> {
 
 			Paciente p1 = new Paciente();
@@ -58,6 +61,13 @@ public class ConsultorioApplication {
 			m1.setRole("ROLE_MEDICO");
 			m1.setEnabled(true);
 			medicoDAO.save(m1);
+
+			Consulta c1 = new Consulta();
+			c1.setDataHoraConsulta(LocalDateTime.of(2023, 8, 2, 14, 30));
+			c1.setMedico(m1);
+			c1.setPaciente(p1);
+			p1.addConsultas(c1);
+			consultaDAO.save(c1);
 
 			//System.out.println("PACIENTES: " + pacienteDAO.findAll());
 
