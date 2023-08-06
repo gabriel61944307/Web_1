@@ -31,6 +31,7 @@
 						<tr>
 							<th>#</th>
 							<th th:text="#{consulta.data.label}"></th>
+							<th th:text="#{consulta.hora.label}"></th>
                             <th th:text="#{consulta.medico.label}"></th>
                             <th th:text="#{consulta.especialidade.label}"></th>
                             <th th:text="#{acao.label}"></th>
@@ -44,7 +45,9 @@
 					<tbody>
 						<tr th:each="consulta : ${consultas}">
                             <td th:text="${consulta.id}"></td>
-                            <td th:text="${#temporals.format(consulta.dataHoraConsulta, 'dd/MM/yyyy, HH:mm')}"></td>
+                            <!-- <td th:text="${#temporals.format(consulta.dataHoraConsulta, 'dd/MM/yyyy, HH:mm')}"></td> -->
+							<td th:text="${#temporals.format(consulta.dataConsulta, 'dd/MM/yyyy')}"></td>
+							<td th:text="${#temporals.format(consulta.horaConsulta, 'HH:mm')}"></td>
                             <td th:text="${consulta.medico.nome}"></td>
                             <td th:text="${consulta.medico.especialidade}"></td>
                             <td colspan="2">

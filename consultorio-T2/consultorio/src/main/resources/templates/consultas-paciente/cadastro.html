@@ -9,11 +9,11 @@
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"><i class="oi oi-caret-right"></i>
-						<span th:text="#{compra.cadastrar.label}"></span></li>
+						<span th:text="#{consulta.cadastrar.label}"></span></li>
 				</ul>
-				<a class="btn btn-primary btn-md" th:href="@{/consultas/listar}"
+				<a class="btn btn-primary btn-md" th:href="@{/consultas-paciente/listar}"
 					role="button"> <span class="oi oi-spreadsheet" title="Listar"
-					aria-hidden="true"></span> <span th:text="#{compra.listar.label}"></span>
+					aria-hidden="true"></span> <span th:text="#{consulta.listar.label}"></span>
 				</a>
 			</div>
 		</nav>
@@ -22,53 +22,78 @@
 
 			<div th:replace="fragments/alert"></div>
 
-			<form th:action="@{/consultas/salvar}" th:object="${compra}"
-				method="POST">
+			<form 
+				th:action="${consulta.id == null} ? @{/consultas-paciente/salvar} : @{consultas-paciente/editar}"
+				th:object="${consulta}" method="POST">
 
-				<div th:replace="fragments/validacao :: validacao"></div>
+				<!-- <div th:replace="fragments/validacao :: validacao"></div> -->
 
 				<div class="form-row">
-					<div class="form-group col-md-12">
-						
-						<table class="table table-striped table-hover table-sm">
-							<thead>
-								<tr>
-									<th>#</th>
-									<!-- <th th:text="#{livro.titulo.label}"></th>
-									<th th:text="#{livro.autor.label}"></th>
-									<th th:text="#{livro.editora.label}"></th>
-									<th th:text="#{livro.ano.label}"></th>
-									<th th:text="#{livro.preco.label}"></th> -->
-                                    <th th:text="#{consulta-paciente.medico.label}"></th>
-                                    <th th:text="#{consulta-paciente.dataHora.label}"></th>
 
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="livro : ${livros}">
-									<td>
-										<input type="radio" th:id="${livro.id}" name="livro" th:value="${livro.id}" th:field="*{livro}" required>
-									</td>
-									<!-- <td th:text="${livro.titulo}"></td>
-									<td th:text="${livro.autor}"></td>
-									<td th:text="${livro.editora.nome}"></td>
-									<td th:text="${livro.ano}"></td>
-									<td th:text="|R$ ${#numbers.formatDecimal(livro.preco,2,2,'COMMA')}|"></td> -->
-                                    <td th:text=""></td>
-                                    <td th:text=""></td>
-								</tr>
-							</tbody>
-						</table>
+					<input type="hidden" id="paciente" name="paciente" th:field="*{paciente}">
+
+					<div class="for col-md-4">
+						<label th:text="#{consulta.select-medico.label}" for="medico"></label>
+						<br>
+						<select id="medico" name="medico">
+							<!-- <option></option> -->
+						</select>
+
+						<input type="hidden" id="medico" name="medico" value="3">
+						<!-- tem muita coisa faltando aqui, tem que lembrar de arrumar -->
 
 						<div class="invalid-feedback">
-							<span th:errors="*{livro}"></span>
+							<span th:errors="*{medico}"></span>
 						</div>
 					</div>
-				</div>
-				
-				<input type="hidden" th:field="*{usuario}" id="usuario">
-				<input type="hidden" th:field="*{data}" id="data">
 
+					<div class="form-group col-md-4">
+						<label th:text="#{consulta.data.label}" for="dataConsulta"></label>
+						<input type="date" class="form-control" id="dataConsulta" th:field="*{dataConsulta}"
+							autofocus="autofocus" th:classappend="${#fields.hasErrors('dataConsulta')} ? is-invalid" />
+
+						<div class="invalid-feedback">
+							<span th:errors="*{dataConsulta}"></span>
+						</div>	
+					</div>
+
+					<div class="form-group col-md-4">
+						<label th:text="#{consulta.hora.label}" for="horaConsulta"></label>
+						<!-- <input type="time" class="form-control" id="horaConsulta" th:field="*{horaConsulta}"
+						autofocus="autofocus" th:classappend="${#fields.hasErrors('horaConsulta')} ? is-invalid" step="1800" /> -->
+
+						<select class="form-control" id="horaConsulta" name="horaConsulta" required>
+							<option value="" disable>Selecione um horário.</option>
+
+							<!-- Gerar as opções de horário de meia em meia hora -->
+							<!-- Das 08:00 às 18:30 -->
+							<script>
+								// Defina os horários de início e fim permitidos
+								const startHour = 8;
+								const endHour = 18;
+								const endMinute = 30;
+
+								// Gere as opções de horário de meia em meia hora dentro do intervalo permitido
+								for (let hour = startHour; hour <= endHour; hour++) {
+									for (let minute = 0; minute <= 30; minute += 30) {
+										const formattedHour = String(hour).padStart(2, '0');
+										const formattedMinute = String(minute).padStart(2, '0');
+										const optionText = `${formattedHour}:${formattedMinute}`;
+										const optionValue = `${formattedHour}:${formattedMinute}`;
+
+										document.write(`<option value="${optionValue}">${optionText}</option>`);
+									}
+								}
+							</script>
+						</select>
+
+						<div class="invalid-feedback">
+							<span th:errors="*{horaConsulta}"></span>
+						</div>	
+					</div>
+
+				</div>				
+			
 				<button type="submit" th:text="#{button.salvar.label}"
 					class="btn btn-primary btn-sm"></button>
 			</form>

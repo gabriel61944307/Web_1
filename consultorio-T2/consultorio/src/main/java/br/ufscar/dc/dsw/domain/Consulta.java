@@ -1,13 +1,18 @@
 package br.ufscar.dc.dsw.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+//import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 //import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,10 +33,19 @@ public class Consulta extends AbstractEntity<Long> {
 
     // será que não precisa de id? no exemplo do prof não tem...
     
+    // @NotNull(message = "{NotNull.consulta.data}")
+    // //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    // @Column(nullable = false)
+    // private LocalDateTime dataHoraConsulta;
+
     @NotNull(message = "{NotNull.consulta.data}")
-    //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false)
-    private LocalDateTime dataHoraConsulta;
+    private LocalDate dataConsulta;
+
+    @NotNull(message = "{NotNull.consulta.hora}")
+    @Column(nullable = false)
+    private LocalTime horaConsulta;
 
     //@NotNull(message = "{NotNull.consulta.paciente}")
     @ManyToOne
@@ -43,12 +57,28 @@ public class Consulta extends AbstractEntity<Long> {
     @JoinColumn(name = "medicoID")
     private Medico medico;
 
-    public LocalDateTime getDataHoraConsulta() {
-        return dataHoraConsulta;
+    // public LocalDateTime getDataHoraConsulta() {
+    //     return dataHoraConsulta;
+    // }
+
+    // public void setDataHoraConsulta(LocalDateTime dataHoraConsulta) {
+    //     this.dataHoraConsulta = dataHoraConsulta;
+    // }
+
+    public LocalDate getDataConsulta() {
+        return dataConsulta;
     }
 
-    public void setDataHoraConsulta(LocalDateTime dataHoraConsulta) {
-        this.dataHoraConsulta = dataHoraConsulta;
+    public void setDataConsulta(LocalDate dataConsulta) {
+        this.dataConsulta = dataConsulta;
+    }
+
+    public LocalTime getHoraConsulta() {
+        return horaConsulta;
+    }
+
+    public void setHoraConsulta(LocalTime horaConsulta) {
+        this.horaConsulta = horaConsulta;
     }
 
     public Paciente getPaciente() {
@@ -66,4 +96,17 @@ public class Consulta extends AbstractEntity<Long> {
     public void setMedico(Medico medico) {
         this.medico = medico;
     }
+
+    // public LocalDate getDataConsulta() {
+    //     return dataHoraConsulta.toLocalDate();
+    // }
+    
+    // public LocalTime getHoraConsulta() {
+    //     return dataHoraConsulta.toLocalTime();
+    // }
+    
+    // public void setDataConsulta(LocalDate data) {
+    //     LocalTime horaAtual = getHoraConsulta();
+    //     this.dataHoraConsulta = LocalDateTime.of(data, horaAtual);
+    // }
 }

@@ -2,7 +2,8 @@ package br.ufscar.dc.dsw;
 
 //import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+// import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -63,7 +64,8 @@ public class ConsultorioApplication {
 			medicoDAO.save(m1);
 
 			Consulta c1 = new Consulta();
-			c1.setDataHoraConsulta(LocalDateTime.of(2023, 8, 2, 14, 30));
+			c1.setDataConsulta(LocalDate.of(2023, 8, 2));
+			c1.setHoraConsulta(LocalTime.of(14, 30));
 			c1.setMedico(m1);
 			c1.setPaciente(p1);
 			p1.addConsultas(c1);
