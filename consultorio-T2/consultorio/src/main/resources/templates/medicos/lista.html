@@ -14,7 +14,7 @@
 						<span th:text="#{medico.listar.label}"></span>
 					</li>
 				</ul>
-				<a class="btn btn-primary btn-md" th:href="@{/medico/cadastrar}" role="button"> 
+				<a class="btn btn-primary btn-md" th:href="@{/medicos/cadastrar}" role="button"> 
 					<span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span> 
 					<span th:text="#{medico.cadastrar.label}"></span>
 				</a>
@@ -45,12 +45,12 @@
 							<td th:text="${medico.CRM}"></td>
 							<td th:text="${medico.especialidade}"></td>
 							<td colspan="2">
-								<a class="btn btn-info btn-sm" th:href="@{/medico/editar/{id} (id=${medico.id}) }"
+								<a class="btn btn-info btn-sm" th:href="@{/medicos/editar/{id} (id=${medico.id}) }"
 									role="button"> 
 									<span class="oi oi-brush" th:title="#{link.editar.label}" aria-hidden="true"> </span>
 								</a>
 								<button
-									th:id="${'btn_medico/excluir/' + medico.id}"
+									th:id="${'btn_medicos/excluir/' + medico.id}"
 									type="button" class="btn btn-danger btn-sm"
 									data-toggle="modal" data-target="#myModal">
 									<span class="oi oi-circle-x" th:title="#{link.excluir.label}" aria-hidden="true"></span>
