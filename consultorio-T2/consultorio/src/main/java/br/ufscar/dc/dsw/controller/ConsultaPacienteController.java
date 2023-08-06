@@ -1,10 +1,16 @@
 package br.ufscar.dc.dsw.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufscar.dc.dsw.domain.Consulta;
@@ -56,28 +63,36 @@ public class ConsultaPacienteController {
     public String cadastrar(Consulta consulta) {
         // consulta.setPaciente();
         //consulta.setPaciente(this.getUsuario());
+        consulta.setPaciente(getPacienteLogado());
 
-        return "consulta/cadastro";
+        return "consultas-paciente/cadastro";
     }
 
     @GetMapping("/listar")
     public String listar(ModelMap model) {
-        // Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        // UsuarioDetails usuarioAutenticado = (UsuarioDetails) authentication.getPrincipal();
-    
-        // System.out.println("CLASSEEEEEEEEEEE: " + usuarioAutenticado.getClass());
-        // System.out.println("USUARIOOOOOOOO: " + usuarioAutenticado.getUsuario());
-
-        //Paciente pacienteAutenticado = usuarioAutenticado.getUsuario();
-
-      
-
-
-        //model.addAttribute("consultas", consultaService.buscarTodasPorPaciente(pacienteAutenticado));
-
         model.addAttribute("consultas", consultaService.buscarTodasPorPaciente(getPacienteLogado()));
 
         return "consultas-paciente/lista";
     }
+
+    @PostMapping("/salvar")
+    public String salvar(@Valid Consulta consulta, BindingResult result, RedirectAttributes attr) {
+
+        if (result.hasErrors()) {
+            return "consultas-paciente/cadastro";
+        }
+
+        //LocalDateTime dataHoraConsulta = dataConsulta.atTime(horaConsulta);
+
+        //consulta.setDataHoraConsulta(dataHoraConsulta);
+
+        consultaService.salvar(consulta);
+        attr.addFlashAttribute("success", "consulta.create.success");
+        return "redirect:/consultas-paciente/listar";
+    }
+
+    // @ModelAttribute("medicos")
+    // public List<Medico> listaMedicos() {
+    //     return medicoService.buscarTodos();
+    // }
 }
