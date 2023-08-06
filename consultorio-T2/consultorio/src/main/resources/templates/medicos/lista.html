@@ -6,17 +6,17 @@
 <body>
 	<section class="layout-content" layout:fragment="corpo">
 
-		<nav class="navbar navbar-expand-md bg-light">
+		 <nav class="navbar navbar-expand-md bg-light">
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
 						<i class="oi oi-caret-right"></i>
-						<span th:text="#{usuario.listar.label}"></span>
+						<span th:text="#{medico.listar.label}"></span>
 					</li>
 				</ul>
 				<a class="btn btn-primary btn-md" th:href="@{/medico/cadastrar}" role="button"> 
 					<span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span> 
-					<span th:text="#{usuario.cadastrar.label}"></span>
+					<span th:text="#{medico.cadastrar.label}"></span>
 				</a>
 			</div>
 		</nav>
@@ -30,20 +30,20 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th th:text="#{usuario.username.label}"></th>
-							<th th:text="#{usuario.name.label}"></th>
+							<th th:text="#{medico.nome.label}"></th>
+							<th th:text="#{medico.email.label}"></th>
 							<th th:text="#{medico.CRM.label}"></th>
-							<th th:text="#{usuario.role.label}"></th>
+							<th th:text="#{medico.especialidade.label}"></th>
 							<th th:text="#{acao.label}"></th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="medico : ${medico}">
+						<tr th:each="medico : ${medicos}">
 							<td th:text="${medico.id}"></td>
-							<td th:text="${medico.username}"></td>
-							<td th:text="${medico.name}"></td>
+							<td th:text="${medico.nome}"></td>
+							<td th:text="${medico.email}"></td>
 							<td th:text="${medico.CRM}"></td>
-							<td th:text="${medico.role}"></td>
+							<td th:text="${medico.especialidade}"></td>
 							<td colspan="2">
 								<a class="btn btn-info btn-sm" th:href="@{/medico/editar/{id} (id=${medico.id}) }"
 									role="button"> 
@@ -62,7 +62,7 @@
 			</div>
 		</div>
 
-		<div th:replace="fragments/modal :: modal"></div>
+		<div th:replace="fragments/modal :: modal"></div> 
 	</section>
 </body>
 </html>
