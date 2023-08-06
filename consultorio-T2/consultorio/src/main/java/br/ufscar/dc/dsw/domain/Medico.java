@@ -2,9 +2,12 @@ package br.ufscar.dc.dsw.domain;
 
 // import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 // import javax.persistence.JoinColumn;
 // import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -28,6 +31,14 @@ public class Medico extends Usuario {
     @Column(nullable = false, length = 16)
     private String Especialidade;
 
+    @OneToMany(mappedBy = "medico")
+    private List<Consulta> consultas = new ArrayList<>();
+
+    public List<Consulta> getConsultas() {
+        return consultas;
+    }
+
+
     public String getCRM() {
         return CRM;
     }
@@ -44,5 +55,4 @@ public class Medico extends Usuario {
         Especialidade = especialidade;
     }
 
-    
 }
