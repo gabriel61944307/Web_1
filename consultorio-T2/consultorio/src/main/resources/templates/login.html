@@ -3,6 +3,18 @@
 	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout2}">
 <head>
 <title th:text="#{login.message}"></title>
+<style>
+	.button {
+		display: inline-block;
+		padding: 10px 20px;
+		background-color: #157988;
+		color: white;
+		text-decoration: none;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+</style>
 </head>
 <body>
 	<div layout:fragment="content" th:remove="tag">
@@ -104,6 +116,8 @@
 						</div>
 					</div>
 				</form>
+				
+				<a class="button" href="/noAutho/listar">Listar Médicos</a>
 			</div>
 		</div>
 	</div>
