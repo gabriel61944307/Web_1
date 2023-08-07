@@ -120,20 +120,28 @@
 
 				
 				
-				<button onclick="listarMedicosPorEspecialidade()">Listar Médicos por Especialidade</button>
-				<select id="especialidade" name="especialidade">
-					<option value="Cardiologia">Cardiologia</option>
-					<option value="Dermatologia">Dermatologia</option>
-					
+				<a class="button" onclick="listarMedicosPorEspecialidade()" href="javascript:void(0)"
+					th:text="#{login.listaresp}"></a>
+				<select class="button" id="especialidade" name="especialidade">
+					<option th:value="Cardiologia" th:text="#{login.especialidade.cardiologia}">Cardiologia</option>
+					<option th:value="Dermatologia" th:text="#{login.especialidade.dermatologia}">Dermatologia</option>
+					<option th:value="Neurologia" th:text="#{login.especialidade.neurologia}">Neurologia</option>
+					<option th:value="Psiquiatria" th:text="#{login.especialidade.psiquiatria}">Psiquiatria</option>
+					<option th:value="Endocrinologia" th:text="#{login.especialidade.endocrinologia}">Endocrinologia</option>
+					<option th:value="Ortopedia" th:text="#{login.especialidade.ortopedia}">Ortopedia</option>
+					<option th:value="Oftalmologia" th:text="#{login.especialidade.oftalmologia}">Oftalmologia</option>
+					<option th:value="Anestesiologia" th:text="#{login.especialidade.anestesiologia}">Anestesiologia</option>
+					<option th:value="Ginecologia" th:text="#{login.especialidade.ginecologia}">Ginecologia</option>
+					<option th:value="Pediatria" th:text="#{login.especialidade.pediatria}">Pediatria</option>
+					<option th:value="Urologia" th:text="#{login.especialidade.urologia}">Urologia</option>
 				</select>
-				
+
 				<script th:inline="javascript">
 					function listarMedicosPorEspecialidade() {
 						var especialidadeSelecionada = document.getElementById("especialidade").value;
 						window.location.href = '/noAutho/listaresp?especialidade=' + encodeURIComponent(especialidadeSelecionada);
 					}
 				</script>
-
 			</div>
 		</div>
 	</div>
