@@ -69,7 +69,7 @@
 						<select class="form-control" id="horaConsulta" name="horaConsulta" required th:field="*{horaConsulta}">
 							<option value="" disable>Selecione um horário.</option>
 
-							<option th:each="horario : ${horarios}" th:value="${horario}" th:text="${horario}"></option>
+							<option th:each="horario : ${horarios}" th:value="${#dates.format(standardDate, 'HH:mm')}" th:text="${horario}"></option>
 						</select>
 
 						<div class="invalid-feedback">
