@@ -14,4 +14,6 @@ public interface IMedicoService {
 	void excluir(Long id);
 
     boolean medicoTemConsultas(Long id);
+
+	List<Medico> buscarPorEspecialidade(String especialidade);
 }
