@@ -19,7 +19,8 @@ import br.ufscar.dc.dsw.dao.IMedicoDAO;
 import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.dao.IConsultaDAO;
 import br.ufscar.dc.dsw.domain.Consulta;
-
+import br.ufscar.dc.dsw.domain.Especialidade;
+import br.ufscar.dc.dsw.dao.IEspecialidadeDAO;
 @SpringBootApplication
 public class ConsultorioApplication {
 
@@ -28,7 +29,7 @@ public class ConsultorioApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(IUsuarioDAO usuarioDAO, IPacienteDAO pacienteDAO, IMedicoDAO medicoDAO, IConsultaDAO consultaDAO, BCryptPasswordEncoder encoder) {
+	public CommandLineRunner demo(IUsuarioDAO usuarioDAO, IPacienteDAO pacienteDAO, IMedicoDAO medicoDAO, IConsultaDAO consultaDAO, IEspecialidadeDAO especialidadeDAO, BCryptPasswordEncoder encoder) {
 		return (args) -> {
 
 			Paciente p1 = new Paciente();
@@ -71,6 +72,65 @@ public class ConsultorioApplication {
 			p1.addConsultas(c1);
 			consultaDAO.save(c1);
 
+			Especialidade e1 = new Especialidade();
+			e1.setEspecialidade("Cardiologia");
+			especialidadeDAO.save(e1);
+			
+			Especialidade e2 = new Especialidade();
+			e2.setEspecialidade("Dermatologia");
+			especialidadeDAO.save(e2);
+			
+			Especialidade e3 = new Especialidade();
+			e3.setEspecialidade("Neurologia");
+			especialidadeDAO.save(e3);
+			
+			Especialidade e4 = new Especialidade();
+			e4.setEspecialidade("Psiquiatria");
+			especialidadeDAO.save(e4);
+			
+			Especialidade e5 = new Especialidade();
+			e5.setEspecialidade("Endocrinologia");
+			especialidadeDAO.save(e5);
+			
+			Especialidade e6 = new Especialidade();
+			e6.setEspecialidade("Ortopedia");
+			especialidadeDAO.save(e6);
+			
+			Especialidade e7 = new Especialidade();
+			e7.setEspecialidade("Oftalmologia");
+			especialidadeDAO.save(e7);
+			
+			Especialidade e8 = new Especialidade();
+			e8.setEspecialidade("Anestesiologia");
+			especialidadeDAO.save(e8);
+			
+			Especialidade e9 = new Especialidade();
+			e9.setEspecialidade("Ginecologia");
+			especialidadeDAO.save(e9);
+			
+			Especialidade e10 = new Especialidade();
+			e10.setEspecialidade("Pediatria");
+			especialidadeDAO.save(e10);
+			
+			Especialidade e11 = new Especialidade();
+			e11.setEspecialidade("Urologia");
+			especialidadeDAO.save(e11);
+
+			Especialidade e12 = new Especialidade();
+			e12.setEspecialidade("Dentista");
+			especialidadeDAO.save(e12);
+
+			Especialidade e13 = new Especialidade();
+			e13.setEspecialidade("Oncologia");
+			especialidadeDAO.save(e13);
+
+			Especialidade e14 = new Especialidade();
+			e14.setEspecialidade("Gastroenterologia");
+			especialidadeDAO.save(e14);
+
+			Especialidade e15 = new Especialidade();
+			e15.setEspecialidade("Radiologia");
+			especialidadeDAO.save(e15);
 			//System.out.println("PACIENTES: " + pacienteDAO.findAll());
 
 			// Usuario u2 = new Usuario();

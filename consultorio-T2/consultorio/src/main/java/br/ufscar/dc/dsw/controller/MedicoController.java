@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.service.spec.IMedicoService;
+import br.ufscar.dc.dsw.service.spec.IEspecialidadeService;
 
 @Controller
 @RequestMapping("/medicos")
@@ -22,11 +23,15 @@ public class MedicoController {
     private IMedicoService service;
 
     @Autowired
+    private IEspecialidadeService especialidadeService;
+
+    @Autowired
 	private BCryptPasswordEncoder encoder;
 
     @GetMapping("/cadastrar")
-    public String cadastrar(Medico medico) {
+    public String cadastrar(Medico medico, ModelMap model) {
         medico.setRole("ROLE_PACIENTE");
+        model.addAttribute("especialidades", especialidadeService.buscarTodos());
         return "medicos/cadastro";
     }
 
@@ -62,14 +67,15 @@ public class MedicoController {
     @GetMapping("/editar/{id}")
     public String preEditar(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("medico", service.buscarPorId(id));
-
+        model.addAttribute("especialidades", especialidadeService.buscarTodos());
         return "medicos/cadastro";
     }
 
     @PostMapping("/editar")
-    public String editar(@Valid Medico medico, String novoPassword, BindingResult result, RedirectAttributes attr) {
+    public String editar(@Valid Medico medico, String novoPassword, BindingResult result, ModelMap model, RedirectAttributes attr) {
 
         if (result.hasErrors()) {
+            model.addAttribute("especialidades", especialidadeService.buscarTodos());
             return "medicos/cadastro";
         }
 
@@ -78,7 +84,6 @@ public class MedicoController {
         } else {
 			System.out.println("Senha não foi editada");
 		}
-
         service.salvar(medico);
         attr.addFlashAttribute("success", "medico.edit.success");
         return "redirect:/medicos/listar";
