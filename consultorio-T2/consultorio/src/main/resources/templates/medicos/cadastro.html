@@ -91,11 +91,11 @@
 				</div> 
 
 
-				<label >Selecione uma especialidade</label>
+				<label th:text="#{medico.especialidade.label}"></label>
 				<br>
 				<select class="form-control" id="especialidade" th:field="*{especialidade}" required>
 					<!-- <option></option> -->
-					<option value="" disabled>Selecione uma especialidade.</option>
+					<option value="" disable th:text="#{medico.especialidade.label}"></option>
 					<option th:each="especialidade : ${especialidades}" th:value="${especialidade}" th:text="${especialidade}"></option>
 				</select>
 
