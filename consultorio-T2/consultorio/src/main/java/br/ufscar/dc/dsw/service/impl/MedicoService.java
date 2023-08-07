@@ -35,6 +35,11 @@ public class MedicoService implements IMedicoService {
 		return dao.findAll();
 	}
 
+	@Transactional(readOnly = true)
+	public List<Medico> buscarPorEspecialidade(String especialidade) {
+		return dao.findByEspecialidade(especialidade);
+	}
+
     // esse aqui tem que implementar quando a gente criar a consulta pra verificar se o medico tem uma consulta e não deletar ele se tiver (e tem que ter a mesma coisa pra médico)
     @Transactional(readOnly = true)
 	public boolean medicoTemConsultas(Long id) {
