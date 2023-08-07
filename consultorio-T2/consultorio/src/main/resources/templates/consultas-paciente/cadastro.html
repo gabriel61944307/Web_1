@@ -40,7 +40,7 @@
 						<select class="form-control" id="medico" name="medico" required>
 							<!-- <option></option> -->
 							<option value="" disable>Selecione um médico.</option>
-							<option th:each="medico : ${medicos}" th:value="${medico.id}" th:text="${medico.nome + ' - ' + medico.especialidade}"></option>
+							<option th:each="medico : ${medicos}" th:value="${medico.id}" th:text="${medico.nome + ' - ' + medico.especialidade}" th:field="*{medico.id}"></option>
 						</select>
 
 						<!-- <input type="hidden" id="medico" name="medico" value="3"> -->
@@ -66,29 +66,10 @@
 						<!-- <input type="time" class="form-control" id="horaConsulta" th:field="*{horaConsulta}"
 						autofocus="autofocus" th:classappend="${#fields.hasErrors('horaConsulta')} ? is-invalid" step="1800" /> -->
 
-						<select class="form-control" id="horaConsulta" name="horaConsulta" required>
+						<select class="form-control" id="horaConsulta" name="horaConsulta" required th:field="*{horaConsulta}">
 							<option value="" disable>Selecione um horário.</option>
 
-							<!-- Gerar as opções de horário de meia em meia hora -->
-							<!-- Das 08:00 às 18:30 -->
-							<script>
-								// Defina os horários de início e fim permitidos
-								const startHour = 8;
-								const endHour = 18;
-								const endMinute = 30;
-
-								// Gere as opções de horário de meia em meia hora dentro do intervalo permitido
-								for (let hour = startHour; hour <= endHour; hour++) {
-									for (let minute = 0; minute <= 30; minute += 30) {
-										const formattedHour = String(hour).padStart(2, '0');
-										const formattedMinute = String(minute).padStart(2, '0');
-										const optionText = `${formattedHour}:${formattedMinute}`;
-										const optionValue = `${formattedHour}:${formattedMinute}`;
-
-										document.write(`<option value="${optionValue}">${optionText}</option>`);
-									}
-								}
-							</script>
+							<option th:each="horario : ${horarios}" th:value="${horario}" th:text="${horario}"></option>
 						</select>
 
 						<div class="invalid-feedback">
@@ -98,6 +79,7 @@
 
 				</div>				
 			
+				<input type="hidden" id="id" th:field="*{id}" />
 				<button type="submit" th:text="#{button.salvar.label}"
 					class="btn btn-primary btn-sm"></button>
 			</form>
