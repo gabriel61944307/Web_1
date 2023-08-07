@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.ufscar.dc.dsw.service.spec.IMedicoService;
 
@@ -12,12 +13,21 @@ import br.ufscar.dc.dsw.service.spec.IMedicoService;
 @RequestMapping("/noAutho")
 public class NoAuthoController {
 
-    @Autowired
-    private IMedicoService service;
+	@Autowired
+	private IMedicoService service;
 
-    @GetMapping("/listar")
+	@GetMapping("/listar")
 	public String listar(ModelMap model) {
-		model.addAttribute("medicos",service.buscarTodos());
+		model.addAttribute("medicos", service.buscarTodos());
 		return "noAutho/listarMedicos";
 	}
+
+	@GetMapping("/listaresp")
+	public String listarPorEspecialidade(@RequestParam(value = "especialidade", required = false) String especialidade,
+			ModelMap model) {
+		model.addAttribute("especialidade", especialidade);
+		model.addAttribute("medicos", service.buscarPorEspecialidade(especialidade));
+		return "noAutho/listarMedicosEsp";
+	}
+
 }
