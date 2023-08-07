@@ -47,12 +47,12 @@
                             <td th:text="${consulta.medico.nome}"></td>
                             <td th:text="${consulta.medico.especialidade}"></td>
                             <td colspan="2">
-								<a class="btn btn-info btn-sm" th:href="@{/consultas/editar/{id} (id=${consulta.id}) }"
+								<a class="btn btn-info btn-sm" th:href="@{/consultas-paciente/editar/{id} (id=${consulta.id}) }"
 									role="button"> 
 									<span class="oi oi-brush" th:title="#{link.editar.label}" aria-hidden="true"> </span>
 								</a>
 								<button
-									th:id="${'btn_consultas/excluir/' + consulta.id}"
+									th:id="${'btn_consultas-paciente/excluir/' + consulta.id}"
 									type="button" class="btn btn-danger btn-sm"
 									data-toggle="modal" data-target="#myModal">
 									<span class="oi oi-circle-x" th:title="#{link.excluir.label}" aria-hidden="true"></span>

@@ -23,6 +23,10 @@ public class ConsultaService implements IConsultaService {
         dao.save(consulta);
     }
 
+    public void excluir(Long id) {
+        dao.deleteById(id);
+    }
+
     @Transactional(readOnly = true)
     public Consulta buscarPorId(Long id) {
         return dao.findById(id.longValue());
