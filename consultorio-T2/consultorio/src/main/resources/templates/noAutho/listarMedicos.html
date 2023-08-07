@@ -59,10 +59,10 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>CRM</th>
-                    <th>Especialidade</th>
+                    <th th:text="#{medico.nome.label}"></th>
+                    <th th:text="#{medico.email.label}"></th>
+                    <th th:text="#{medico.CRM.label}"></th>
+                    <th th:text="#{medico.especialidade.label}"></th>
                 </tr>
             </thead>
             <tbody>
@@ -76,6 +76,6 @@
             </tbody>
         </table>
     </div>
-    <a class="button" href="/login">Voltar</a>
+    <a class="button" href="/login" th:text="#{previous.message}"></a>
 </body>
 </html>
