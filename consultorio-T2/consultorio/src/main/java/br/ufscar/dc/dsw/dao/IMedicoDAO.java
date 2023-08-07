@@ -10,12 +10,16 @@ import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.domain.Paciente;
 
 @SuppressWarnings("unchecked")
-public interface IMedicoDAO extends CrudRepository<Medico, Long>  {
+public interface IMedicoDAO extends CrudRepository<Medico, Long> {
     Medico save(Medico medico);
 
     Medico findById(long id);
 
-	List<Medico> findAll();
+    List<Medico> findAll();
 
-	void deleteById(Long id);
+    void deleteById(Long id);
+
+    // Consulta personalizada para buscar médicos por especialidade
+    @Query("SELECT m FROM Medico m WHERE m.especialidade = :especialidade")
+    List<Medico> findByEspecialidade(@Param("especialidade") String especialidade);
 }
