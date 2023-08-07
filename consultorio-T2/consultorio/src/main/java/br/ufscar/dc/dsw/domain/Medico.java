@@ -29,7 +29,7 @@ public class Medico extends Usuario {
 
     @NotBlank
     @Column(nullable = false, length = 16)
-    private String Especialidade;
+    private String especialidade;
 
     @OneToMany(mappedBy = "medico")
     private List<Consulta> consultas = new ArrayList<>();
@@ -48,11 +48,12 @@ public class Medico extends Usuario {
     }
 
     public String getEspecialidade() {
-        return Especialidade;
+        return especialidade;
     }
 
-    public void setEspecialidade(String especialidade) {
-        Especialidade = especialidade;
+    public void setEspecialidade(String Especialidade) {
+        especialidade = Especialidade;
     }
+
 
 }
