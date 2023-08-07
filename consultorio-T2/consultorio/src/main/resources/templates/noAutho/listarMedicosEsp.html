@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listagem de Médicos por Especialidade</title>
+</head>
+<body>
+    <h1>Listagem de Médicos por Especialidade</h1>
+    <p>Especialidade: <strong th:text="${especialidade}"></strong></p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CRM</th>
+                <th>Email</th>
+                <!-- Adicione aqui outras colunas que deseja mostrar -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop pelos médicos na lista 'medicos' -->
+            <tr th:each="medico : ${medicos}">
+                <td th:text="${medico.nome}"></td>
+                <td th:text="${medico.CRM}"></td>
+                <td th:text="${medico.email}"></td>
+                <!-- Adicione aqui outras colunas que deseja mostrar -->
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
