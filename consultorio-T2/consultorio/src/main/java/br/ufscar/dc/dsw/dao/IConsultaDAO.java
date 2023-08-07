@@ -18,5 +18,7 @@ public interface IConsultaDAO extends CrudRepository<Consulta, Long> {
 
     Consulta save(Consulta consulta);
 
+    void deleteById(Long id);
+
     // edição e remoção?
 }

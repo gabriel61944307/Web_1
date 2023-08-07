@@ -9,7 +9,9 @@
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"><i class="oi oi-caret-right"></i>
-						<span th:text="#{consulta.cadastrar.label}"></span></li>
+						<!-- <span th:text="#{consulta.cadastrar.label}"></span> -->
+						<span th:text="${consulta.id == null} ? #{consulta.cadastrar.label} : #{consulta.editar.label}"></span>
+					</li>
 				</ul>
 				<a class="btn btn-primary btn-md" th:href="@{/consultas-paciente/listar}"
 					role="button"> <span class="oi oi-spreadsheet" title="Listar"
@@ -23,7 +25,7 @@
 			<div th:replace="fragments/alert"></div>
 
 			<form 
-				th:action="${consulta.id == null} ? @{/consultas-paciente/salvar} : @{consultas-paciente/editar}"
+				th:action="${consulta.id == null} ? @{/consultas-paciente/salvar} : @{/consultas-paciente/editar}"
 				th:object="${consulta}" method="POST">
 
 				<!-- <div th:replace="fragments/validacao :: validacao"></div> -->
@@ -35,11 +37,13 @@
 					<div class="for col-md-4">
 						<label th:text="#{consulta.select-medico.label}" for="medico"></label>
 						<br>
-						<select id="medico" name="medico">
+						<select class="form-control" id="medico" name="medico" required>
 							<!-- <option></option> -->
+							<option value="" disable>Selecione um médico.</option>
+							<option th:each="medico : ${medicos}" th:value="${medico.id}" th:text="${medico.nome + ' - ' + medico.especialidade}"></option>
 						</select>
 
-						<input type="hidden" id="medico" name="medico" value="3">
+						<!-- <input type="hidden" id="medico" name="medico" value="3"> -->
 						<!-- tem muita coisa faltando aqui, tem que lembrar de arrumar -->
 
 						<div class="invalid-feedback">
