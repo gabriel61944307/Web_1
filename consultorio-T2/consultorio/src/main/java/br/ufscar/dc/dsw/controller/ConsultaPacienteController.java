@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -62,8 +63,6 @@ public class ConsultaPacienteController {
 
     @GetMapping("/cadastrar")
     public String cadastrar(Consulta consulta, ModelMap model) {
-        // consulta.setPaciente();
-        //consulta.setPaciente(this.getUsuario());
         consulta.setPaciente(getPacienteLogado());
 
         model.addAttribute("medicos", medicoService.buscarTodos());
@@ -82,6 +81,8 @@ public class ConsultaPacienteController {
     public String salvar(@Valid Consulta consulta, BindingResult result, RedirectAttributes attr, ModelMap model) {
 
         //System.out.println(consulta.getMedico().getId());
+
+
 
         if (result.hasErrors()) {
             // repopulando a lista de médicos
@@ -129,17 +130,21 @@ public class ConsultaPacienteController {
     public String preEditar(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("consulta", consultaService.buscarPorId(id));
         model.addAttribute("medicos", medicoService.buscarTodos());
-
+        
         return "consultas-paciente/cadastro";
     }
 
     @PostMapping("/editar")
     public String editar(@Valid Consulta consulta, BindingResult result, RedirectAttributes attr, ModelMap model) {
-
+        
         if (result.hasErrors()) {
             model.addAttribute("medicos", medicoService.buscarTodos());
             return "consultas-paciente/cadastro";
         }
+
+        
+
+        //model.addAttribute("horarios", listaHorario);
 
         List<Consulta> consultasMedico = consultaService.buscarTodasPorMedico(consulta.getMedico());
 
@@ -147,6 +152,13 @@ public class ConsultaPacienteController {
             if (consultaItem.getDataConsulta().equals(consulta.getDataConsulta())) {
                 if (consultaItem.getHoraConsulta().equals(consulta.getHoraConsulta())) {
                     attr.addFlashAttribute("fail", "consulta.create.indisponivel");
+                    //model.addAttribute("consulta", consulta);
+                    attr.addFlashAttribute("consulta", consultaService.buscarPorId(consulta.getId()));
+                    // "medicos", medicoService.buscarTodos()
+
+                    // model.addAttribute();
+                    // model.addAttribute();
+
                     //return "consultas-paciente/cadastro";
                     return "redirect:/consultas-paciente/cadastrar";
                 }
@@ -160,6 +172,7 @@ public class ConsultaPacienteController {
             if (consultaItem.getDataConsulta().equals(consulta.getDataConsulta())) {
                 if (consultaItem.getHoraConsulta().equals(consulta.getHoraConsulta())) {
                     attr.addFlashAttribute("fail", "consulta.create.indisponivel");
+                    attr.addFlashAttribute("consulta", consultaService.buscarPorId(consulta.getId()));
                     //return "consultas-paciente/cadastro";
                     return "redirect:/consultas-paciente/cadastrar";
                 }
@@ -190,5 +203,20 @@ public class ConsultaPacienteController {
 		model.addAttribute("success", "consulta.delete.success");
         
         return listar(model);
+    }
+
+    @ModelAttribute("horarios")
+    public List<LocalTime> listaHorarios() {
+        List<LocalTime> listaHorario = new ArrayList<>();
+        
+        LocalTime horarioInicial = LocalTime.of(8, 0);
+        LocalTime horarioFinal = LocalTime.of(19, 0);
+        
+        while (horarioInicial.isBefore(horarioFinal)) {
+            listaHorario.add(horarioInicial);
+            horarioInicial = horarioInicial.plusMinutes(30);
+        }
+
+        return listaHorario;
     }
 }
