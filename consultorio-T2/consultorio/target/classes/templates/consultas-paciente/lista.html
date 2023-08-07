@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<i class="oi oi-caret-right"></i>
+						<span th:text="#{consulta.listar.label}"></span>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		
+		<div class="container" id="listagem">
+
+			<div th:replace="fragments/alert"></div>
+
+			<div class="table-responsive">
+				<table class="table table-striped table-hover table-sm">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th th:text="#{consulta.data.label}"></th>
+							<th th:text="#{consulta.hora.label}"></th>
+                            <th th:text="#{consulta.medico.label}"></th>
+                            <th th:text="#{consulta.especialidade.label}"></th>
+                            <th th:text="#{acao.label}"></th>
+							<!-- <th class="bg-warning" th:text="#{livro.titulo.label}"></th>
+							<th class="bg-warning" th:text="#{livro.autor.label}"></th>
+							<th class="bg-warning" th:text="#{livro.editora.label}"></th>
+							<th class="bg-warning" th:text="#{livro.ano.label}"></th>
+							<th class="bg-warning" th:text="#{consulta.valor.label}"></th> -->
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="consulta : ${consultas}">
+                            <td th:text="${consulta.id}"></td>
+                            <!-- <td th:text="${#temporals.format(consulta.dataHoraConsulta, 'dd/MM/yyyy, HH:mm')}"></td> -->
+							<td th:text="${#temporals.format(consulta.dataConsulta, 'dd/MM/yyyy')}"></td>
+							<td th:text="${#temporals.format(consulta.horaConsulta, 'HH:mm')}"></td>
+                            <td th:text="${consulta.medico.nome}"></td>
+                            <td th:text="${consulta.medico.especialidade}"></td>
+                            <td colspan="2">
+								<a class="btn btn-info btn-sm" th:href="@{/consultas-paciente/editar/{id} (id=${consulta.id}) }"
+									role="button"> 
+									<span class="oi oi-brush" th:title="#{link.editar.label}" aria-hidden="true"> </span>
+								</a>
+								<button
+									th:id="${'btn_consultas-paciente/excluir/' + consulta.id}"
+									type="button" class="btn btn-danger btn-sm"
+									data-toggle="modal" data-target="#myModal">
+									<span class="oi oi-circle-x" th:title="#{link.excluir.label}" aria-hidden="true"></span>
+								</button>
+							</td>
+							<!-- <td th:text="${consulta.id}"></td>
+							<td th:text="${consulta.data}"></td>
+							<td th:text="${consulta.livro.titulo}"></td>
+							<td th:text="${consulta.livro.autor}"></td>
+							<td th:text="${consulta.livro.editora.nome}"></td>
+							<td th:text="${consulta.livro.ano}"></td>
+							<td th:text="|R$ ${#numbers.formatDecimal(consulta.valor,2,2,'COMMA')}|"></td> -->
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div th:replace="fragments/modal :: modal"></div>
+	</section>
+</body>
+</html>
