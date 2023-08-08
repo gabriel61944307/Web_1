@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-// import br.ufscar.dc.dsw.domain.Editora;
-// import br.ufscar.dc.dsw.service.spec.IEditoraService;
 
 import br.ufscar.dc.dsw.service.spec.IPacienteService;
 import br.ufscar.dc.dsw.domain.Paciente;
@@ -42,19 +40,9 @@ public class PacienteController {
     @PostMapping("/salvar")
 	public String salvar(@Valid Paciente paciente, BindingResult result, RedirectAttributes attr) {
 		
-   
-        //System.out.println("PACIENTE: " + paciente);
-        //System.out.println(result);
-
-        //paciente.setRole("ROLE_PACIENTE");
-
 		if (result.hasErrors()) {
-            
-            System.out.println(result);
 			return "pacientes/cadastro";
 		}
-
-		//System.out.println("password = " + paciente.getPassword());
 		
 		paciente.setPassword(encoder.encode(paciente.getPassword()));
 		service.salvar(paciente);
@@ -89,12 +77,6 @@ public class PacienteController {
 
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, ModelMap model) {
-        // if (service.editoraTemLivros(id)) {
-		// 	model.addAttribute("fail", "editora.delete.fail");
-		// } else {
-		// 	service.excluir(id);
-		// 	model.addAttribute("success", "editora.delete.success");
-		// }
         if (service.pacienteTemConsultas(id)) {
             model.addAttribute("fail", "paciente.delete.fail");
         } else {

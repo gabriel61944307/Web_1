@@ -34,7 +34,6 @@
 					<tbody>
 						<tr th:each="consulta : ${consultas}">
                             <td th:text="${consulta.id}"></td>
-                            <!-- <td th:text="${#temporals.format(consulta.dataHoraConsulta, 'dd/MM/yyyy, HH:mm')}"></td> -->
                             <td th:text="${consulta.paciente.nome}"></td>
 							<td th:text="${#temporals.format(consulta.dataConsulta, 'dd/MM/yyyy')}"></td>
 							<td th:text="${#temporals.format(consulta.horaConsulta, 'HH:mm')}"></td>

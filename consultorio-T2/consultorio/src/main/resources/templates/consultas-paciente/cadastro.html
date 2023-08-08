@@ -9,7 +9,6 @@
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"><i class="oi oi-caret-right"></i>
-						<!-- <span th:text="#{consulta.cadastrar.label}"></span> -->
 						<span th:text="${consulta.id == null} ? #{consulta.cadastrar.label} : #{consulta.editar.label}"></span>
 					</li>
 				</ul>
@@ -28,8 +27,6 @@
 				th:action="${consulta.id == null} ? @{/consultas-paciente/salvar} : @{/consultas-paciente/editar}"
 				th:object="${consulta}" method="POST">
 
-				<!-- <div th:replace="fragments/validacao :: validacao"></div> -->
-
 				<div class="form-row">
 
 					<input type="hidden" id="paciente" name="paciente" th:field="*{paciente}">
@@ -38,13 +35,9 @@
 						<label th:text="#{consulta.select-medico.label}" for="medico"></label>
 						<br>
 						<select class="form-control" id="medico" name="medico" required>
-							<!-- <option></option> -->
-							<option value="" disable>Selecione um médico.</option>
+							<option value="" disable th:text="#{select-medico}"></option>
 							<option th:each="medico : ${medicos}" th:value="${medico.id}" th:text="${medico.nome + ' - ' + medico.especialidade}" th:field="*{medico.id}"></option>
 						</select>
-
-						<!-- <input type="hidden" id="medico" name="medico" value="3"> -->
-						<!-- tem muita coisa faltando aqui, tem que lembrar de arrumar -->
 
 						<div class="invalid-feedback">
 							<span th:errors="*{medico}"></span>
@@ -63,11 +56,9 @@
 
 					<div class="form-group col-md-4">
 						<label th:text="#{consulta.hora.label}" for="horaConsulta"></label>
-						<!-- <input type="time" class="form-control" id="horaConsulta" th:field="*{horaConsulta}"
-						autofocus="autofocus" th:classappend="${#fields.hasErrors('horaConsulta')} ? is-invalid" step="1800" /> -->
 
 						<select class="form-control" id="horaConsulta" name="horaConsulta" required th:field="*{horaConsulta}">
-							<option value="" disable>Selecione um horário.</option>
+							<option value="" disable th:text="#{select-hora}"></option>
 
 							<option th:each="horario : ${horarios}" th:value="${#dates.format(standardDate, 'HH:mm')}" th:text="${horario}"></option>
 						</select>

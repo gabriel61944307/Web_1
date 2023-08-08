@@ -31,17 +31,11 @@
                             <th th:text="#{consulta.medico.label}"></th>
                             <th th:text="#{consulta.especialidade.label}"></th>
                             <th th:text="#{acao.label}"></th>
-							<!-- <th class="bg-warning" th:text="#{livro.titulo.label}"></th>
-							<th class="bg-warning" th:text="#{livro.autor.label}"></th>
-							<th class="bg-warning" th:text="#{livro.editora.label}"></th>
-							<th class="bg-warning" th:text="#{livro.ano.label}"></th>
-							<th class="bg-warning" th:text="#{consulta.valor.label}"></th> -->
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="consulta : ${consultas}">
                             <td th:text="${consulta.id}"></td>
-                            <!-- <td th:text="${#temporals.format(consulta.dataHoraConsulta, 'dd/MM/yyyy, HH:mm')}"></td> -->
 							<td th:text="${#temporals.format(consulta.dataConsulta, 'dd/MM/yyyy')}"></td>
 							<td th:text="${#temporals.format(consulta.horaConsulta, 'HH:mm')}"></td>
                             <td th:text="${consulta.medico.nome}"></td>
@@ -58,13 +52,6 @@
 									<span class="oi oi-circle-x" th:title="#{link.excluir.label}" aria-hidden="true"></span>
 								</button>
 							</td>
-							<!-- <td th:text="${consulta.id}"></td>
-							<td th:text="${consulta.data}"></td>
-							<td th:text="${consulta.livro.titulo}"></td>
-							<td th:text="${consulta.livro.autor}"></td>
-							<td th:text="${consulta.livro.editora.nome}"></td>
-							<td th:text="${consulta.livro.ano}"></td>
-							<td th:text="|R$ ${#numbers.formatDecimal(consulta.valor,2,2,'COMMA')}|"></td> -->
 						</tr>
 					</tbody>
 				</table>

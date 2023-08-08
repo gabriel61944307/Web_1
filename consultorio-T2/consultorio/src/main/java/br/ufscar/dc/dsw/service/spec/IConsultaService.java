@@ -17,6 +17,4 @@ public interface IConsultaService {
     void salvar(Consulta consulta);
 
     void excluir(Long id);
-
-    // edição e remoção?
 }

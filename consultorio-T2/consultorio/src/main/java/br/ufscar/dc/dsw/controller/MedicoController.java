@@ -30,7 +30,7 @@ public class MedicoController {
 
     @GetMapping("/cadastrar")
     public String cadastrar(Medico medico, ModelMap model) {
-        medico.setRole("ROLE_PACIENTE");
+        medico.setRole("ROLE_MEDICO");
         model.addAttribute("especialidades", especialidadeService.buscarTodos());
         return "medicos/cadastro";
     }
@@ -43,21 +43,11 @@ public class MedicoController {
 
     @PostMapping("/salvar")
 	public String salvar(@Valid Medico medico, BindingResult result, RedirectAttributes attr) {
-		
-   
-        //System.out.println("PACIENTE: " + medico);
-        //System.out.println(result);
-
-        //medico.setRole("ROLE_PACIENTE");
 
 		if (result.hasErrors()) {
-            
-            System.out.println(result);
 			return "medicos/cadastro";
 		}
 
-		//System.out.println("password = " + medico.getPassword());
-		
 		medico.setPassword(encoder.encode(medico.getPassword()));
 		service.salvar(medico);
 		attr.addFlashAttribute("success", "medico.create.success");
@@ -91,12 +81,6 @@ public class MedicoController {
 
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, ModelMap model) {
-        // if (service.editoraTemLivros(id)) {
-		// 	model.addAttribute("fail", "editora.delete.fail");
-		// } else {
-		// 	service.excluir(id);
-		// 	model.addAttribute("success", "editora.delete.success");
-		// }
         if (service.medicoTemConsultas(id)) {
             model.addAttribute("fail", "medico.delete.fail");
         } else {
@@ -107,9 +91,3 @@ public class MedicoController {
         return listar(model);
     }
 }
-
-
-
-
-
-

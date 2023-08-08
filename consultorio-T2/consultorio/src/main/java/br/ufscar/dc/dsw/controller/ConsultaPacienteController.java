@@ -1,18 +1,12 @@
 package br.ufscar.dc.dsw.controller;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,13 +16,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufscar.dc.dsw.domain.Consulta;
 import br.ufscar.dc.dsw.domain.Paciente;
-import br.ufscar.dc.dsw.domain.Usuario;
-import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.security.UsuarioDetails;
 import br.ufscar.dc.dsw.service.spec.IConsultaService;
 import br.ufscar.dc.dsw.service.spec.IPacienteService;
@@ -50,14 +41,9 @@ public class ConsultaPacienteController {
     private Paciente getPacienteLogado() {
 		UsuarioDetails usuarioDetails = (UsuarioDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        //System.out.println(usuarioDetails.getUsuario().getId());
-
         Long idPaciente = usuarioDetails.getUsuario().getId();
-
         Paciente pacienteLogado = pacienteService.buscarPorId(idPaciente);
 
-		//return usuarioDetails.getUsuario();
-        
         return pacienteLogado;
 	}
 
@@ -80,42 +66,30 @@ public class ConsultaPacienteController {
     @PostMapping("/salvar")
     public String salvar(@Valid Consulta consulta, BindingResult result, RedirectAttributes attr, ModelMap model) {
 
-        //System.out.println(consulta.getMedico().getId());
-
-
-
         if (result.hasErrors()) {
-            // repopulando a lista de médicos
             model.addAttribute("medicos", medicoService.buscarTodos());
             return "consultas-paciente/cadastro";
-            //return "redirect:/consultas-paciente/cadastrar";
         }
 
-        //LocalDateTime dataHoraConsulta = dataConsulta.atTime(horaConsulta);
-
-        //consulta.setDataHoraConsulta(dataHoraConsulta);
-
-        // verificar se o horário da consulta está disponível para o médico
+        // Verifica se o médico da consulta tem essa data/horário disponíveis
         List<Consulta> consultasMedico = consultaService.buscarTodasPorMedico(consulta.getMedico());
 
         for (Consulta consultaItem : consultasMedico) {
             if (consultaItem.getDataConsulta().equals(consulta.getDataConsulta())) {
                 if (consultaItem.getHoraConsulta().equals(consulta.getHoraConsulta())) {
                     attr.addFlashAttribute("fail", "consulta.create.indisponivel");
-                    //return "consultas-paciente/cadastro";
                     return "redirect:/consultas-paciente/cadastrar";
                 }
             }
         }
 
-        // verificar se o paciente da consulta tem essa data/horário disponíveis
+        // Verifica se o paciente da consulta tem essa data/horário disponíveis
         List<Consulta> consultasPaciente = consultaService.buscarTodasPorPaciente(consulta.getPaciente());
         
         for (Consulta consultaItem : consultasPaciente) {
             if (consultaItem.getDataConsulta().equals(consulta.getDataConsulta())) {
                 if (consultaItem.getHoraConsulta().equals(consulta.getHoraConsulta())) {
                     attr.addFlashAttribute("fail", "consulta.create.indisponivel");
-                    //return "consultas-paciente/cadastro";
                     return "redirect:/consultas-paciente/cadastrar";
                 }
             }
@@ -142,30 +116,21 @@ public class ConsultaPacienteController {
             return "consultas-paciente/cadastro";
         }
 
-        
-
-        //model.addAttribute("horarios", listaHorario);
-
+        // Verifica se o médico da consulta tem essa data/horário disponíveis
         List<Consulta> consultasMedico = consultaService.buscarTodasPorMedico(consulta.getMedico());
 
         for (Consulta consultaItem : consultasMedico) {
             if (consultaItem.getDataConsulta().equals(consulta.getDataConsulta())) {
                 if (consultaItem.getHoraConsulta().equals(consulta.getHoraConsulta())) {
                     attr.addFlashAttribute("fail", "consulta.create.indisponivel");
-                    //model.addAttribute("consulta", consulta);
                     attr.addFlashAttribute("consulta", consultaService.buscarPorId(consulta.getId()));
-                    // "medicos", medicoService.buscarTodos()
 
-                    // model.addAttribute();
-                    // model.addAttribute();
-
-                    //return "consultas-paciente/cadastro";
                     return "redirect:/consultas-paciente/cadastrar";
                 }
             }
         }
 
-        // verificar se o paciente da consulta tem essa data/horário disponíveis
+        // Verifica se o paciente da consulta tem essa data/horário disponíveis
         List<Consulta> consultasPaciente = consultaService.buscarTodasPorPaciente(consulta.getPaciente());
         
         for (Consulta consultaItem : consultasPaciente) {
@@ -173,7 +138,7 @@ public class ConsultaPacienteController {
                 if (consultaItem.getHoraConsulta().equals(consulta.getHoraConsulta())) {
                     attr.addFlashAttribute("fail", "consulta.create.indisponivel");
                     attr.addFlashAttribute("consulta", consultaService.buscarPorId(consulta.getId()));
-                    //return "consultas-paciente/cadastro";
+
                     return "redirect:/consultas-paciente/cadastrar";
                 }
             }
@@ -186,18 +151,6 @@ public class ConsultaPacienteController {
 
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, ModelMap model) {
-        // if (service.editoraTemLivros(id)) {
-		// 	model.addAttribute("fail", "editora.delete.fail");
-		// } else {
-		// 	service.excluir(id);
-		// 	model.addAttribute("success", "editora.delete.success");
-		// }
-        // if (service.pacienteTemConsultas(id)) {
-        //     model.addAttribute("fail", "paciente.delete.fail");
-        // } else {
-        //     service.excluir(id);
-        //     model.addAttribute("success", "paciente.delete.success");
-        // }
 
         consultaService.excluir(id);
 		model.addAttribute("success", "consulta.delete.success");

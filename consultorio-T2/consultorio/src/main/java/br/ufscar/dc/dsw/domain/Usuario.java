@@ -12,11 +12,7 @@ import javax.validation.constraints.NotBlank;
 @Table(name = "Usuario")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario extends AbstractEntity<Long> {
-  
-	// @NotBlank
-    // @Column(nullable = false, length = 20, unique = true)
-    // private String username;
-    
+      
 	@NotBlank
     @Column(nullable = false, length = 60)
     private String nome;
@@ -35,14 +31,6 @@ public class Usuario extends AbstractEntity<Long> {
     
     @Column(nullable = false)
     private boolean enabled;
-		
-	// public String getUsername() {
-	// 	return username;
-	// }
-	
-	// public void setUsername(String username) {
-	// 	this.username = username;
-	// }
 
 	public String getNome() {
 		return nome;

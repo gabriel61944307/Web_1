@@ -31,7 +31,6 @@
 						<tr>
 							<th>#</th>
 							<th th:text="#{paciente.name.label}"></th>
-							<!-- <th th:text="#{paciente.username.label}"></th> -->
                             <th th:text="#{paciente.email.label}"></th>
 							<th th:text="#{paciente.CPF.label}"></th>
 							<th th:text="#{paciente.telefone.label}"></th>
@@ -47,10 +46,7 @@
 							<td th:text="${paciente.email}"></td>
 							<td th:text="${paciente.CPF}"></td>
 							<td th:text="${paciente.telefone}"></td>
-                            <!-- <td th:text="${paciente.dataNascimento}"></td> -->
-                            <!-- <td th:text="${#dates.format(paciente.dataNascimento, 'dd/MM/yyyy')}"></td> -->
                             <td th:with="formattedDate=${#temporals.format(paciente.dataNascimento, 'dd/MM/yyyy')}">
-                                <!-- Utilize a variável temporária para exibir a data formatada -->
                                 <span th:text="${formattedDate}"></span>
                             </td>
                             <td th:text="${paciente.sexo}"></td>

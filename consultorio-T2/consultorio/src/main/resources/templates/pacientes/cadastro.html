@@ -40,20 +40,6 @@
 							</div>
 						</div>
 
-						<!-- trecho removido daqui, tava impedindo a edição: 
-							th:readonly="${paciente.id != null}" -->
-						<!-- <div class="form-group col-md-6">
-							<label th:text="#{paciente.password.label}" for="password"></label> 
-							<input type="password" class="form-control" id="password"
-								th:placeholder="#{paciente.password.label}" autofocus="autofocus"
-								th:field="*{password}"
-								th:classappend="${#fields.hasErrors('password')} ? is-invalid" />
-								
-							<div class="invalid-feedback">
-								<span th:errors="*{password}"></span>
-							</div>
-						</div> -->
-
 						<div th:if="${paciente.id == null}" class="form-group col-md-6">
 							<label th:text="#{paciente.password.label}" for="password"></label> 
 							<input type="password" class="form-control" id="password"
@@ -73,14 +59,9 @@
 								th:classappend="${#fields.hasErrors('password')} ? is-invalid" />
 
 							<input type="hidden" th:field="*{password}" />
-								
-							<!-- <div class="invalid-feedback">
-								<span th:errors="*{password}"></span>
-							</div> -->
 						</div>
 					</div>
 						
-
 					<div class="form-row">
 
 						<div class="form-group col-md-6">
@@ -108,7 +89,6 @@
 
 					</div>
 						
-
 					<div class="form-row">
 						<div class="form-group col-md-4">
 							<label th:text="#{paciente.telefone.label}" for="telefone"></label> 
@@ -121,17 +101,6 @@
 							</div>
 						</div>
 					
-						<!-- <div class="form-group col-md-4">
-							<label th:text="#{paciente.dataNascimento.label}" for="dataNascimento"></label> 
-							<input type="date" class="form-control" id="dataNascimento" th:field="*{dataNascimento}"
-								autofocus="autofocus" placeholder="__/__/____"
-								th:classappend="${#fields.hasErrors('dataNascimento')} ? is-invalid" 
-								data-mask="00/00/0000" />
-							<div class="invalid-feedback">
-								<span th:errors="*{dataNascimento}"></span>
-							</div>
-						</div> -->
-
 						<div class="form-group col-md-4">
 							<label th:text="#{paciente.dataNascimento.label}" for="dataNascimento"></label> 
 							<input type="date" class="form-control" id="dataNascimento" th:field="*{dataNascimento}"

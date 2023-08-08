@@ -58,10 +58,6 @@
 							th:classappend="${#fields.hasErrors('password')} ? is-invalid" />
 
 						<input type="hidden" th:field="*{password}" />
-							
-						<!-- <div class="invalid-feedback">
-							<span th:errors="*{password}"></span>
-						</div> -->
 					</div>
 					
 					<div class="form-group col-md-6">
@@ -94,21 +90,9 @@
 				<label th:text="#{medico.especialidade.label}"></label>
 				<br>
 				<select class="form-control" id="especialidade" th:field="*{especialidade}" required>
-					<!-- <option></option> -->
 					<option value="" disable th:text="#{medico.especialidade.label}"></option>
 					<option th:each="especialidade : ${especialidades}" th:value="${especialidade}" th:text="${especialidade}"></option>
 				</select>
-
-				<!-- <div class="form-group col-md-6">
-					<label th:text="#{medico.especialidade.label}" for="especialidade"></label> 
-					<input type="text" class="form-control" id="especialidade" th:field="*{especialidade}"
-						th:placeholder="#{medico.especialidade.label}" autofocus="autofocus"
-						th:classappend="${#fields.hasErrors('especialidade')} ? is-invalid" />
-						
-					<div class="invalid-feedback">
-						<span th:errors="*{especialidade}"></span>
-					</div>
-				</div> -->
 
 				<input type="hidden" id="id" th:field="*{id}" />
 				<button type="submit" th:text="#{button.salvar.label}"
