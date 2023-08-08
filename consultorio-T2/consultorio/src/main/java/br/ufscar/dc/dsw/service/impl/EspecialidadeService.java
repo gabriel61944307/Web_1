@@ -16,7 +16,7 @@ public class EspecialidadeService implements IEspecialidadeService{
     @Autowired
 	IEspecialidadeDAO dao;
 
-    	@Transactional(readOnly = true)
+    @Transactional(readOnly = true)
 	public List<Especialidade> buscarTodos() {
 		return dao.findAll();
 	}
