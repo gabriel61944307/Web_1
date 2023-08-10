@@ -15,4 +15,6 @@ public interface IPacienteService {
 	void excluir(Long id);
 
     boolean pacienteTemConsultas(Long id);
+
+	Paciente buscarPorCPF(String CPF);
 }

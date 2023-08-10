@@ -10,16 +10,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import br.ufscar.dc.dsw.validation.UniqueCPF;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Paciente")
 public class Paciente extends Usuario {
 
+    @UniqueCPF (message = "{Unique.paciente.CPF}")
     @NotBlank
     @Column(nullable = false, length = 14)
+    @Size(min = 14, max = 14)
     private String CPF;
 
     @NotBlank

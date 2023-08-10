@@ -39,4 +39,9 @@ public class PacienteService implements IPacienteService {
 	public boolean pacienteTemConsultas(Long id) {
 		return !dao.findById(id.longValue()).getConsultas().isEmpty();
 	}
+
+	@Override
+	public Paciente buscarPorCPF(String CPF) {
+		return dao.findByCPF(CPF);
+	}
 }
