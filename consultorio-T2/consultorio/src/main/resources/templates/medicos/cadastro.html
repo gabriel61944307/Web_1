@@ -74,7 +74,7 @@
 					<div class="form-group col-md-6">
 						<label th:text="#{medico.CRM.label}" for="CRM"></label> 
 						<input type="text" class="form-control" id="CRM" th:field="*{CRM}"
-							autofocus="autofocus" placeholder="__.___/__"
+							autofocus="autofocus" placeholder="__.___/__" value="12.345-SP"
 							th:classappend="${#fields.hasErrors('CRM')} ? is-invalid" 
 							data-mask="00.000/SS" />
 							

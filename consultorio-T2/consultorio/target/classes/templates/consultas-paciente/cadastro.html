@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active"><i class="oi oi-caret-right"></i>
+						<span th:text="${consulta.id == null} ? #{consulta.cadastrar.label} : #{consulta.editar.label}"></span>
+					</li>
+				</ul>
+				<a class="btn btn-primary btn-md" th:href="@{/consultas-paciente/listar}"
+					role="button"> <span class="oi oi-spreadsheet" title="Listar"
+					aria-hidden="true"></span> <span th:text="#{consulta.listar.label}"></span>
+				</a>
+			</div>
+		</nav>
+
+		<div class="container" id="cadastro">
+
+			<div th:replace="fragments/alert"></div>
+
+			<form 
+				th:action="${consulta.id == null} ? @{/consultas-paciente/salvar} : @{/consultas-paciente/editar}"
+				th:object="${consulta}" method="POST">
+
+				<div class="form-row">
+
+					<input type="hidden" id="paciente" name="paciente" th:field="*{paciente}">
+
+					<div class="for col-md-4">
+						<label th:text="#{consulta.select-medico.label}" for="medico"></label>
+						<br>
+						<select class="form-control" id="medico" name="medico" required>
+							<option value="" disable th:text="#{select-medico}"></option>
+							<option th:each="medico : ${medicos}" th:value="${medico.id}" th:text="${medico.nome + ' - ' + medico.especialidade}" th:field="*{medico.id}"></option>
+						</select>
+
+						<div class="invalid-feedback">
+							<span th:errors="*{medico}"></span>
+						</div>
+					</div>
+
+					<div class="form-group col-md-4">
+						<label th:text="#{consulta.data.label}" for="dataConsulta"></label>
+						<input type="date" class="form-control" id="dataConsulta" th:field="*{dataConsulta}"
+							autofocus="autofocus" th:classappend="${#fields.hasErrors('dataConsulta')} ? is-invalid" />
+
+						<div class="invalid-feedback">
+							<span th:errors="*{dataConsulta}"></span>
+						</div>	
+					</div>
+
+					<div class="form-group col-md-4">
+						<label th:text="#{consulta.hora.label}" for="horaConsulta"></label>
+
+						<select class="form-control" id="horaConsulta" name="horaConsulta" required th:field="*{horaConsulta}">
+							<option value="" disable th:text="#{select-hora}"></option>
+
+							<option th:each="horario : ${horarios}" th:value="${#dates.format(standardDate, 'HH:mm')}" th:text="${horario}"></option>
+						</select>
+
+						<div class="invalid-feedback">
+							<span th:errors="*{horaConsulta}"></span>
+						</div>	
+					</div>
+
+				</div>				
+			
+				<input type="hidden" id="id" th:field="*{id}" />
+				<button type="submit" th:text="#{button.salvar.label}"
+					class="btn btn-primary btn-sm"></button>
+			</form>
+		</div>
+	</section>
+</body>
+</html>
