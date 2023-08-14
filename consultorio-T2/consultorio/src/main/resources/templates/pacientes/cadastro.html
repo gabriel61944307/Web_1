@@ -115,8 +115,8 @@
 							<label th:text="#{paciente.sexo.label}" for="sexo"></label> 
 							<br>
 							<select id="sexo" name="sexo" required>
-								<option value="M" ${paciente.sexo == 'M' ? 'selected' : ''}>Masculino</option>
-								<option value="F" ${paciente.sexo == 'F' ? 'selected' : ''}>Feminino</option>
+								<option value="M" ${paciente.sexo == 'M' ? 'selected' : ''} th:text="#{paciente.sexoM.label}"></option>
+								<option value="F" ${paciente.sexo == 'F' ? 'selected' : ''} th:text="#{paciente.sexoF.label}"></option>
 							</select>						
 							<div class="invalid-feedback">
 								<span th:errors="*{sexo}"></span>
