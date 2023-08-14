@@ -7,6 +7,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import br.ufscar.dc.dsw.validation.UniqueEmail;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Usuario")
@@ -21,6 +23,7 @@ public class Usuario extends AbstractEntity<Long> {
     @Column(nullable = false, length = 64)
     private String password;
 
+	@UniqueEmail (message = "{Unique.usuario.email}")
 	@NotBlank
 	@Column(nullable = false, length = 64)
 	private String email;
