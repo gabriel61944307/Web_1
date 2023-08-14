@@ -14,7 +14,7 @@ public interface IMedicoDAO extends CrudRepository<Medico, Long> {
 
     Medico findById(long id);
 
-    Medico findByCRM(String CNPJ);
+    Medico findByCRM(String CRM);
 
     List<Medico> findAll();
 
