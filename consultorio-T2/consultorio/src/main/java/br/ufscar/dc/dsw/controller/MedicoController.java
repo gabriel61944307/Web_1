@@ -42,14 +42,16 @@ public class MedicoController {
 	}
 
     @PostMapping("/salvar")
-	public String salvar(@Valid Medico medico, BindingResult result, RedirectAttributes attr) {
+	public String salvar(@Valid Medico medico, BindingResult result, RedirectAttributes attr, ModelMap model) {
 
 		if (result.hasErrors()) {
+            model.addAttribute("especialidades", especialidadeService.buscarTodos());
 			return "medicos/cadastro";
 		}
 
 		medico.setPassword(encoder.encode(medico.getPassword()));
 		service.salvar(medico);
+
 		attr.addFlashAttribute("success", "medico.create.success");
 		return "redirect:/medicos/listar";
 	}
@@ -68,6 +70,11 @@ public class MedicoController {
             model.addAttribute("especialidades", especialidadeService.buscarTodos());
             return "medicos/cadastro";
         }
+
+        // if (result.getFieldErrorCount() > 1 || result.getFieldError("CRM") == null) {
+        //     model.addAttribute("especialidades", especialidadeService.buscarTodos());
+        //     return "medicos/cadastro";
+        // }
 
         if (novoPassword != null && !novoPassword.trim().isEmpty()) {
             medico.setPassword(encoder.encode(novoPassword));

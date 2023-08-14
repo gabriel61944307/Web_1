@@ -1,7 +1,6 @@
 package br.ufscar.dc.dsw.domain;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +23,7 @@ public class Consulta extends AbstractEntity<Long> {
 
     @NotNull(message = "{NotNull.consulta.hora}")
     @Column(nullable = false)
-    private LocalTime horaConsulta;
+    private String horaConsulta;
 
     @ManyToOne
     @JoinColumn(name = "pacienteID")
@@ -43,11 +42,11 @@ public class Consulta extends AbstractEntity<Long> {
         this.dataConsulta = dataConsulta;
     }
 
-    public LocalTime getHoraConsulta() {
+    public String getHoraConsulta() {
         return horaConsulta;
     }
 
-    public void setHoraConsulta(LocalTime horaConsulta) {
+    public void setHoraConsulta(String horaConsulta) {
         this.horaConsulta = horaConsulta;
     }
 

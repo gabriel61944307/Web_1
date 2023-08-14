@@ -14,14 +14,14 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import br.ufscar.dc.dsw.validation.UniqueCPF;
+// import br.ufscar.dc.dsw.validation.UniqueCPF;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Paciente")
 public class Paciente extends Usuario {
 
-    @UniqueCPF (message = "{Unique.paciente.CPF}")
+    // @UniqueCPF (message = "{Unique.paciente.CPF}")
     @NotBlank
     @Column(nullable = false, length = 14)
     @Size(min = 14, max = 14)

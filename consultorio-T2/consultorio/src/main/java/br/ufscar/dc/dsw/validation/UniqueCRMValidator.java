@@ -18,8 +18,8 @@
  	@Override
  	public boolean isValid(String CRM, ConstraintValidatorContext context) {
  		if (dao != null) {
- 			Medico editora = dao.findByCRM(CRM);
- 			return editora == null;
+			Medico medico = dao.findByCRM(CRM);
+ 			return medico == null;
  		} else {
  			//  Durante a execução da classe ConsultorioApplication
  			//  não há injeção de dependência

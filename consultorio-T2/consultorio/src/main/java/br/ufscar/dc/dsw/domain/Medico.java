@@ -10,16 +10,16 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import br.ufscar.dc.dsw.validation.UniqueCRM;
+//import br.ufscar.dc.dsw.validation.UniqueCRM;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Medico")
 public class Medico extends Usuario {
 
-    @UniqueCRM (message = "{Unique.medico.CRM}")
+    //@UniqueCRM (message = "{Unique.medico.CRM}")
     @NotBlank
-    @Column(nullable = false, length = 9)
+    @Column(nullable = false, length = 9, unique = true)
     @Size(min = 9, max = 9, message = "{size.medico.CRM}")
     private String CRM;
 

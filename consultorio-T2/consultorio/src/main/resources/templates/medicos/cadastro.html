@@ -82,6 +82,19 @@
 							<span th:errors="*{CRM}"></span>
 						</div>
 					</div>
+
+					<!-- <div class="form-group col-md-6">
+						<label th:text="#{medico.CRM.label}" for="CRM"></label> 
+						<input type="text" class="form-control" id="CRM" th:field="*{CRM}"
+							autofocus="autofocus" placeholder="__.___/__"
+							th:classappend="${#fields.hasErrors('CRM')} ? is-invalid" 
+							data-mask="00.000/SS"
+							th:readonly="${medico.id != null}" />
+							
+						<div class="invalid-feedback">
+							<span th:errors="*{CRM}"></span>
+						</div>
+					</div> -->
 					
 					<input type="hidden" id="role" th:field="*{role}"/>
 				</div> 

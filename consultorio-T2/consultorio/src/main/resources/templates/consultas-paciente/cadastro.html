@@ -54,13 +54,27 @@
 						</div>	
 					</div>
 
-					<div class="form-group col-md-4">
+					<!-- <div class="form-group col-md-4">
 						<label th:text="#{consulta.hora.label}" for="horaConsulta"></label>
 
 						<select class="form-control" id="horaConsulta" name="horaConsulta" required th:field="*{horaConsulta}">
 							<option value="" disable th:text="#{select-hora}"></option>
 
 							<option th:each="horario : ${horarios}" th:value="${#dates.format(standardDate, 'HH:mm')}" th:text="${horario}"></option>
+						</select>
+
+						<div class="invalid-feedback">
+							<span th:errors="*{horaConsulta}"></span>
+						</div>	
+					</div> -->
+
+					<div class="form-group col-md-4">
+						<label th:text="#{consulta.hora.label}" for="horaConsulta"></label>
+
+						<select class="form-control" id="horaConsulta" name="horaConsulta" required th:field="*{horaConsulta}">
+							<option value="" disable th:text="#{select-hora}"></option>
+
+							<option th:each="horario : ${horarios}" th:value="${horario}" th:text="${horario}"></option>
 						</select>
 
 						<div class="invalid-feedback">
