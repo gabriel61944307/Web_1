@@ -8,16 +8,6 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-/*
- * Na classe Editora tava assim:
- * 
- * @UniqueCRM (message = "{Unique.editora.CRM}")
-	@NotBlank
-	@Size(min = 18, max = 18, message = "{Size.editora.CRM}")
-	@Column(nullable = false, unique = true, length = 60)
-	private String CRM;
- */
-
 @Constraint(validatedBy = UniqueEmailValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
