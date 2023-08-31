@@ -114,7 +114,7 @@ public class ConsultaPacienteController {
         
         InternetAddress to = new InternetAddress(emailPac, nomePac);
         String subject = "Sua consulta foi agendada com sucesso!";
-        String body = "Olá, " + nomePac + ", este e-mail tem como objetivo lhe informar que sua consulta foi marcada com sucesso para " + formattedDate + " às " + consulta.getHoraConsulta() + ".\n\nAtenciosamente, \nAdministrador do sistema do hospital.";
+        String body = "Olá, " + nomePac + ", este e-mail tem como objetivo lhe informar que sua consulta foi marcada com sucesso para " + formattedDate + " às " + consulta.getHoraConsulta() + " com " + consulta.getMedico().getNome() + ".\n\nAtenciosamente, \nAdministrador do sistema do hospital.";
 
         emailService.send(from, to, subject, body);
 
@@ -124,7 +124,7 @@ public class ConsultaPacienteController {
 
         to = new InternetAddress(emailMed, nomeMed);
         subject = "Você possui uma nova consulta agendada";
-        body = "Olá, " + nomeMed + ", este e-mail tem como objetivo lhe informar que foi marcada uma consulta com você no dia " + formattedDate + " às " + consulta.getHoraConsulta() + ".\n\nAtenciosamente, \nAdministrador do sistema do hospital.";
+        body = "Olá, " + nomeMed + ", este e-mail tem como objetivo lhe informar que o paciente " + consulta.getPaciente().getNome() + " marcou uma consulta com você no dia " + formattedDate + " às " + consulta.getHoraConsulta() + ".\n\nAtenciosamente, \nAdministrador do sistema do hospital.";
 
         emailService.send(from, to, subject, body);
 
@@ -142,7 +142,7 @@ public class ConsultaPacienteController {
     }
 
     @PostMapping("/editar")
-    public String editar(@Valid Consulta consulta, BindingResult result, RedirectAttributes attr, ModelMap model) {
+    public String editar(@Valid Consulta consulta, BindingResult result, RedirectAttributes attr, ModelMap model) throws UnsupportedEncodingException {
         
         if (result.hasErrors()) {
             model.addAttribute("medicos", medicoService.buscarTodos());
@@ -177,13 +177,69 @@ public class ConsultaPacienteController {
             }
         }
 
+        // Envio de E-mail
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = consulta.getDataConsulta().format(dateFormatter);
+
+        EmailService emailService = new EmailService();
+        InternetAddress from = new InternetAddress("gabrielrodriguesmalaquias1111@gmail.com", "Admin");
+
+        Paciente pac = consulta.getPaciente();
+        String nomePac = pac.getNome();
+        String emailPac = pac.getEmail();
+        
+        InternetAddress to = new InternetAddress(emailPac, nomePac);
+        String subject = "Sua consulta foi reagendada com sucesso!";
+        String body = "Olá, " + nomePac + ", este e-mail tem como objetivo lhe informar que sua consulta foi remarcada com sucesso para " + formattedDate + " às " + consulta.getHoraConsulta() + " com " + consulta.getMedico().getNome() + ".\n\nAtenciosamente, \nAdministrador do sistema do hospital.";
+
+        emailService.send(from, to, subject, body);
+
+        Medico med = consulta.getMedico();
+        String nomeMed = med.getNome();
+        String emailMed = med.getEmail();
+
+        to = new InternetAddress(emailMed, nomeMed);
+        subject = "Uma das suas consultas foi reagendada";
+        body = "Olá, " + nomeMed + ", este e-mail tem como objetivo lhe informar a sua consulta com " + consulta.getPaciente().getNome() + " foi remarcada para o dia " + formattedDate + " às " + consulta.getHoraConsulta() + ".\n\nAtenciosamente, \nAdministrador do sistema do hospital.";
+
+        emailService.send(from, to, subject, body);
+
         consultaService.salvar(consulta);
         attr.addFlashAttribute("success", "consulta.create.success");
         return "redirect:/consultas-paciente/listar";
     }
 
     @GetMapping("/excluir/{id}")
-    public String excluir(@PathVariable("id") Long id, ModelMap model) {
+    public String excluir(@PathVariable("id") Long id, ModelMap model) throws UnsupportedEncodingException {
+
+        Consulta consulta = consultaService.buscarPorId(id);
+
+        // Envio de E-mail
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = consulta.getDataConsulta().format(dateFormatter);
+
+        EmailService emailService = new EmailService();
+        InternetAddress from = new InternetAddress("gabrielrodriguesmalaquias1111@gmail.com", "Admin");
+
+        Paciente pac = consulta.getPaciente();
+        String nomePac = pac.getNome();
+        String emailPac = pac.getEmail();
+        
+        InternetAddress to = new InternetAddress(emailPac, nomePac);
+        String subject = "Sua consulta foi cancelada!";
+        String body = "Olá, " + nomePac + ", este e-mail tem como objetivo lhe informar que sua consulta com " + consulta.getMedico().getNome() + " no dia " + formattedDate + " às " + consulta.getHoraConsulta()  + " foi cancelada com sucesso.\n\nAtenciosamente, \nAdministrador do sistema do hospital.";
+
+        emailService.send(from, to, subject, body);
+
+        Medico med = consulta.getMedico();
+        String nomeMed = med.getNome();
+        String emailMed = med.getEmail();
+
+        to = new InternetAddress(emailMed, nomeMed);
+        subject = "Uma de suas consultas foi cancelada";
+        body = "Olá, " + nomeMed + ", este e-mail tem como objetivo lhe informar que sua consulta com " + consulta.getPaciente().getNome() + " no dia " + formattedDate + " às " + consulta.getHoraConsulta() + " foi cancelada.\n\nAtenciosamente, \nAdministrador do sistema do hospital.";
+
+        emailService.send(from, to, subject, body);
 
         consultaService.excluir(id);
 		model.addAttribute("success", "consulta.delete.success");

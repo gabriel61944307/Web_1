@@ -29,6 +29,7 @@
                             <th th:text="#{consulta.paciente.label}"></th>
 							<th th:text="#{consulta.data.label}"></th>
 							<th th:text="#{consulta.hora.label}"></th>
+							<th th:text="#{acao.label}"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -37,6 +38,14 @@
                             <td th:text="${consulta.paciente.nome}"></td>
 							<td th:text="${#temporals.format(consulta.dataConsulta, 'dd/MM/yyyy')}"></td>
 							<td th:text="${consulta.horaConsulta}"></td>
+							<td colspan="2">
+								<button
+									th:id="${'btn_consultas-paciente/excluir/' + consulta.id}"
+									type="button" class="btn btn-danger btn-sm"
+									data-toggle="modal" data-target="#myModal">
+									<span class="oi oi-circle-x" th:title="#{link.excluir.label}" aria-hidden="true"></span>
+								</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
