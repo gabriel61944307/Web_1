@@ -14,9 +14,12 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 // import br.ufscar.dc.dsw.validation.UniqueCPF;
 
 @SuppressWarnings("serial")
+@JsonIgnoreProperties(value = { "consultas" })
 @Entity
 @Table(name = "Paciente")
 public class Paciente extends Usuario {

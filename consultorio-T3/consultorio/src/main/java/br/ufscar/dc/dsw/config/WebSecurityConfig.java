@@ -40,11 +40,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-				http.authorizeRequests()
+				// http.authorizeRequests()
+				http.csrf().disable().authorizeRequests()
 				.antMatchers("/error", "/login/**", "/js/**", "/css/**", "/image/**", "/webjars/**", "/noAutho/**").permitAll()
-				.antMatchers("/medicos/**", "/pacientes/**").hasRole("ADMIN")
-				.antMatchers("/consultas-paciente/**").hasRole("PACIENTE")
-				.antMatchers("/consultas-medico/**").hasRole("MEDICO")
+				.antMatchers("/medicos/**", "/pacientes/**").permitAll()
+				.antMatchers("/consultas-paciente/**").permitAll()
+				.antMatchers("/consultas-medico/**").permitAll()
+
+				// esses três aqui de baixo eu só copiei do exemplo que tava no pdf do t3, não sei se tá certo mesmo...
+				.antMatchers("/medicos/especialidades/{\\w+}").permitAll()
+				.antMatchers("/consultas/pacientes/{\\d+}").permitAll()
+				.antMatchers("/consultas/medicos/{\\d+}").permitAll()
 				.anyRequest().authenticated()
 			.and()
 				.formLogin()
