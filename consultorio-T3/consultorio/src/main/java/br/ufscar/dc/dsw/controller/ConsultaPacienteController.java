@@ -3,6 +3,7 @@ package br.ufscar.dc.dsw.controller;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 import javax.validation.Valid;
 
@@ -20,10 +21,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufscar.dc.dsw.domain.Consulta;
 import br.ufscar.dc.dsw.domain.Paciente;
+import br.ufscar.dc.dsw.domain.Medico;
 import br.ufscar.dc.dsw.security.UsuarioDetails;
 import br.ufscar.dc.dsw.service.spec.IConsultaService;
 import br.ufscar.dc.dsw.service.spec.IPacienteService;
 import br.ufscar.dc.dsw.service.spec.IMedicoService;
+import br.ufscar.dc.dsw.utils.EmailService;
+
+import java.io.UnsupportedEncodingException;
+import javax.mail.internet.InternetAddress;
 
 @Controller
 @RequestMapping("/consultas-paciente")
@@ -64,7 +70,7 @@ public class ConsultaPacienteController {
     }
 
     @PostMapping("/salvar")
-    public String salvar(@Valid Consulta consulta, BindingResult result, RedirectAttributes attr, ModelMap model) {
+    public String salvar(@Valid Consulta consulta, BindingResult result, RedirectAttributes attr, ModelMap model) throws UnsupportedEncodingException {
 
         if (result.hasErrors()) {
             model.addAttribute("medicos", medicoService.buscarTodos());
@@ -94,6 +100,33 @@ public class ConsultaPacienteController {
                 }
             }
         }
+
+        // Envio de E-mail
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = consulta.getDataConsulta().format(dateFormatter);
+
+        EmailService emailService = new EmailService();
+        InternetAddress from = new InternetAddress("gabrielrodriguesmalaquias1111@gmail.com", "Admin");
+
+        Paciente pac = consulta.getPaciente();
+        String nomePac = pac.getNome();
+        String emailPac = pac.getEmail();
+        
+        InternetAddress to = new InternetAddress(emailPac, nomePac);
+        String subject = "Sua consulta foi agendada com sucesso!";
+        String body = "Olá, " + nomePac + ", este e-mail tem como objetivo lhe informar que sua consulta foi marcada com sucesso para " + formattedDate + " às " + consulta.getHoraConsulta() + ".\n\nAtenciosamente, \nAdministrador do sistema do hospital.";
+
+        emailService.send(from, to, subject, body);
+
+        Medico med = consulta.getMedico();
+        String nomeMed = med.getNome();
+        String emailMed = med.getEmail();
+
+        to = new InternetAddress(emailMed, nomeMed);
+        subject = "Você possui uma nova consulta agendada";
+        body = "Olá, " + nomeMed + ", este e-mail tem como objetivo lhe informar que foi marcada uma consulta com você no dia " + formattedDate + " às " + consulta.getHoraConsulta() + ".\n\nAtenciosamente, \nAdministrador do sistema do hospital.";
+
+        emailService.send(from, to, subject, body);
 
         consultaService.salvar(consulta);
         attr.addFlashAttribute("success", "consulta.create.success");
