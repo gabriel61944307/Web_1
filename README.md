@@ -19,3 +19,4 @@ Neste repositório encontram-se os trabalhos desenvolvidos ao longo da disciplin
 
 - [Trabalho 1](https://github.com/gabriel61944307/Web_1/tree/main/consultorio-T1): Sistema de Agendamento de Consultas utilizando Servlet, JSP, JSTL & JDBC.
 - [Trabalho 2](https://github.com/gabriel61944307/Web_1/tree/main/consultorio-T2): Sistema de Agendamento de Consultas utilizando Spring MVC.
+- [Trabalho 3](https://github.com/gabriel61944307/Web_1/tree/main/consultorio-T3): Rest API Para o Sistema de Agendamento de Consultas utilizando Spring MVC.
