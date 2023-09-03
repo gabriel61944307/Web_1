@@ -133,6 +133,15 @@ public class MedicoRestController {
 		return ResponseEntity.ok(medico);
 	}
 
+    @GetMapping(path = "/medicos/especialidades/{nome}")
+	public ResponseEntity<List<Medico>> lista(@PathVariable("nome") String especialidade) {
+        List<Medico> lista = service.buscarPorEspecialidade(especialidade);
+		if (lista.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(lista);
+	}
+
 /*
 
 {
