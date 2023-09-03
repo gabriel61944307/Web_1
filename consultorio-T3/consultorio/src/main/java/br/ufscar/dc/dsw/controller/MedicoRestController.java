@@ -87,6 +87,20 @@ public class MedicoRestController {
 		return ResponseEntity.ok(lista);
  	}
 
+     @DeleteMapping(path = "medicos/{id}")
+     public ResponseEntity<Boolean> remove(@PathVariable("id") long id) {
+         Medico medico = service.buscarPorId(id);
+         if (medico == null) {
+             return ResponseEntity.notFound().build();
+         } else {
+             if (service.medicoTemConsultas(id)) {
+                 return new ResponseEntity<Boolean>(false, HttpStatus.FORBIDDEN);
+             } else {
+                 service.excluir(id);
+                 return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+             }
+         }
+     }
 	/*@GetMapping(path = "/pacientes/{id}")
 	public ResponseEntity<Paciente> lista(@PathVariable("id") long id) {
 		Paciente paciente = service.buscarPorId(id);
