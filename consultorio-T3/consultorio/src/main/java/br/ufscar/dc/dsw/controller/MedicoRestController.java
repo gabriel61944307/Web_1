@@ -141,7 +141,6 @@ public class MedicoRestController {
 		}
 		return ResponseEntity.ok(lista);
 	}
-
 /*
 
 {
