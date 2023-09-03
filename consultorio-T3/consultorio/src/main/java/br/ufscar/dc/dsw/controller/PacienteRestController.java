@@ -76,6 +76,42 @@ public class PacienteRestController {
         }
 	}
 
+    	@GetMapping(path = "/pacientes")
+	public ResponseEntity<List<Paciente>> lista() {
+		List<Paciente> lista = service.buscarTodos();
+		if (lista.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(lista);
+ 	}
+
+	@GetMapping(path = "/pacientes/{id}")
+	public ResponseEntity<Paciente> lista(@PathVariable("id") long id) {
+		Paciente paciente = service.buscarPorId(id);
+		if (paciente == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(paciente);
+	}
+
+	@PostMapping(path = "/pacientes")
+	@ResponseBody
+	public ResponseEntity<Paciente> cria(@RequestBody JSONObject json) {
+		try {
+			if (isJSONValid(json.toString())) {
+				Paciente paciente = new Paciente();
+				parse(paciente, json);
+				service.salvar(paciente);
+				return ResponseEntity.ok(paciente);
+			} else {
+				return ResponseEntity.badRequest().body(null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
+		}
+ 	}
+
     @PutMapping(path = "pacientes/{id}")
     public ResponseEntity<Paciente> atualiza(@PathVariable("id") long id, @RequestBody JSONObject json) {
         try {
