@@ -165,36 +165,18 @@ public class MedicoRestController {
 		}
  	}
 
-    /*
-	@PostMapping(path = "/pacientes")
-	@ResponseBody
-	public ResponseEntity<Paciente> cria(@RequestBody JSONObject json) {
-		try {
-			if (isJSONValid(json.toString())) {
-				Paciente paciente = new Paciente();
-				parse(paciente, json);
-				service.salvar(paciente);
-				return ResponseEntity.ok(paciente);
-			} else {
-				return ResponseEntity.badRequest().body(null);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
-		}
- 	}
-
-    @PutMapping(path = "pacientes/{id}")
-    public ResponseEntity<Paciente> atualiza(@PathVariable("id") long id, @RequestBody JSONObject json) {
+    
+    @PutMapping(path = "medicos/{id}")
+    public ResponseEntity<Medico> atualiza(@PathVariable("id") long id, @RequestBody JSONObject json) {
         try {
             if (isJSONValid(json.toString())) {
-                Paciente paciente = service.buscarPorId(id);
-                if (paciente == null) {
+                Medico medico = service.buscarPorId(id);
+                if (medico == null) {
                     return ResponseEntity.notFound().build();
                 } else {
-                    parse(paciente, json);
-                    service.salvar(paciente);
-                    return ResponseEntity.ok(paciente);
+                    parse(medico, json);
+                    service.salvar(medico);
+                    return ResponseEntity.ok(medico);
                 }
             } else {
                 return ResponseEntity.badRequest().body(null);
@@ -203,19 +185,4 @@ public class MedicoRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
         }
     }
-
-    @DeleteMapping(path = "pacientes/{id}")
-    public ResponseEntity<Boolean> remove(@PathVariable("id") long id) {
-        Paciente paciente = service.buscarPorId(id);
-        if (paciente == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            if (service.pacienteTemConsultas(id)) {
-                return new ResponseEntity<Boolean>(false, HttpStatus.FORBIDDEN);
-            } else {
-                service.excluir(id);
-                return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-            }
-        }
-    }*/
 }
