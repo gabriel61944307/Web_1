@@ -2,10 +2,8 @@ package br.ufscar.dc.dsw.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.tomcat.jni.Local;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,6 +59,7 @@ public class PacienteRestController {
         paciente.setCPF((String) json.get("CPF"));
         paciente.setTelefone((String) json.get("telefone"));
         paciente.setSexo((String) json.get("sexo"));
+        paciente.setRole((String) json.get("role"));
 
         String dataNascimentoStr = (String) json.get("dataNascimento");
         if (dataNascimentoStr != null) {
