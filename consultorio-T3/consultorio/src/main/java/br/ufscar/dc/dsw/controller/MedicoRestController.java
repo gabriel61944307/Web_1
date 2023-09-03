@@ -78,6 +78,27 @@ public class MedicoRestController {
         }
 	}
 
+	private void parse(Medico medico, JSONObject json) {
+
+		Object id = json.get("id");
+		if (id != null) {
+			if (id instanceof Integer) {
+				medico.setId(((Integer) id).longValue());
+			} else {
+				medico.setId((Long) id);
+			}
+		}
+
+        medico.setNome((String) json.get("nome"));
+        medico.setPassword(encoder.encode((String) json.get("password")));
+        medico.setEmail((String) json.get("email"));
+        medico.setCRM((String) json.get("crm"));
+        medico.setRole((String) json.get("role"));
+        medico.setEspecialidade((String) json.get("especialidade"));
+        medico.setEnabled((Boolean) json.get("enabled"));
+
+	}
+
     @GetMapping(path = "/medicos")
 	public ResponseEntity<List<Medico>> lista() {
 		List<Medico> lista = service.buscarTodos();
@@ -111,6 +132,38 @@ public class MedicoRestController {
 		}
 		return ResponseEntity.ok(medico);
 	}
+
+/*
+
+{
+    "nome": "Médico Teste",
+    "password": "$2a$10$OLbuLZEL.YIUHSt26UDXKu3CLdffEM/xOGxPxAqy2lmSJeJri5PK.",
+    "email": "medico@email.com",
+    "role": "ROLE_MEDICO",
+    "enabled": true,
+    "especialidade": "Cardiologia",
+    "crm": "12.335/SP"
+}
+
+ */
+
+    @PostMapping(path = "/medicos")
+	@ResponseBody
+	public ResponseEntity<Medico> cria(@RequestBody JSONObject json) {
+		try {
+			if (isJSONValid(json.toString())) {
+				Medico medico = new Medico();
+				parse(medico, json);
+				service.salvar(medico);
+				return ResponseEntity.ok(medico);
+			} else {
+				return ResponseEntity.badRequest().body(null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
+		}
+ 	}
 
     /*
 	@PostMapping(path = "/pacientes")
