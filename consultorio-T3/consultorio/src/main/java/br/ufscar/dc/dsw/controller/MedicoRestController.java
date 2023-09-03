@@ -101,15 +101,18 @@ public class MedicoRestController {
              }
          }
      }
-	/*@GetMapping(path = "/pacientes/{id}")
-	public ResponseEntity<Paciente> lista(@PathVariable("id") long id) {
-		Paciente paciente = service.buscarPorId(id);
-		if (paciente == null) {
+	
+    
+    @GetMapping(path = "/medicos/{id}")
+	public ResponseEntity<Medico> lista(@PathVariable("id") long id) {
+        Medico medico = service.buscarPorId(id);
+		if (medico == null) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(paciente);
+		return ResponseEntity.ok(medico);
 	}
 
+    /*
 	@PostMapping(path = "/pacientes")
 	@ResponseBody
 	public ResponseEntity<Paciente> cria(@RequestBody JSONObject json) {
