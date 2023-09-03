@@ -10,10 +10,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 //import br.ufscar.dc.dsw.validation.UniqueCRM;
 
 @SuppressWarnings("serial")
 @Entity
+@JsonIgnoreProperties(value = { "consultas" })
 @Table(name = "Medico")
 public class Medico extends Usuario {
 
