@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @SuppressWarnings("serial")
 @Entity
-@JsonIgnoreProperties(value = { "consultas" })
+@JsonIgnoreProperties(value = { "consultas", "role", "enabled", "password" })
 @Table(name = "Medico")
 public class Medico extends Usuario {
 
@@ -32,6 +32,11 @@ public class Medico extends Usuario {
 
     @OneToMany(mappedBy = "medico")
     private List<Consulta> consultas = new ArrayList<>();
+
+    public Medico() {
+        this.setRole("ROLE_PACIENTE");
+        this.setEnabled(true);
+    }
 
     public List<Consulta> getConsultas() {
         return consultas;

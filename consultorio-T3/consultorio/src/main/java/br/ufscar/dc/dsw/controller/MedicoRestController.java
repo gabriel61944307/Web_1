@@ -1,7 +1,6 @@
 package br.ufscar.dc.dsw.controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.json.simple.JSONObject;
@@ -18,12 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import br.ufscar.dc.dsw.domain.Consulta;
 import br.ufscar.dc.dsw.domain.Medico;
-import br.ufscar.dc.dsw.domain.Paciente;
 import br.ufscar.dc.dsw.service.spec.IMedicoService;
 
 @RestController
@@ -43,38 +39,6 @@ public class MedicoRestController {
 		}
 	}
 
-	private void parse(Paciente paciente, JSONObject json) {
-
-		Object id = json.get("id");
-		if (id != null) {
-			if (id instanceof Integer) {
-				paciente.setId(((Integer) id).longValue());
-			} else {
-				paciente.setId((Long) id);
-			}
-		}
-
-        paciente.setNome((String) json.get("nome"));
-        paciente.setPassword(encoder.encode((String) json.get("password")));
-        paciente.setEmail((String) json.get("email"));
-        paciente.setCPF((String) json.get("CPF"));
-        paciente.setTelefone((String) json.get("telefone"));
-        paciente.setSexo((String) json.get("sexo"));
-
-        String dataNascimentoStr = (String) json.get("dataNascimento");
-        if (dataNascimentoStr != null) {
-            LocalDate dataNascimento = LocalDate.parse(dataNascimentoStr);
-            paciente.setDataNascimento(dataNascimento);
-        }
-
-        Object consultasObject = json.get("consultas");
-        if (consultasObject instanceof List) {
-            List<Consulta> consultas = new ObjectMapper().convertValue(consultasObject, new TypeReference<List<Consulta>>() {
-            });
-            paciente.setConsultas(consultas);
-        }
-	}
-
 	private void parse(Medico medico, JSONObject json) {
 
 		Object id = json.get("id");
@@ -90,10 +54,7 @@ public class MedicoRestController {
         medico.setPassword(encoder.encode((String) json.get("password")));
         medico.setEmail((String) json.get("email"));
         medico.setCRM((String) json.get("crm"));
-        medico.setRole((String) json.get("role"));
         medico.setEspecialidade((String) json.get("especialidade"));
-        medico.setEnabled((Boolean) json.get("enabled"));
-
 	}
 
     @GetMapping(path = "/medicos")
@@ -138,19 +99,6 @@ public class MedicoRestController {
 		}
 		return ResponseEntity.ok(lista);
 	}
-/*
-
-{
-    "nome": "Médico Teste",
-    "password": "$2a$10$OLbuLZEL.YIUHSt26UDXKu3CLdffEM/xOGxPxAqy2lmSJeJri5PK.",
-    "email": "medico@email.com",
-    "role": "ROLE_MEDICO",
-    "enabled": true,
-    "especialidade": "Cardiologia",
-    "crm": "12.335/SP"
-}
-
- */
 
     @PostMapping(path = "/medicos")
 	@ResponseBody

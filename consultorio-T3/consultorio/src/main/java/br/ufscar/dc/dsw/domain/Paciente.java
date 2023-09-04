@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 // import br.ufscar.dc.dsw.validation.UniqueCPF;
 
 @SuppressWarnings("serial")
-@JsonIgnoreProperties(value = { "consultas" })
+@JsonIgnoreProperties(value = { "consultas", "role", "enabled", "password" })
 @Entity
 @Table(name = "Paciente")
 public class Paciente extends Usuario {
@@ -45,6 +45,11 @@ public class Paciente extends Usuario {
 
     @OneToMany(mappedBy = "paciente")
     private List<Consulta> consultas = new ArrayList<>();
+
+    public Paciente() {
+        this.setRole("ROLE_PACIENTE");
+        this.setEnabled(true);
+    }
     
     public String getCPF() {
 		return CPF;

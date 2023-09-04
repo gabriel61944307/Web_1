@@ -59,7 +59,6 @@ public class PacienteRestController {
         paciente.setCPF((String) json.get("CPF"));
         paciente.setTelefone((String) json.get("telefone"));
         paciente.setSexo((String) json.get("sexo"));
-        paciente.setRole((String) json.get("role"));
 
         String dataNascimentoStr = (String) json.get("dataNascimento");
         if (dataNascimentoStr != null) {
@@ -75,7 +74,7 @@ public class PacienteRestController {
         }
 	}
 
-    	@GetMapping(path = "/pacientes")
+    @GetMapping(path = "/pacientes")
 	public ResponseEntity<List<Paciente>> lista() {
 		List<Paciente> lista = service.buscarTodos();
 		if (lista.isEmpty()) {
