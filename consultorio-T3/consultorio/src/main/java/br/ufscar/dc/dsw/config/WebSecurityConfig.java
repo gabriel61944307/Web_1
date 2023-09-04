@@ -52,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/consultas/pacientes/{\\d+}").permitAll()
 				.antMatchers("/consultas/medicos/{\\d+}").permitAll()
 				.antMatchers("/consultas/{\\d+}").permitAll()
+				.antMatchers("/consultas").permitAll()
 				.anyRequest().authenticated()
 			.and()
 				.formLogin()

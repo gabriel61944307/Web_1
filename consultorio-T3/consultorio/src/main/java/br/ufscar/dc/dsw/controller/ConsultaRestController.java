@@ -3,6 +3,9 @@ package br.ufscar.dc.dsw.controller;
 
 import java.util.List;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,18 +33,26 @@ public class ConsultaRestController {
     @Autowired
     private IMedicoService serviceMedico;
 
+
     @Autowired
     BCryptPasswordEncoder encoder;
 
-   /* @GetMapping(path = "/medicos")
-	public ResponseEntity<List<Medico>> lista() {
-		List<Medico> lista = service.buscarTodos();
+    @GetMapping(path = "/consultas")
+	public ResponseEntity<List<Consulta>> lista() {
+
+		List<Paciente> listaPaciente = servicePaciente.buscarTodos();
+        List<Consulta> lista = new ArrayList<>();
+        for(Paciente p: listaPaciente){
+            for(Consulta c: service.buscarTodasPorPaciente(p)){
+                lista.add(c);
+            }
+        }
 		if (lista.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(lista);
  	}
-
+    /*
      @DeleteMapping(path = "medicos/{id}")
      public ResponseEntity<Boolean> remove(@PathVariable("id") long id) {
          Medico medico = service.buscarPorId(id);
