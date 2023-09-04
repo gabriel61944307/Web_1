@@ -1,6 +1,9 @@
 package br.ufscar.dc.dsw.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import br.ufscar.dc.dsw.domain.Consulta;
+import br.ufscar.dc.dsw.domain.Paciente;
 import br.ufscar.dc.dsw.service.spec.IConsultaService;
+import br.ufscar.dc.dsw.service.spec.IPacienteService;
 
 @RestController
 public class ConsultaRestController {
@@ -19,17 +24,27 @@ public class ConsultaRestController {
     private IConsultaService service;
 
     @Autowired
+    private IPacienteService servicePaciente;
+
+    @Autowired
     BCryptPasswordEncoder encoder;
 
-   /* @GetMapping(path = "/medicos")
-	public ResponseEntity<List<Medico>> lista() {
-		List<Medico> lista = service.buscarTodos();
+    @GetMapping(path = "/consultas")
+	public ResponseEntity<List<Consulta>> lista() {
+
+		List<Paciente> listaPaciente = servicePaciente.buscarTodos();
+        List<Consulta> lista = new ArrayList<>();
+        for(Paciente p: listaPaciente){
+            for(Consulta c: service.buscarTodasPorPaciente(p)){
+                lista.add(c);
+            }
+        }
 		if (lista.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(lista);
  	}
-
+    /*
      @DeleteMapping(path = "medicos/{id}")
      public ResponseEntity<Boolean> remove(@PathVariable("id") long id) {
          Medico medico = service.buscarPorId(id);
